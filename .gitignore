@@ -51,6 +51,11 @@ lerna-debug.log*
 coverage
 .nyc_output
 
+# Agent workflow (working notes, not product)
+plans/
+systems/
+designs/extracted/
+
 # Misc
 *.tgz
 .cache
