@@ -1,0 +1,3 @@
+{
+  "extends": "@sessionreset/config/tsconfig.base.json"
+}
