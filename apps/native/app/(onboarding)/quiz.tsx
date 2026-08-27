@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, shadows } from "@/lib/tokens";
+import { PressableScale } from "@/components/PressableScale";
 
 const SERVICES = ["claude", "codex", "claudeCode", "cursor"] as const;
 const FREQUENCIES = ["low", "medium", "high"] as const;
@@ -90,7 +91,7 @@ export default function QuizScreen() {
             {SERVICES.map((s) => {
               const active = selectedServices.includes(s);
               return (
-                <Pressable
+                <PressableScale
                   key={s}
                   onPress={() => toggleService(s)}
                   style={{
@@ -175,7 +176,7 @@ export default function QuizScreen() {
                   >
                     {t(`onboarding.quiz.options.${s}`)}
                   </Text>
-                </Pressable>
+                </PressableScale>
               );
             })}
           </Animated.View>
@@ -206,7 +207,7 @@ export default function QuizScreen() {
             {FREQUENCIES.map((f) => {
               const active = selectedFreq === f;
               return (
-                <Pressable
+                <PressableScale
                   key={f}
                   onPress={() => setSelectedFreq(f)}
                   style={{
@@ -234,7 +235,7 @@ export default function QuizScreen() {
                   >
                     {t(`onboarding.quiz.options.${f}`)}
                   </Text>
-                </Pressable>
+                </PressableScale>
               );
             })}
           </Animated.View>
@@ -242,7 +243,10 @@ export default function QuizScreen() {
 
         {/* CTA */}
         <Animated.View entering={FadeIn.duration(400).delay(500)} style={{ marginBottom: spacing[12] }}>
-          <View
+          <PressableScale
+            onPress={() => {
+              if (canContinue) router.push("/(onboarding)/founder-note");
+            }}
             style={{
               height: components.primaryButton.height,
               borderRadius: components.primaryButton.radius,
@@ -258,13 +262,10 @@ export default function QuizScreen() {
                 fontWeight: components.primaryButton.font.weight,
                 color: canContinue ? c.textOnAccent : c.textMuted,
               }}
-              onPress={() => {
-                if (canContinue) router.push("/(onboarding)/founder-note");
-              }}
             >
               {t("onboarding.quiz.cta")}
             </Text>
-          </View>
+          </PressableScale>
         </Animated.View>
       </View>
     </SafeAreaView>

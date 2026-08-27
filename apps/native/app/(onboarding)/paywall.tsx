@@ -11,6 +11,7 @@ import {
 } from "@/lib/purchases";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, shadows } from "@/lib/tokens";
+import { PressableScale } from "@/components/PressableScale";
 
 const FEATURES = ["alerts", "widgets", "sounds"] as const;
 
@@ -235,7 +236,7 @@ export default function PaywallScreen() {
           entering={FadeInDown.duration(400).delay(400)}
           style={{ gap: spacing[18], marginBottom: spacing[12] }}
         >
-          <Pressable
+          <PressableScale
             onPress={handlePurchase}
             style={{
               height: components.primaryButton.height,
@@ -260,7 +261,7 @@ export default function PaywallScreen() {
             >
               {purchasing ? "Processing..." : t("onboarding.paywall.cta")}
             </Text>
-          </Pressable>
+          </PressableScale>
           <Pressable onPress={() => router.push("/(onboarding)/notifications")}>
             <Text
               style={{

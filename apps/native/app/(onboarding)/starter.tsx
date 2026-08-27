@@ -9,6 +9,7 @@ import { createTimer } from "@/lib/timer-engine";
 import { scheduleTimerNotifications } from "@/lib/notifications";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, shadows } from "@/lib/tokens";
+import { PressableScale } from "@/components/PressableScale";
 
 export default function StarterScreen() {
   const router = useRouter();
@@ -116,7 +117,7 @@ export default function StarterScreen() {
           entering={FadeInDown.duration(400).delay(300)}
           style={{ gap: spacing[12], marginBottom: spacing[12] }}
         >
-          <Pressable
+          <PressableScale
             onPress={handleBlocked}
             style={{
               height: components.primaryButton.height,
@@ -141,8 +142,8 @@ export default function StarterScreen() {
             >
               {t("onboarding.starter.blocked")}
             </Text>
-          </Pressable>
-          <Pressable
+          </PressableScale>
+          <PressableScale
             onPress={handleDemoTimer}
             style={{
               height: components.secondaryButton.height,
@@ -167,7 +168,7 @@ export default function StarterScreen() {
             >
               {t("onboarding.starter.demo")}
             </Text>
-          </Pressable>
+          </PressableScale>
         </Animated.View>
       </View>
     </SafeAreaView>

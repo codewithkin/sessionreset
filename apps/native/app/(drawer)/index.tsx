@@ -6,6 +6,7 @@ import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, radii } from "@/lib/tokens";
 import { useTimers } from "@/contexts/TimerContext";
 import { TimerCard } from "@/components/TimerCard";
+import { PressableScale } from "@/components/PressableScale";
 import { useState, useCallback } from "react";
 
 export default function DashboardScreen() {
@@ -159,7 +160,7 @@ export default function DashboardScreen() {
           right: 0,
         }}
       >
-        <Pressable
+        <PressableScale
           onPress={() => router.push("/quick-log")}
           style={{
             marginHorizontal: 16,
@@ -188,7 +189,7 @@ export default function DashboardScreen() {
           >
             Log Limit Hit
           </Text>
-        </Pressable>
+        </PressableScale>
       </Animated.View>
     </View>
   );

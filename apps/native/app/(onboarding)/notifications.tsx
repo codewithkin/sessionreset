@@ -11,6 +11,7 @@ import {
 } from "@/lib/notifications";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, shadows, layout } from "@/lib/tokens";
+import { PressableScale } from "@/components/PressableScale";
 
 export default function NotificationsScreen() {
   const router = useRouter();
@@ -167,7 +168,8 @@ export default function NotificationsScreen() {
           entering={FadeInDown.duration(400).delay(300)}
           style={{ gap: spacing[18], marginBottom: spacing[12] }}
         >
-          <View
+          <PressableScale
+            onPress={handleEnable}
             style={{
               height: components.primaryButton.height,
               borderRadius: components.primaryButton.radius,
@@ -188,13 +190,12 @@ export default function NotificationsScreen() {
                 fontWeight: components.primaryButton.font.weight,
                 color: c.textOnAccent,
               }}
-              onPress={handleEnable}
             >
               {status === "granted"
                 ? t("onboarding.notifications.enabled")
                 : t("onboarding.notifications.cta")}
             </Text>
-          </View>
+          </PressableScale>
           <Text
             style={{
               fontFamily: "Manrope",

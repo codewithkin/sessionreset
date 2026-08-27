@@ -7,6 +7,7 @@ import { Platform } from "@/lib/types";
 import { showInterstitial, canShowInterstitial } from "@/lib/ads";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, shadows, layout } from "@/lib/tokens";
+import { PressableScale } from "@/components/PressableScale";
 
 const SERVICES: { key: Platform; label: string; color: string }[] = [
   { key: "claude", label: "Claude", color: colors.light.claude },
@@ -122,7 +123,7 @@ export default function QuickLogScreen() {
           {SERVICES.map((s) => {
             const active = selectedService === s.key;
             return (
-              <Pressable
+              <PressableScale
                 key={s.key}
                 onPress={() => setSelectedService(s.key)}
                 style={{
@@ -156,7 +157,7 @@ export default function QuickLogScreen() {
                 >
                   {s.label}
                 </Text>
-              </Pressable>
+              </PressableScale>
             );
           })}
         </View>
@@ -177,7 +178,7 @@ export default function QuickLogScreen() {
           {OFFSETS.map((o) => {
             const active = selectedOffset === o.minutes;
             return (
-              <Pressable
+              <PressableScale
                 key={o.minutes}
                 onPress={() => setSelectedOffset(o.minutes)}
                 style={{
@@ -200,7 +201,7 @@ export default function QuickLogScreen() {
                 >
                   {o.label}
                 </Text>
-              </Pressable>
+              </PressableScale>
             );
           })}
         </View>
@@ -251,7 +252,7 @@ export default function QuickLogScreen() {
         </Pressable>
 
         {/* CTA */}
-        <Pressable
+        <PressableScale
           onPress={handleStart}
           disabled={!selectedService}
           style={{
@@ -282,7 +283,7 @@ export default function QuickLogScreen() {
           >
             Start 5-Hour Timer
           </Text>
-        </Pressable>
+        </PressableScale>
       </Animated.View>
     </View>
   );

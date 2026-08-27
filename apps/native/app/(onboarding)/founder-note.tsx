@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, shadows } from "@/lib/tokens";
+import { PressableScale } from "@/components/PressableScale";
 
 export default function FounderNoteScreen() {
   const router = useRouter();
@@ -111,7 +112,8 @@ export default function FounderNoteScreen() {
           entering={FadeInDown.duration(500).delay(300)}
           style={{ marginBottom: spacing[12] }}
         >
-          <View
+          <PressableScale
+            onPress={() => router.push("/(onboarding)/paywall")}
             style={{
               height: components.primaryButton.height,
               borderRadius: components.primaryButton.radius,
@@ -132,11 +134,10 @@ export default function FounderNoteScreen() {
                 fontWeight: components.primaryButton.font.weight,
                 color: c.textOnAccent,
               }}
-              onPress={() => router.push("/(onboarding)/paywall")}
             >
               {t("onboarding.founderNote.cta")}
             </Text>
-          </View>
+          </PressableScale>
         </Animated.View>
       </View>
     </SafeAreaView>
