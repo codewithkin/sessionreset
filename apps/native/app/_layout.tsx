@@ -5,28 +5,33 @@ import { HeroUINativeProvider } from "heroui-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { I18nextProvider } from "react-i18next";
+import { useMMKVBoolean } from "react-native-mmkv";
 
 import { AppThemeProvider } from "@/contexts/app-theme-context";
 import { TimerProvider } from "@/contexts/TimerContext";
 import i18n from "@/lib/i18n";
-import { storage } from "@/lib/storage";
+import { mmkv, STORAGE_KEYS } from "@/lib/storage";
 import { reconcileMissedNotifications } from "@/lib/notifications";
 
-export const unstable_settings = {
-  initialRouteName: storage.onboarding.isComplete()
-    ? "(drawer)"
-    : "(onboarding)",
-};
-
+// (onboarding)/index.tsx and (drawer)/index.tsx both resolve to the same URL
+// ("/" — route groups don't appear in the path), so they can't both be
+// mounted at once: expo-router has no reliable way to pick between two
+// screens claiming the same path, and `initialRouteName` doesn't resolve
+// that collision (it only affects back-navigation inside a single already-
+// mounted navigator). Stack.Protected guards which one is actually mounted,
+// and reacts live via useMMKVBoolean so finishing onboarding flips it
+// automatically — no manual navigation call needed.
 function StackLayout() {
-  const initialRoute = storage.onboarding.isComplete()
-    ? "(drawer)"
-    : "(onboarding)";
+  const [onboardingComplete] = useMMKVBoolean(STORAGE_KEYS.onboardingComplete, mmkv);
 
   return (
-    <Stack screenOptions={{}} initialRouteName={initialRoute}>
-      <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
-      <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+    <Stack screenOptions={{}}>
+      <Stack.Protected guard={!onboardingComplete}>
+        <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
+      </Stack.Protected>
+      <Stack.Protected guard={!!onboardingComplete}>
+        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+      </Stack.Protected>
       <Stack.Screen
         name="quick-log"
         options={{
