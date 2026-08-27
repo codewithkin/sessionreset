@@ -45,6 +45,13 @@ export default function Layout() {
     const afterLog = storage.usageLog.get();
     console.log('[Storage Test] After add log:', afterLog);
     storage.usageLog.set([]);
+
+    // Test onboarding
+    const initialOnboarding = storage.onboarding.isComplete();
+    console.log('[Storage Test] Initial onboarding:', initialOnboarding);
+    storage.onboarding.markComplete();
+    const afterOnboarding = storage.onboarding.isComplete();
+    console.log('[Storage Test] After markComplete:', afterOnboarding);
   }, []);
 
   return (
