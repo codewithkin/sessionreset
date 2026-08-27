@@ -110,7 +110,13 @@
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex"
     },
-    "fab": "+ Log Limit Hit"
+    "fab": "Log Limit Hit",
+    "today": "Today",
+    "remove": {
+      "title": "Remove Timer",
+      "body": "Remove this timer from your dashboard?",
+      "confirm": "Remove"
+    }
   },
   "quickLog": {
     "title": "Log Limit Hit",

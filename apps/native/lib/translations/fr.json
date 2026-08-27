@@ -79,7 +79,13 @@
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex"
     },
-    "fab": "+ Enregistrer la limite"
+    "fab": "Enregistrer la limite",
+    "today": "Aujourd'hui",
+    "remove": {
+      "title": "Supprimer le minuteur",
+      "body": "Supprimer ce minuteur de votre tableau de bord ?",
+      "confirm": "Supprimer"
+    }
   },
   "quickLog": {
     "title": "Enregistrer la limite",

@@ -79,7 +79,13 @@
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex"
     },
-    "fab": "+ 制限を記録"
+    "fab": "上限を記録",
+    "today": "今日",
+    "remove": {
+      "title": "タイマーを削除",
+      "body": "このタイマーをダッシュボードから削除しますか？",
+      "confirm": "削除"
+    }
   },
   "quickLog": {
     "title": "制限を記録",

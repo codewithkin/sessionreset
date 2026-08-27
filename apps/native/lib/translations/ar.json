@@ -79,7 +79,13 @@
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex"
     },
-    "fab": "+ سجّل الحد"
+    "fab": "تسجيل الحد",
+    "today": "اليوم",
+    "remove": {
+      "title": "إزالة المؤقت",
+      "body": "إزالة هذا المؤقت من لوحتك؟",
+      "confirm": "إزالة"
+    }
   },
   "quickLog": {
     "title": "سجّل الحد",

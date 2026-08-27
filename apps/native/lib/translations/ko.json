@@ -79,7 +79,13 @@
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex"
     },
-    "fab": "+ 제한 기록"
+    "fab": "한도 기록",
+    "today": "오늘",
+    "remove": {
+      "title": "타이머 삭제",
+      "body": "이 타이머를 대시보드에서 삭제할까요?",
+      "confirm": "삭제"
+    }
   },
   "quickLog": {
     "title": "제한 기록",

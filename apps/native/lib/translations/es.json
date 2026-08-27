@@ -79,7 +79,13 @@
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex"
     },
-    "fab": "+ Registrar límite"
+    "fab": "Registrar límite",
+    "today": "Hoy",
+    "remove": {
+      "title": "Eliminar temporizador",
+      "body": "¿Eliminar este temporizador de tu panel?",
+      "confirm": "Eliminar"
+    }
   },
   "quickLog": {
     "title": "Registrar límite",

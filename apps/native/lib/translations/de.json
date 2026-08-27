@@ -79,7 +79,13 @@
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex"
     },
-    "fab": "+ Limit protokollieren"
+    "fab": "Limit erfassen",
+    "today": "Heute",
+    "remove": {
+      "title": "Timer entfernen",
+      "body": "Diesen Timer vom Dashboard entfernen?",
+      "confirm": "Entfernen"
+    }
   },
   "quickLog": {
     "title": "Limit protokollieren",

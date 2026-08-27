@@ -1,9 +1,11 @@
 import { View, Text, ScrollView, Pressable, Alert, RefreshControl } from "react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, radii } from "@/lib/tokens";
+import { colors, radii, fontFamily } from "@/lib/tokens";
+import { getAppLanguage } from "@/lib/i18n";
 import { useTimers } from "@/contexts/TimerContext";
 import { TimerCard } from "@/components/TimerCard";
 import { PressableScale } from "@/components/PressableScale";
@@ -12,6 +14,7 @@ import { useState, useCallback } from "react";
 export default function DashboardScreen() {
   const { timers, toggleAlert, removeTimer, refreshTimers } = useTimers();
   const router = useRouter();
+  const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
   const [refreshing, setRefreshing] = useState(false);
@@ -23,17 +26,18 @@ export default function DashboardScreen() {
   }, [refreshTimers]);
 
   const today = new Date();
-  const dateStr = today.toLocaleDateString("en-US", {
+  // Follow the chosen app language, not a hardcoded en-US.
+  const dateStr = today.toLocaleDateString(getAppLanguage(), {
     weekday: "short",
     month: "short",
     day: "numeric",
   });
 
   const handleRemove = (id: string) => {
-    Alert.alert("Remove Timer", "Remove this timer from your dashboard?", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert(t("dashboard.remove.title"), t("dashboard.remove.body"), [
+      { text: t("common.cancel"), style: "cancel" },
       {
-        text: "Remove",
+        text: t("dashboard.remove.confirm"),
         style: "destructive",
         onPress: () => removeTimer(id),
       },
@@ -57,20 +61,18 @@ export default function DashboardScreen() {
         <View>
           <Text
             style={{
-              fontFamily: "Manrope",
+              fontFamily: fontFamily.manrope[800],
               fontSize: 22,
-              fontWeight: "800",
               letterSpacing: -0.5,
               color: c.textPrimary,
             }}
           >
-            Today
+            {t("dashboard.today")}
           </Text>
           <Text
             style={{
-              fontFamily: "JetBrains Mono",
+              fontFamily: fontFamily.mono[500],
               fontSize: 12,
-              fontWeight: "500",
               color: c.textMuted,
               marginTop: 2,
             }}
@@ -115,24 +117,23 @@ export default function DashboardScreen() {
             <Ionicons name="timer-outline" size={48} color={c.textMuted} />
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[800],
                 fontSize: 22,
-                fontWeight: "800",
                 letterSpacing: -0.5,
                 color: c.textPrimary,
               }}
             >
-              No active limits.
+              {t("dashboard.empty.title")}
             </Text>
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[500],
                 fontSize: 16,
-                fontWeight: "500",
+                textAlign: "center",
                 color: c.textMuted,
               }}
             >
-              Tap below when you hit a wall.
+              {t("dashboard.empty.subtext")}
             </Text>
           </Animated.View>
         ) : (
@@ -182,13 +183,12 @@ export default function DashboardScreen() {
           <Ionicons name="add" size={20} color={c.textOnAccent} />
           <Text
             style={{
-              fontFamily: "Manrope",
-              fontWeight: "700",
+              fontFamily: fontFamily.manrope[700],
               fontSize: 16,
               color: c.textOnAccent,
             }}
           >
-            + Log Limit Hit
+            {t("dashboard.fab")}
           </Text>
         </PressableScale>
       </Animated.View>
