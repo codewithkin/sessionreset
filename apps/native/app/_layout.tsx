@@ -29,6 +29,14 @@ export default function Layout() {
     const afterSet = storage.timers.get();
     console.log('[Storage Test] After set:', afterSet);
     storage.timers.set([]);
+
+    // Test settings
+    const initialSettings = storage.settings.get();
+    console.log('[Storage Test] Initial settings:', initialSettings);
+    storage.settings.set({ ...initialSettings, isPro: true, notificationSound: 'radar' });
+    const updatedSettings = storage.settings.get();
+    console.log('[Storage Test] Updated settings:', updatedSettings);
+    storage.settings.set(initialSettings);
   }, []);
 
   return (
