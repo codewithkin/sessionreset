@@ -874,21 +874,30 @@ function NotificationsStep({
                 flexShrink: 0,
               }}
             >
-              <Text style={{ fontFamily: "JetBrains Mono", fontSize: 13, fontWeight: "700", color: c.textOnAccent }}>SR</Text>
+              <Text style={{ fontFamily: fontFamily.mono[700], fontSize: 13, color: c.textOnAccent }}>SR</Text>
             </View>
             <View style={{ flex: 1, gap: spacing[3] }}>
               <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
-                <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.xs, fontWeight: "700", letterSpacing: 0.4, color: c.textTertiary }}>
+                <Text
+                  style={{ fontFamily: fontFamily.manrope[700], fontSize: fontSizes.xs, letterSpacing: 0.4, color: c.textTertiary }}
+                >
                   {t("onboarding.notifications.previewApp")}
                 </Text>
-                <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.xs, fontWeight: "500", color: c.textMuted }}>
+                <Text style={{ fontFamily: fontFamily.manrope[500], fontSize: fontSizes.xs, color: c.textMuted }}>
                   {t("onboarding.notifications.previewTime")}
                 </Text>
               </View>
-              <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.bodySm, fontWeight: "700", color: c.textPrimary }}>
+              <Text style={{ fontFamily: fontFamily.manrope[700], fontSize: fontSizes.bodySm, color: c.textPrimary }}>
                 {t("onboarding.notifications.previewHeadline")}
               </Text>
-              <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.caption, fontWeight: "500", color: c.textTertiary, lineHeight: 19.6 }}>
+              <Text
+                style={{
+                  fontFamily: fontFamily.manrope[500],
+                  fontSize: fontSizes.captionSm,
+                  color: c.textTertiary,
+                  lineHeight: 18.85,
+                }}
+              >
                 {t("onboarding.notifications.previewBody")}
               </Text>
             </View>
@@ -899,12 +908,11 @@ function NotificationsStep({
           entering={FadeInDown.duration(400).delay(200)}
           style={{
             marginTop: spacing[52],
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[800],
             fontSize: fontSizes.h2,
-            fontWeight: "800",
+            lineHeight: 32.5,
             letterSpacing: -0.8,
             color: c.textPrimary,
-            textAlign: "center",
           }}
         >
           {t("onboarding.notifications.headline")}
@@ -914,19 +922,17 @@ function NotificationsStep({
           entering={FadeInDown.duration(400).delay(250)}
           style={{
             marginTop: spacing[14],
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[500],
             fontSize: fontSizes.body,
-            fontWeight: "500",
             lineHeight: 24.8,
             color: c.textTertiary,
-            textAlign: "center",
           }}
         >
           {t("onboarding.notifications.body")}
         </Animated.Text>
       </View>
 
-      <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginBottom: spacing[12] }}>
+      <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginBottom: spacing[14] }}>
         <PrimaryButton
           label={status === "granted" ? t("onboarding.notifications.enabled") : t("onboarding.notifications.cta")}
           onPress={onEnable}
@@ -935,9 +941,8 @@ function NotificationsStep({
         <Text
           style={{
             marginTop: spacing[16],
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[500],
             fontSize: fontSizes.xs,
-            fontWeight: "500",
             color: c.textMuted,
             textAlign: "center",
           }}
