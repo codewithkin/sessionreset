@@ -121,6 +121,33 @@ export const fonts = {
   mono: 'JetBrains Mono',
 } as const;
 
+/**
+ * Loaded font faces, addressed by weight.
+ *
+ * React Native does not synthesise weights on Android: `fontFamily: 'Manrope'`
+ * with `fontWeight: '800'` renders whatever single face was registered under
+ * that name, not ExtraBold. Each weight therefore ships as its own family and
+ * must be referenced by its exact name, WITHOUT also setting `fontWeight`.
+ *
+ * The numeric keys mirror the CSS weights used in the design files
+ * (`designs/extracted/all-screens-template.html`) so specs translate directly:
+ * `font:800 30px Manrope` → `fontFamily: fontFamily.manrope[800]`.
+ */
+export const fontFamily = {
+  manrope: {
+    400: 'Manrope_400Regular',
+    500: 'Manrope_500Medium',
+    600: 'Manrope_600SemiBold',
+    700: 'Manrope_700Bold',
+    800: 'Manrope_800ExtraBold',
+  },
+  mono: {
+    400: 'JetBrainsMono_400Regular',
+    500: 'JetBrainsMono_500Medium',
+    700: 'JetBrainsMono_700Bold',
+  },
+} as const;
+
 export const fontSizes = {
   // Display / Countdown
   displayLg: 44,

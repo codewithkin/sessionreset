@@ -1,17 +1,36 @@
 import "@/global.css";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Stack } from "expo-router";
 import { HeroUINativeProvider } from "heroui-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { I18nextProvider } from "react-i18next";
 import { useMMKVBoolean } from "react-native-mmkv";
+import * as SplashScreen from "expo-splash-screen";
+import {
+  useFonts,
+  Manrope_400Regular,
+  Manrope_500Medium,
+  Manrope_600SemiBold,
+  Manrope_700Bold,
+  Manrope_800ExtraBold,
+} from "@expo-google-fonts/manrope";
+import {
+  JetBrainsMono_400Regular,
+  JetBrainsMono_500Medium,
+  JetBrainsMono_700Bold,
+} from "@expo-google-fonts/jetbrains-mono";
 
 import { AppThemeProvider } from "@/contexts/app-theme-context";
 import { TimerProvider } from "@/contexts/TimerContext";
 import i18n from "@/lib/i18n";
 import { mmkv, STORAGE_KEYS } from "@/lib/storage";
 import { reconcileMissedNotifications } from "@/lib/notifications";
+
+// Hold the native splash until the design fonts are ready, so the first frame
+// is never the system-font fallback (which then visibly reflows once Manrope
+// lands). Failing is non-fatal — see onLayoutRootView.
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 // (onboarding)/index.tsx and (drawer)/index.tsx both resolve to the same URL
 // ("/" — route groups don't appear in the path), so they can't both be
@@ -53,14 +72,33 @@ function StackLayout() {
 }
 
 export default function Layout() {
+  const [fontsLoaded, fontError] = useFonts({
+    Manrope_400Regular,
+    Manrope_500Medium,
+    Manrope_600SemiBold,
+    Manrope_700Bold,
+    Manrope_800ExtraBold,
+    JetBrainsMono_400Regular,
+    JetBrainsMono_500Medium,
+    JetBrainsMono_700Bold,
+  });
+
   useEffect(() => {
     // Initialize services on app launch
     // Ads + purchases disabled for now — everyone gets Pro
     reconcileMissedNotifications();
   }, []);
 
+  const onLayoutRootView = useCallback(() => {
+    // Render on success *or* failure: a missing font should degrade to the
+    // system face, never leave the user staring at the splash forever.
+    if (fontsLoaded || fontError) SplashScreen.hideAsync().catch(() => {});
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) return null;
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <KeyboardProvider>
         <I18nextProvider i18n={i18n}>
           <AppThemeProvider>

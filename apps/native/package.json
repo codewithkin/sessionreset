@@ -13,6 +13,8 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@expo-google-fonts/jetbrains-mono": "^0.4.1",
+    "@expo-google-fonts/manrope": "^0.4.2",
     "@expo/metro-runtime": "~57.0.12",
     "@expo/vector-icons": "^15.1.1",
     "@gorhom/bottom-sheet": "^5.2.14",
@@ -40,7 +42,6 @@
     "react-i18next": "^17.0.12",
     "react-native": "0.86.2",
     "react-native-gesture-handler": "~2.32.0",
-
     "react-native-keyboard-controller": "1.21.9",
     "react-native-mmkv": "^4.3.2",
     "react-native-purchases": "^10.8.0",
