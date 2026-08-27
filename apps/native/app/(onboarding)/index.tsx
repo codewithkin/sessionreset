@@ -704,7 +704,7 @@ function PaywallStep({
             color: c.textPrimary,
           }}
         >
-          {t("onboarding.paywall.headline")}
+          {isPro ? t("onboarding.paywall.proHeadline") : t("onboarding.paywall.headline")}
         </Animated.Text>
 
         <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ marginTop: spacing[26], gap: spacing[18] }}>
@@ -771,7 +771,7 @@ function PaywallStep({
                   color: c.textPrimary,
                 }}
               >
-                {t("onboarding.paywall.price")}
+                {isPro ? t("onboarding.paywall.proPrice") : t("onboarding.paywall.price")}
               </Text>
               <Text
                 style={{
@@ -785,7 +785,7 @@ function PaywallStep({
               </Text>
             </View>
             <Text style={{ fontFamily: fontFamily.manrope[500], fontSize: fontSizes.captionSm, color: c.textTertiary }}>
-              {t("onboarding.paywall.period")}
+              {isPro ? t("onboarding.paywall.proPeriod") : t("onboarding.paywall.period")}
             </Text>
           </View>
           <Text
@@ -795,35 +795,37 @@ function PaywallStep({
               fontFamily: fontFamily.mono[700],
               fontSize: 10,
               letterSpacing: 1.2,
-              color: c.accent,
+              color: isPro ? c.success : c.accent,
             }}
           >
-            {t("onboarding.paywall.lifetimeBadge")}
+            {isPro ? t("onboarding.paywall.proBadge") : t("onboarding.paywall.lifetimeBadge")}
           </Text>
         </Animated.View>
       </View>
 
-      <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: spacing[12] }}>
-        {isPro ? (
-          <View
-            style={{
-              height: components.primaryButton.height,
-              borderRadius: components.primaryButton.radius,
-              backgroundColor: c.surface,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontFamily: "Manrope", fontSize: 16, fontWeight: "700", color: c.success }}>{t("onboarding.paywall.isPro")}</Text>
-          </View>
-        ) : (
-          <PrimaryButton label={t("onboarding.paywall.cta")} onPress={onPrimary} c={c} />
+      {/* While everyone is Pro (launch), there is nothing to sell and nothing
+          to decline — so the screen shows one plain action instead of a dead
+          "You're Pro" chip above an ambiguous "Continue" link. */}
+      <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: spacing[14] }}>
+        <PrimaryButton
+          label={isPro ? t("onboarding.paywall.proCta") : t("onboarding.paywall.cta")}
+          onPress={onPrimary}
+          c={c}
+        />
+        {!isPro && (
+          <Pressable onPress={onSkip} style={{ marginTop: spacing[16] }}>
+            <Text
+              style={{
+                fontFamily: fontFamily.manrope[500],
+                fontSize: fontSizes.micro,
+                color: c.textMuted,
+                textAlign: "center",
+              }}
+            >
+              {t("onboarding.paywall.skip")}
+            </Text>
+          </Pressable>
         )}
-        <Pressable onPress={isPro ? onPrimary : onSkip} style={{ marginTop: spacing[16] }}>
-          <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.micro, fontWeight: "500", color: c.textMuted, textAlign: "center" }}>
-            {isPro ? t("onboarding.paywall.continueLabel") : t("onboarding.paywall.skip")}
-          </Text>
-        </Pressable>
       </Animated.View>
     </View>
   );
