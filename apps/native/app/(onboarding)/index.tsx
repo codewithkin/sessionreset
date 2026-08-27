@@ -33,8 +33,19 @@ import {
 type ThemeColors = typeof colors.light | typeof colors.dark;
 type TFn = ReturnType<typeof useTranslation>["t"];
 
-const SERVICES = ["claude", "codex", "claudeCode", "cursor"] as const;
+/** The four quiz services, chunked into the design's 2-column grid rows. */
+const SERVICE_ROWS = [
+  ["claude", "codex"],
+  ["claudeCode", "cursor"],
+] as const;
 const FREQUENCIES = ["low", "medium", "high"] as const;
+
+/** Brand dot beside each quiz option, per the design's colour per service. */
+function serviceDotColor(service: string, c: ThemeColors, isDark: boolean): string {
+  if (service === "claude" || service === "claudeCode") return c.claude;
+  if (service === "codex") return c.codex;
+  return isDark ? c.textDisabled : c.textMuted;
+}
 
 // 6 screens shown as one mounted route, switched via local state so there is
 // no router push/pop between them — only a single replace() when onboarding
@@ -397,13 +408,12 @@ function QuizStep({
     <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16], justifyContent: "space-between" }}>
       <ProgressDots activeIndex={STEP.QUIZ} c={c} />
 
-      <View style={{ gap: spacing[22], marginTop: spacing[40] }}>
+      <View style={{ marginTop: spacing[40] }}>
         <Animated.View entering={FadeInDown.duration(400).delay(100)}>
           <Text
             style={{
-              fontFamily: "Manrope",
+              fontFamily: fontFamily.manrope[800],
               fontSize: fontSizes.h4,
-              fontWeight: "800",
               lineHeight: 27.3,
               letterSpacing: -0.4,
               color: c.textPrimary,
@@ -411,100 +421,114 @@ function QuizStep({
           >
             {t("onboarding.quiz.question1")}
           </Text>
-          <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.micro, fontWeight: "500", color: c.textMuted, marginTop: spacing[6] }}>
+          <Text
+            style={{
+              fontFamily: fontFamily.manrope[500],
+              fontSize: fontSizes.micro,
+              color: c.textMuted,
+              marginTop: spacing[6],
+            }}
+          >
             {t("onboarding.quiz.pickAllThatApply")}
           </Text>
         </Animated.View>
 
+        {/* Design is a 2-column grid with a 10px gutter, so cards are laid out
+            as rows of two with flex:1 rather than an approximate percentage. */}
         <Animated.View
           entering={FadeInDown.duration(400).delay(200)}
-          style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing[10] }}
+          style={{ marginTop: spacing[18], gap: spacing[10] }}
         >
-          {SERVICES.map((s) => {
-            const active = services.includes(s);
-            return (
-              <PressableScale
-                key={s}
-                onPress={() => toggleService(s)}
-                style={{
-                  width: "47%",
-                  borderWidth: 2,
-                  borderColor: active
-                    ? isDark
-                      ? components.quizCard.dark.activeBorder
-                      : components.quizCard.light.activeBorder
-                    : isDark
-                      ? components.quizCard.dark.inactiveBorder
-                      : components.quizCard.light.inactiveBorder,
-                  backgroundColor: active ? (isDark ? components.quizCard.dark.activeBg : components.quizCard.light.activeBg) : "transparent",
-                  borderRadius: components.quizCard.radius,
-                  padding: components.quizCard.padding,
-                  minHeight: components.quizCard.minHeight,
-                  gap: spacing[10],
-                }}
-              >
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                  <View
+          {SERVICE_ROWS.map((row, rowIndex) => (
+            <View key={rowIndex} style={{ flexDirection: "row", gap: spacing[10] }}>
+              {row.map((s) => {
+                const active = services.includes(s);
+                return (
+                  <PressableScale
+                    key={s}
+                    onPress={() => toggleService(s)}
                     style={{
-                      width: components.quizCard.serviceDotSize,
-                      height: components.quizCard.serviceDotSize,
-                      borderRadius: 50,
-                      backgroundColor:
-                        s === "claude" ? c.claude : s === "codex" ? c.codex : s === "claudeCode" ? c.claude : c.textMuted,
+                      flex: 1,
+                      borderWidth: 2,
+                      borderColor: active
+                        ? isDark
+                          ? components.quizCard.dark.activeBorder
+                          : components.quizCard.light.activeBorder
+                        : isDark
+                          ? components.quizCard.dark.inactiveBorder
+                          : components.quizCard.light.inactiveBorder,
+                      backgroundColor: active
+                        ? isDark
+                          ? components.quizCard.dark.activeBg
+                          : components.quizCard.light.activeBg
+                        : "transparent",
+                      borderRadius: components.quizCard.radius,
+                      padding: components.quizCard.padding,
+                      minHeight: components.quizCard.minHeight,
+                      gap: spacing[10],
                     }}
-                  />
-                  {active ? (
-                    <Animated.View
-                      key={`check-${s}`}
-                      entering={ZoomIn.springify()
-                        .damping(springs.pop.damping)
-                        .stiffness(springs.pop.stiffness)
-                        .mass(springs.pop.mass)}
+                  >
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                      <View
+                        style={{
+                          width: components.quizCard.serviceDotSize,
+                          height: components.quizCard.serviceDotSize,
+                          borderRadius: 50,
+                          backgroundColor: serviceDotColor(s, c, isDark),
+                        }}
+                      />
+                      {active ? (
+                        <Animated.View
+                          key={`check-${s}`}
+                          entering={ZoomIn.springify()
+                            .damping(springs.pop.damping)
+                            .stiffness(springs.pop.stiffness)
+                            .mass(springs.pop.mass)}
+                          style={{
+                            width: components.quizCard.checkboxSize,
+                            height: components.quizCard.checkboxSize,
+                            borderRadius: 50,
+                            backgroundColor: c.accent,
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Ionicons name="checkmark" size={12} color={c.textOnAccent} />
+                        </Animated.View>
+                      ) : (
+                        <View
+                          style={{
+                            width: components.quizCard.checkboxSize,
+                            height: components.quizCard.checkboxSize,
+                            borderRadius: 50,
+                            borderWidth: 2,
+                            borderColor: c.borderStrong,
+                          }}
+                        />
+                      )}
+                    </View>
+                    <Text
                       style={{
-                        width: components.quizCard.checkboxSize,
-                        height: components.quizCard.checkboxSize,
-                        borderRadius: 50,
-                        backgroundColor: c.accent,
-                        justifyContent: "center",
-                        alignItems: "center",
+                        fontFamily: fontFamily.manrope[700],
+                        fontSize: fontSizes.caption,
+                        lineHeight: 18.2,
+                        color: active ? c.textPrimary : c.textSecondary,
                       }}
                     >
-                      <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.tiny, fontWeight: "700", color: c.textOnAccent }}>✓</Text>
-                    </Animated.View>
-                  ) : (
-                    <View
-                      style={{
-                        width: components.quizCard.checkboxSize,
-                        height: components.quizCard.checkboxSize,
-                        borderRadius: 50,
-                        borderWidth: 2,
-                        borderColor: c.borderStrong,
-                      }}
-                    />
-                  )}
-                </View>
-                <Text
-                  style={{
-                    fontFamily: "Manrope",
-                    fontSize: fontSizes.caption,
-                    fontWeight: "700",
-                    lineHeight: 18.2,
-                    color: active ? c.textPrimary : c.textSecondary,
-                  }}
-                >
-                  {t(`onboarding.quiz.options.${s}`)}
-                </Text>
-              </PressableScale>
-            );
-          })}
+                      {t(`onboarding.quiz.options.${s}`)}
+                    </Text>
+                  </PressableScale>
+                );
+              })}
+            </View>
+          ))}
         </Animated.View>
 
-        <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginTop: spacing[12] }}>
+        <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginTop: spacing[36] }}>
           <Text
             style={{
-              fontFamily: "Manrope",
+              fontFamily: fontFamily.manrope[800],
               fontSize: fontSizes.h4,
-              fontWeight: "800",
               lineHeight: 27.3,
               letterSpacing: -0.4,
               color: c.textPrimary,
@@ -514,7 +538,10 @@ function QuizStep({
           </Text>
         </Animated.View>
 
-        <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ flexDirection: "row", gap: spacing[10] }}>
+        <Animated.View
+          entering={FadeInDown.duration(400).delay(400)}
+          style={{ marginTop: spacing[18], flexDirection: "row", gap: spacing[10] }}
+        >
           {FREQUENCIES.map((f) => {
             const active = frequency === f;
             return (
@@ -538,15 +565,21 @@ function QuizStep({
                   alignItems: "center",
                 }}
               >
-                <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.captionSm, fontWeight: "700", color: active ? c.textPrimary : c.textSecondary }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.manrope[700],
+                    fontSize: fontSizes.captionSm,
+                    color: active ? c.textPrimary : c.textSecondary,
+                  }}
+                >
                   {t(`onboarding.quiz.frequency.${f}.main`)}
                 </Text>
                 <Text
                   style={{
                     marginTop: spacing[4],
-                    fontFamily: "Manrope",
+                    fontFamily: fontFamily.manrope[500],
                     fontSize: fontSizes.xs,
-                    fontWeight: "500",
+                    textAlign: "center",
                     color: active ? c.accent : c.textMuted,
                   }}
                 >
