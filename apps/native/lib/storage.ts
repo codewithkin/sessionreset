@@ -15,6 +15,7 @@ export const STORAGE_KEYS = {
   usageLog: 'usage_log',
   onboardingComplete: 'onboarding_complete',
   quizAnswers: 'onboarding_quiz_answers',
+  language: 'app_language',
 } as const;
 
 function getJson<T>(key: string, fallback: T): T {
@@ -76,6 +77,11 @@ export const storage = {
   usageLog: {
     get: (): UsageLog[] => getJson<UsageLog[]>(STORAGE_KEYS.usageLog, []),
     set: (logs: UsageLog[]): void => setJson(STORAGE_KEYS.usageLog, logs),
+  },
+  language: {
+    /** null until the user picks one, so we can fall back to the device locale. */
+    get: (): string | null => mmkv.getString(STORAGE_KEYS.language) ?? null,
+    set: (code: string): void => mmkv.set(STORAGE_KEYS.language, code),
   },
   onboarding: {
     isComplete: (): boolean => mmkv.getBoolean(STORAGE_KEYS.onboardingComplete) ?? false,
