@@ -125,6 +125,25 @@
     "about": {
       "version": "SessionReset v{{version}}",
       "contact": "お問い合わせ / フィードバック"
+    },
+    "sections": {
+      "notifications": "通知",
+      "data": "データ",
+      "about": "アプリについて",
+      "language": "言語"
+    },
+    "soundDefault": "デフォルト",
+    "restoring": "復元中…",
+    "languageRow": "アプリの言語",
+    "alerts": {
+      "exported": "エクスポート完了",
+      "exportedBody": "データをクリップボードにコピーしました。",
+      "restored": "復元しました",
+      "restoredBody": "Pro の購入を復元しました。",
+      "noPurchases": "購入が見つかりません",
+      "noPurchasesBody": "以前の Pro の購入は見つかりませんでした。",
+      "error": "エラー",
+      "restoreError": "購入を復元できませんでした。"
     }
   },
   "rewardedAd": {
@@ -149,5 +168,15 @@
     "confirm": "確認",
     "back": "戻る",
     "next": "次へ"
+  },
+  "history": {
+    "title": "履歴",
+    "empty": "過去のタイマーはまだありません。"
+  },
+  "alerts": {
+    "title": "アラート",
+    "subtitle": "リセット前アラート",
+    "active": "有効なアラート",
+    "empty": "有効なアラートはありません。タイマーで有効にするとここに表示されます。"
   }
 }

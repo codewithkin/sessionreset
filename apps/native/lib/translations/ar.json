@@ -125,6 +125,25 @@
     "about": {
       "version": "SessionReset v{{version}}",
       "contact": "تواصل / ملاحظات"
+    },
+    "sections": {
+      "notifications": "الإشعارات",
+      "data": "البيانات",
+      "about": "حول التطبيق",
+      "language": "اللغة"
+    },
+    "soundDefault": "افتراضي",
+    "restoring": "جارٍ الاستعادة…",
+    "languageRow": "لغة التطبيق",
+    "alerts": {
+      "exported": "تم التصدير",
+      "exportedBody": "تم نسخ البيانات إلى الحافظة.",
+      "restored": "تمت الاستعادة",
+      "restoredBody": "تمت استعادة شراء Pro الخاص بك.",
+      "noPurchases": "لم يتم العثور على مشتريات",
+      "noPurchasesBody": "لم يتم العثور على شراء Pro سابق.",
+      "error": "خطأ",
+      "restoreError": "تعذّرت استعادة المشتريات."
     }
   },
   "rewardedAd": {
@@ -149,5 +168,15 @@
     "confirm": "تأكيد",
     "back": "رجوع",
     "next": "التالي"
+  },
+  "history": {
+    "title": "السجل",
+    "empty": "لا توجد مؤقتات سابقة بعد."
+  },
+  "alerts": {
+    "title": "التنبيهات",
+    "subtitle": "تنبيهات ما قبل إعادة التعيين",
+    "active": "التنبيهات النشطة",
+    "empty": "لا توجد تنبيهات نشطة. فعّلها على مؤقتاتك لتظهر هنا."
   }
 }

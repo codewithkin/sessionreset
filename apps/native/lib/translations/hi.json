@@ -125,6 +125,25 @@
     "about": {
       "version": "SessionReset v{{version}}",
       "contact": "संपर्क / प्रतिक्रिया"
+    },
+    "sections": {
+      "notifications": "सूचनाएँ",
+      "data": "डेटा",
+      "about": "ऐप के बारे में",
+      "language": "भाषा"
+    },
+    "soundDefault": "डिफ़ॉल्ट",
+    "restoring": "पुनर्स्थापित हो रहा है…",
+    "languageRow": "ऐप की भाषा",
+    "alerts": {
+      "exported": "निर्यात हो गया",
+      "exportedBody": "डेटा क्लिपबोर्ड पर कॉपी किया गया।",
+      "restored": "पुनर्स्थापित",
+      "restoredBody": "आपकी Pro खरीद पुनर्स्थापित कर दी गई है।",
+      "noPurchases": "कोई खरीद नहीं मिली",
+      "noPurchasesBody": "कोई पिछली Pro खरीद नहीं मिली।",
+      "error": "त्रुटि",
+      "restoreError": "खरीद पुनर्स्थापित नहीं हो सकी।"
     }
   },
   "rewardedAd": {
@@ -149,5 +168,15 @@
     "confirm": "पुष्टि करें",
     "back": "वापस",
     "next": "अगला"
+  },
+  "history": {
+    "title": "इतिहास",
+    "empty": "अभी तक कोई पुराना टाइमर नहीं।"
+  },
+  "alerts": {
+    "title": "अलर्ट",
+    "subtitle": "रीसेट से पहले अलर्ट",
+    "active": "सक्रिय अलर्ट",
+    "empty": "कोई सक्रिय अलर्ट नहीं। उन्हें यहाँ देखने के लिए अपने टाइमर पर चालू करें।"
   }
 }

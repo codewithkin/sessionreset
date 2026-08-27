@@ -125,6 +125,25 @@
     "about": {
       "version": "SessionReset v{{version}}",
       "contact": "Contact / Avis"
+    },
+    "sections": {
+      "notifications": "NOTIFICATIONS",
+      "data": "DONNÉES",
+      "about": "À PROPOS",
+      "language": "LANGUE"
+    },
+    "soundDefault": "Par défaut",
+    "restoring": "Restauration…",
+    "languageRow": "Langue de l'app",
+    "alerts": {
+      "exported": "Exporté",
+      "exportedBody": "Données copiées dans le presse-papiers.",
+      "restored": "Restauré",
+      "restoredBody": "Votre achat Pro a été restauré.",
+      "noPurchases": "Aucun achat trouvé",
+      "noPurchasesBody": "Aucun achat Pro antérieur n'a été trouvé.",
+      "error": "Erreur",
+      "restoreError": "Impossible de restaurer les achats."
     }
   },
   "rewardedAd": {
@@ -149,5 +168,15 @@
     "confirm": "Confirmer",
     "back": "Retour",
     "next": "Suivant"
+  },
+  "history": {
+    "title": "Historique",
+    "empty": "Aucun minuteur passé pour l'instant."
+  },
+  "alerts": {
+    "title": "Alertes",
+    "subtitle": "Alertes avant réinitialisation",
+    "active": "ALERTES ACTIVES",
+    "empty": "Aucune alerte active. Activez-les sur vos minuteurs pour les voir ici."
   }
 }

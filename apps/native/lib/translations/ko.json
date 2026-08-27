@@ -125,6 +125,25 @@
     "about": {
       "version": "SessionReset v{{version}}",
       "contact": "문의 / 피드백"
+    },
+    "sections": {
+      "notifications": "알림",
+      "data": "데이터",
+      "about": "앱 정보",
+      "language": "언어"
+    },
+    "soundDefault": "기본값",
+    "restoring": "복원 중…",
+    "languageRow": "앱 언어",
+    "alerts": {
+      "exported": "내보내기 완료",
+      "exportedBody": "데이터를 클립보드에 복사했습니다.",
+      "restored": "복원됨",
+      "restoredBody": "Pro 구매가 복원되었습니다.",
+      "noPurchases": "구매를 찾을 수 없음",
+      "noPurchasesBody": "이전 Pro 구매를 찾을 수 없습니다.",
+      "error": "오류",
+      "restoreError": "구매를 복원할 수 없습니다."
     }
   },
   "rewardedAd": {
@@ -149,5 +168,15 @@
     "confirm": "확인",
     "back": "뒤로",
     "next": "다음"
+  },
+  "history": {
+    "title": "기록",
+    "empty": "아직 지난 타이머가 없습니다."
+  },
+  "alerts": {
+    "title": "알림",
+    "subtitle": "리셋 전 알림",
+    "active": "활성 알림",
+    "empty": "활성 알림이 없습니다. 타이머에서 켜면 여기에 표시됩니다."
   }
 }

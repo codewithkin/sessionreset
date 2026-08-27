@@ -125,6 +125,25 @@
     "about": {
       "version": "SessionReset v{{version}}",
       "contact": "Contato / Feedback"
+    },
+    "sections": {
+      "notifications": "NOTIFICAÇÕES",
+      "data": "DADOS",
+      "about": "SOBRE",
+      "language": "IDIOMA"
+    },
+    "soundDefault": "Predefinido",
+    "restoring": "A restaurar…",
+    "languageRow": "Idioma da app",
+    "alerts": {
+      "exported": "Exportado",
+      "exportedBody": "Dados copiados para a área de transferência.",
+      "restored": "Restaurado",
+      "restoredBody": "A sua compra Pro foi restaurada.",
+      "noPurchases": "Nenhuma compra encontrada",
+      "noPurchasesBody": "Não foi encontrada nenhuma compra Pro anterior.",
+      "error": "Erro",
+      "restoreError": "Não foi possível restaurar as compras."
     }
   },
   "rewardedAd": {
@@ -149,5 +168,15 @@
     "confirm": "Confirmar",
     "back": "Voltar",
     "next": "Próximo"
+  },
+  "history": {
+    "title": "Histórico",
+    "empty": "Ainda não há temporizadores anteriores."
+  },
+  "alerts": {
+    "title": "Alertas",
+    "subtitle": "Alertas pré-reinício",
+    "active": "ALERTAS ATIVOS",
+    "empty": "Sem alertas ativos. Ative-os nos seus temporizadores para os ver aqui."
   }
 }

@@ -156,6 +156,25 @@
     "about": {
       "version": "SessionReset v{{version}}",
       "contact": "Contact / Feedback"
+    },
+    "sections": {
+      "notifications": "NOTIFICATIONS",
+      "data": "DATA",
+      "about": "ABOUT",
+      "language": "LANGUAGE"
+    },
+    "soundDefault": "Default",
+    "restoring": "Restoring…",
+    "languageRow": "App Language",
+    "alerts": {
+      "exported": "Exported",
+      "exportedBody": "Data copied to clipboard.",
+      "restored": "Restored",
+      "restoredBody": "Your Pro purchase has been restored.",
+      "noPurchases": "No purchases found",
+      "noPurchasesBody": "No previous Pro purchase was found.",
+      "error": "Error",
+      "restoreError": "Could not restore purchases."
     }
   },
   "rewardedAd": {
@@ -180,5 +199,15 @@
     "confirm": "Confirm",
     "back": "Back",
     "next": "Next"
+  },
+  "history": {
+    "title": "History",
+    "empty": "No past timers yet."
+  },
+  "alerts": {
+    "title": "Alerts",
+    "subtitle": "Pre-Reset Alerts",
+    "active": "ACTIVE ALERTS",
+    "empty": "No active alerts. Enable alerts on your timers to see them here."
   }
 }
