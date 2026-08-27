@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
+import { springs } from "@/lib/tokens";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -26,7 +27,7 @@ export function PressableScale({
   const animatedScale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: withSpring(animatedScale.value, { damping: 0.8 }) }],
+    transform: [{ scale: withSpring(animatedScale.value, springs.press) }],
   }));
 
   const handlePressIn = (e: any) => {

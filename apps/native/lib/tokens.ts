@@ -571,6 +571,28 @@ export const components = {
 export const animations = {
   fadeIn: { duration: 300, easing: 'ease-out' },
   fadeOut: { duration: 500 },
-  sheetSpring: { damping: 0.8 },
   notificationSlide: { duration: 500 },
+  /** Onboarding step-to-step slide. */
+  stepTransition: { duration: 320 },
+} as const;
+
+/**
+ * Spring configs, tuned by damping ratio rather than by eye.
+ *
+ * ζ = damping / (2·√(stiffness · mass)). Below ~0.5 a spring visibly rings;
+ * these all sit near 0.75–0.9, which reads as "physical" but settles in
+ * roughly a quarter-second.
+ *
+ * These replace a previous `{ damping: 0.8 }` used app-wide. With Reanimated's
+ * default stiffness (100) and mass (1) that works out to ζ ≈ 0.04 — around
+ * 25 visible bounces taking ~10s to settle, which is why presses and the quiz
+ * checkmark felt violent and never seemed to stop moving.
+ */
+export const springs = {
+  /** Press feedback on buttons and cards. ζ ≈ 0.76, settles ~0.2s. */
+  press: { damping: 20, stiffness: 350, mass: 0.5 },
+  /** Small element appearing, e.g. a checkmark. ζ ≈ 0.72, settles ~0.27s. */
+  pop: { damping: 18, stiffness: 260, mass: 0.6 },
+  /** Bottom sheet entrance. ζ ≈ 0.89, settles ~0.25s. */
+  sheet: { damping: 22, stiffness: 220, mass: 0.7 },
 } as const;
