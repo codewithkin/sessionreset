@@ -245,7 +245,7 @@ function HookStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t
     <View style={{ flex: 1, paddingHorizontal: spacing[28], paddingTop: spacing[56], justifyContent: "space-between" }}>
       <View>
         <Animated.View entering={FadeInDown.duration(300)}>
-          <RateLimitTimeline c={c} isDark={isDark} />
+          <RateLimitTimeline c={c} isDark={isDark} t={t} />
         </Animated.View>
 
         <Animated.Text
@@ -294,7 +294,7 @@ function HookStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t
 }
 
 /** Looping "Rate Limit Hit → 05:00:00 → 00:00:00 → Back to Code" status rail. */
-function RateLimitTimeline({ c, isDark }: { c: ThemeColors; isDark: boolean }) {
+function RateLimitTimeline({ c, isDark, t }: { c: ThemeColors; isDark: boolean; t: TFn }) {
   const progress = useSharedValue(0);
 
   useEffect(() => {
@@ -326,7 +326,9 @@ function RateLimitTimeline({ c, isDark }: { c: ThemeColors; isDark: boolean }) {
           <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.error }} />
         </View>
         <View style={{ backgroundColor: c.errorBg, borderRadius: radii.card, paddingVertical: 12, paddingHorizontal: 16 }}>
-          <Text style={{ fontFamily: fontFamily.manrope[700], fontSize: 14, color: c.error }}>Rate Limit Hit</Text>
+          <Text style={{ fontFamily: fontFamily.manrope[700], fontSize: 14, color: c.error }}>
+            {t("onboarding.outcomeHook.timeline.limitHit")}
+          </Text>
         </View>
       </Animated.View>
 
@@ -366,7 +368,9 @@ function RateLimitTimeline({ c, isDark }: { c: ThemeColors; isDark: boolean }) {
           <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.success }} />
         </View>
         <View style={{ backgroundColor: c.success, borderRadius: radii.card, paddingVertical: 12, paddingHorizontal: 16 }}>
-          <Text style={{ fontFamily: fontFamily.manrope[700], fontSize: 14, color: backToCodeText }}>Back to Code</Text>
+          <Text style={{ fontFamily: fontFamily.manrope[700], fontSize: 14, color: backToCodeText }}>
+            {t("onboarding.outcomeHook.timeline.backToCode")}
+          </Text>
         </View>
       </Animated.View>
     </View>
@@ -1027,7 +1031,7 @@ function StarterStep({
             <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.accent }} />
           </View>
           <Text style={{ fontFamily: fontFamily.mono[500], fontSize: fontSizes.captionSm, color: c.textTertiary }}>
-            NOW → 5H WINDOW OPENS
+            {t("onboarding.starter.windowRail")}
           </Text>
         </Animated.View>
       </View>

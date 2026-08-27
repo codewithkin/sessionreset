@@ -7,7 +7,11 @@
       "headline": "Never lose your flow state to unexpected AI limits.",
       "subtitle": "Instant 5-hour rolling reset alarms for Claude, Codex, and AI CLI tools.",
       "cta": "Get Started →",
-      "footer": "No account required • 100% On-Device Data"
+      "footer": "No account required • 100% On-Device Data",
+      "timeline": {
+        "limitHit": "Rate Limit Hit",
+        "backToCode": "Back to Code"
+      }
     },
     "quiz": {
       "question1": "Which AI assistants do you rely on daily?",
@@ -73,9 +77,10 @@
     },
     "starter": {
       "headline": "Let's log your first reset",
-      "subtext": "Tap below to start tracking your first 5-hour window.",
-      "blocked": "I'm Blocked Right Now",
-      "demo": "Start Demo Timer"
+      "subtext": "Log a real limit to start the countdown, or try a demo timer first.",
+      "windowRail": "NOW → 5H WINDOW OPENS",
+      "blocked": "I've Hit My Usage Limit",
+      "demo": "Try a Demo Timer"
     }
   },
   "dashboard": {
