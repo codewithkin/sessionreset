@@ -1,4 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { storage } from "@/lib/storage";
 
 export default function HistoryScreen() {
@@ -23,7 +24,10 @@ export default function HistoryScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <View style={{ paddingHorizontal: 20, paddingTop: 56, paddingBottom: 18 }}>
+      <Animated.View
+        entering={FadeIn.duration(400)}
+        style={{ paddingHorizontal: 20, paddingTop: 56, paddingBottom: 18 }}
+      >
         <Text
           style={{
             fontFamily: "Manrope",
@@ -35,13 +39,16 @@ export default function HistoryScreen() {
         >
           History
         </Text>
-      </View>
+      </Animated.View>
 
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40 }}
       >
         {inactive.length === 0 ? (
-          <View style={{ alignItems: "center", paddingTop: 120 }}>
+          <Animated.View
+            entering={FadeInDown.duration(500).delay(200)}
+            style={{ alignItems: "center", paddingTop: 120 }}
+          >
             <Text
               style={{
                 fontFamily: "Manrope",
@@ -52,10 +59,14 @@ export default function HistoryScreen() {
             >
               No past timers yet.
             </Text>
-          </View>
+          </Animated.View>
         ) : (
-          Object.entries(grouped).map(([date, timers]) => (
-            <View key={date} style={{ marginBottom: 24 }}>
+          Object.entries(grouped).map(([date, timers], groupIndex) => (
+            <Animated.View
+              key={date}
+              entering={FadeInDown.duration(400).delay(groupIndex * 100)}
+              style={{ marginBottom: 24 }}
+            >
               <Text
                 style={{
                   fontFamily: "Manrope",
@@ -116,7 +127,7 @@ export default function HistoryScreen() {
                   </Text>
                 </View>
               ))}
-            </View>
+            </Animated.View>
           ))
         )}
       </ScrollView>

@@ -1,0 +1,53 @@
+# EAS Build uploads the whole monorepo root so pnpm can resolve workspace
+# packages, but it does NOT respect nested per-package .gitignore files.
+# Build caches like apps/web/.next slip through and bloat the archive even
+# though they're already properly gitignored and completely irrelevant to
+# building the native app. Listed explicitly here so they're excluded
+# regardless of what's locally present.
+
+# ALL node_modules
+**/node_modules
+
+# ALL build caches
+**/.next/
+**/.turbo/
+**/.vercel/
+**/.wrangler/
+**/.output/
+**/.nitro/
+**/dist/
+**/build/
+**/coverage/
+**/.expo/
+**/*.log
+**/.DS_Store
+
+# Web app — not needed for native build at all
+apps/web/
+
+# Native projects are CNG-managed (generated fresh by EAS Build's own
+# prebuild step), not hand-committed. If a stray android/ or ios/ ever
+# reappears locally, EAS Build silently uses it instead of app.config.js.
+apps/native/android/
+apps/native/ios/
+
+# Design / planning docs — not needed by any build
+/designs
+/plans
+/systems
+
+# Agent workflow notes
+/progress
+.trash-session-3/
+
+# Turbo cache
+.turbo
+
+# Env files (not needed for build, injected at runtime)
+.env*.local
+
+# Misc
+*.tgz
+.cache
+tmp
+temp

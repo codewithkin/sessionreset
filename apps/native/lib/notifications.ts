@@ -35,19 +35,11 @@ export async function getNotificationPermissionStatus(): Promise<NotificationPer
 
 // T11: Schedule notifications for a timer
 export async function scheduleTimerNotifications(timer: Timer): Promise<{ resetId: string; preResetId: string | null }> {
-  const settings = storage.settings.get();
-  const soundName = settings.notificationSound === 'chime'
-    ? 'chime.wav'
-    : settings.notificationSound === 'radar'
-      ? 'radar.wav'
-      : 'subtle-ping.wav';
-
   // Schedule reset notification (fires at resetTime)
   const resetId = await Notifications.scheduleNotificationAsync({
     content: {
       title: `${timer.platform === 'claude' ? 'Claude' : 'Codex'} Window Reset! 🚀`,
       body: `Your 5-hour ${timer.platform === 'claude' ? 'Claude' : 'Codex'} context window limit has cleared.`,
-      sound: soundName,
       data: { timerId: timer.id, type: 'reset' },
     },
     trigger: {
@@ -66,7 +58,6 @@ export async function scheduleTimerNotifications(timer: Timer): Promise<{ resetI
         content: {
           title: `⚡ ${timer.platform === 'claude' ? 'Claude' : 'Codex'} Reset in 15 Minutes`,
           body: `Finish your current task—your 5-hour context window is about to clear.`,
-          sound: soundName,
           data: { timerId: timer.id, type: 'pre-reset' },
         },
         trigger: {
@@ -103,18 +94,10 @@ export async function reconcileMissedNotifications(): Promise<number> {
     // If timer has expired while app was closed
     if (timer.resetTime <= now) {
       // Fire the reset notification immediately
-      const settings = storage.settings.get();
-      const soundName = settings.notificationSound === 'chime'
-        ? 'chime.wav'
-        : settings.notificationSound === 'radar'
-          ? 'radar.wav'
-          : 'subtle-ping.wav';
-
       await Notifications.scheduleNotificationAsync({
         content: {
           title: `${timer.platform === 'claude' ? 'Claude' : 'Codex'} Window Reset! 🚀`,
           body: `Your 5-hour ${timer.platform === 'claude' ? 'Claude' : 'Codex'} context window limit has cleared.`,
-          sound: soundName,
           data: { timerId: timer.id, type: 'reset' },
         },
         trigger: {

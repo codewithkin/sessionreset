@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, Text, Pressable, Alert } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -54,7 +55,10 @@ export default function PaywallScreen() {
         }}
       >
         {/* Progress dots */}
-        <View style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}>
+        <Animated.View
+          entering={FadeIn.duration(300)}
+          style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}
+        >
           {[0, 1, 2, 3, 4].map((i) => (
             <View
               key={i}
@@ -66,11 +70,12 @@ export default function PaywallScreen() {
               }}
             />
           ))}
-        </View>
+        </Animated.View>
 
         <View style={{ gap: 24, marginTop: 40 }}>
           {/* Social proof */}
-          <Text
+          <Animated.Text
+            entering={FadeInDown.duration(400).delay(100)}
             style={{
               fontFamily: "Manrope",
               fontSize: 13,
@@ -80,9 +85,10 @@ export default function PaywallScreen() {
             }}
           >
             {t("onboarding.paywall.socialProof")}
-          </Text>
+          </Animated.Text>
 
-          <Text
+          <Animated.Text
+            entering={FadeInDown.duration(400).delay(150)}
             style={{
               fontFamily: "Manrope",
               fontSize: 26,
@@ -93,10 +99,13 @@ export default function PaywallScreen() {
             }}
           >
             Everything you need,{"\n"}nothing you don't.
-          </Text>
+          </Animated.Text>
 
           {/* Feature checklist */}
-          <View style={{ gap: 14 }}>
+          <Animated.View
+            entering={FadeInDown.duration(400).delay(200)}
+            style={{ gap: 14 }}
+          >
             {FEATURES.map((f) => (
               <View
                 key={f}
@@ -136,10 +145,11 @@ export default function PaywallScreen() {
                 </Text>
               </View>
             ))}
-          </View>
+          </Animated.View>
 
           {/* Price card */}
-          <View
+          <Animated.View
+            entering={FadeInDown.duration(400).delay(300)}
             style={{
               backgroundColor: "#F5F6F7",
               borderLeftWidth: 3,
@@ -195,9 +205,10 @@ export default function PaywallScreen() {
                 LIFETIME
               </Text>
             </View>
-          </View>
+          </Animated.View>
 
-          <Text
+          <Animated.Text
+            entering={FadeInDown.duration(400).delay(350)}
             style={{
               fontFamily: "Manrope",
               fontSize: 13,
@@ -207,11 +218,14 @@ export default function PaywallScreen() {
             }}
           >
             {t("onboarding.paywall.period")}
-          </Text>
+          </Animated.Text>
         </View>
 
         {/* CTAs */}
-        <View style={{ gap: 18, marginBottom: 12 }}>
+        <Animated.View
+          entering={FadeInDown.duration(400).delay(400)}
+          style={{ gap: 18, marginBottom: 12 }}
+        >
           <Pressable
             onPress={handlePurchase}
             style={{
@@ -251,7 +265,7 @@ export default function PaywallScreen() {
               {t("onboarding.paywall.skip")}
             </Text>
           </Pressable>
-        </View>
+        </Animated.View>
       </View>
     </SafeAreaView>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, TouchableOpacity, Pressable } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -32,7 +33,10 @@ export default function QuizScreen() {
         }}
       >
         {/* Progress dots */}
-        <View style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}>
+        <Animated.View
+          entering={FadeIn.duration(300)}
+          style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}
+        >
           {[0, 1, 2, 3, 4].map((i) => (
             <View
               key={i}
@@ -44,11 +48,11 @@ export default function QuizScreen() {
               }}
             />
           ))}
-        </View>
+        </Animated.View>
 
         <View style={{ gap: 22, marginTop: 40 }}>
           {/* Question 1 */}
-          <View>
+          <Animated.View entering={FadeInDown.duration(400).delay(100)}>
             <Text
               style={{
                 fontFamily: "Manrope",
@@ -72,10 +76,13 @@ export default function QuizScreen() {
             >
               Pick all that apply
             </Text>
-          </View>
+          </Animated.View>
 
           {/* Service grid */}
-          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
+          <Animated.View
+            entering={FadeInDown.duration(400).delay(200)}
+            style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}
+          >
             {SERVICES.map((s) => {
               const active = selectedServices.includes(s);
               return (
@@ -163,10 +170,13 @@ export default function QuizScreen() {
                 </Pressable>
               );
             })}
-          </View>
+          </Animated.View>
 
           {/* Question 2 */}
-          <View style={{ marginTop: 12 }}>
+          <Animated.View
+            entering={FadeInDown.duration(400).delay(300)}
+            style={{ marginTop: 12 }}
+          >
             <Text
               style={{
                 fontFamily: "Manrope",
@@ -179,9 +189,12 @@ export default function QuizScreen() {
             >
               {t("onboarding.quiz.question2")}
             </Text>
-          </View>
+          </Animated.View>
 
-          <View style={{ flexDirection: "row", gap: 8 }}>
+          <Animated.View
+            entering={FadeInDown.duration(400).delay(400)}
+            style={{ flexDirection: "row", gap: 8 }}
+          >
             {FREQUENCIES.map((f) => {
               const active = selectedFreq === f;
               return (
@@ -212,11 +225,11 @@ export default function QuizScreen() {
                 </Pressable>
               );
             })}
-          </View>
+          </Animated.View>
         </View>
 
         {/* CTA */}
-        <View style={{ marginBottom: 12 }}>
+        <Animated.View entering={FadeIn.duration(400).delay(500)} style={{ marginBottom: 12 }}>
           <View
             style={{
               height: 56,
@@ -240,7 +253,7 @@ export default function QuizScreen() {
               {t("onboarding.quiz.cta")}
             </Text>
           </View>
-        </View>
+        </Animated.View>
       </View>
     </SafeAreaView>
   );

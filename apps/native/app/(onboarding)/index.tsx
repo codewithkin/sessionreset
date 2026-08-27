@@ -1,4 +1,5 @@
 import { View, Text } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,7 +18,7 @@ export default function OutcomeHookScreen() {
           justifyContent: "space-between",
         }}
       >
-        <View style={{ gap: 16 }}>
+        <Animated.View entering={FadeInDown.duration(500)} style={{ gap: 16 }}>
           <Text
             style={{
               fontFamily: "Manrope",
@@ -41,9 +42,12 @@ export default function OutcomeHookScreen() {
           >
             {t("onboarding.outcomeHook.subtitle")}
           </Text>
-        </View>
+        </Animated.View>
 
-        <View style={{ gap: 18, marginBottom: 12 }}>
+        <Animated.View
+          entering={FadeInDown.duration(500).delay(200)}
+          style={{ gap: 18, marginBottom: 12 }}
+        >
           <View
             style={{
               height: 56,
@@ -81,7 +85,7 @@ export default function OutcomeHookScreen() {
           >
             {t("onboarding.outcomeHook.footer")}
           </Text>
-        </View>
+        </Animated.View>
       </View>
     </SafeAreaView>
   );

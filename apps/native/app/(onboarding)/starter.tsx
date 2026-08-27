@@ -1,4 +1,5 @@
 import { View, Text, Pressable } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,7 +17,6 @@ export default function StarterScreen() {
   };
 
   const handleDemoTimer = async () => {
-    // Create a real demo timer for Claude
     const timer = createTimer("claude", Date.now(), true);
     storage.timers.add(timer);
     await scheduleTimerNotifications(timer);
@@ -25,7 +25,6 @@ export default function StarterScreen() {
   };
 
   const handleBlocked = async () => {
-    // Create a real timer immediately (as if limit was just hit)
     const timer = createTimer("claude", Date.now(), true);
     storage.timers.add(timer);
     await scheduleTimerNotifications(timer);
@@ -44,7 +43,10 @@ export default function StarterScreen() {
         }}
       >
         {/* Progress dots — all complete */}
-        <View style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}>
+        <Animated.View
+          entering={FadeIn.duration(300)}
+          style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}
+        >
           {[0, 1, 2, 3, 4].map((i) => (
             <View
               key={i}
@@ -56,11 +58,12 @@ export default function StarterScreen() {
               }}
             />
           ))}
-        </View>
+        </Animated.View>
 
         <View style={{ gap: 24, marginTop: 40, alignItems: "center" }}>
           {/* Checkmark circle */}
-          <View
+          <Animated.View
+            entering={FadeInDown.duration(500).delay(100)}
             style={{
               width: 76,
               height: 76,
@@ -78,9 +81,10 @@ export default function StarterScreen() {
             >
               ✓
             </Text>
-          </View>
+          </Animated.View>
 
-          <Text
+          <Animated.Text
+            entering={FadeInDown.duration(400).delay(200)}
             style={{
               fontFamily: "Manrope",
               fontSize: 30,
@@ -92,9 +96,10 @@ export default function StarterScreen() {
             }}
           >
             {t("onboarding.starter.headline")}
-          </Text>
+          </Animated.Text>
 
-          <Text
+          <Animated.Text
+            entering={FadeInDown.duration(400).delay(250)}
             style={{
               fontFamily: "Manrope",
               fontSize: 16,
@@ -105,11 +110,14 @@ export default function StarterScreen() {
             }}
           >
             {t("onboarding.starter.subtext")}
-          </Text>
+          </Animated.Text>
         </View>
 
         {/* CTAs */}
-        <View style={{ gap: 12, marginBottom: 12 }}>
+        <Animated.View
+          entering={FadeInDown.duration(400).delay(300)}
+          style={{ gap: 12, marginBottom: 12 }}
+        >
           <Pressable
             onPress={handleBlocked}
             style={{
@@ -158,7 +166,7 @@ export default function StarterScreen() {
               {t("onboarding.starter.demo")}
             </Text>
           </Pressable>
-        </View>
+        </Animated.View>
       </View>
     </SafeAreaView>
   );

@@ -7,31 +7,15 @@ import {
   Alert,
   Platform as RNPlatform,
 } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
-import * as Haptics from "expo-haptics";
 import { storage } from "@/lib/storage";
-import { NotificationSound } from "@/lib/types";
 import { restorePurchases } from "@/lib/purchases";
-
-const SOUNDS: { key: NotificationSound; label: string }[] = [
-  { key: "chime", label: "Chime" },
-  { key: "radar", label: "Radar" },
-  { key: "subtle-ping", label: "Subtle Ping" },
-];
 
 export default function SettingsScreen() {
   const router = useRouter();
   const [settings, setSettings] = useState(() => storage.settings.get());
   const [restoring, setRestoring] = useState(false);
-
-  const updateSetting = <K extends keyof typeof settings>(
-    key: K,
-    value: (typeof settings)[K]
-  ) => {
-    const updated = { ...settings, [key]: value };
-    setSettings(updated);
-    storage.settings.set(updated);
-  };
 
   const handleExport = async () => {
     const timers = storage.timers.get();
@@ -111,6 +95,7 @@ export default function SettingsScreen() {
 
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
         {/* Pro upgrade / status */}
+        <Animated.View entering={FadeInDown.duration(400).delay(100)}>
         {settings.isPro ? (
           <View
             style={{
@@ -192,79 +177,13 @@ export default function SettingsScreen() {
             </Text>
           </Pressable>
         )}
-
-        {/* NOTIFICATIONS section */}
-        <View style={{ marginBottom: 24 }}>
-          <Text
-            style={{
-              fontFamily: "JetBrains Mono",
-              fontSize: 11,
-              fontWeight: "700",
-              letterSpacing: 1.4,
-              color: "#9DA1A7",
-              paddingHorizontal: 20,
-              marginBottom: 10,
-            }}
-          >
-            NOTIFICATIONS
-          </Text>
-          <View
-            style={{
-              marginHorizontal: 20,
-              backgroundColor: "#F5F6F7",
-              borderRadius: 14,
-              overflow: "hidden",
-            }}
-          >
-            {SOUNDS.map((s, i) => (
-              <Pressable
-                key={s.key}
-                onPress={() => {
-                  updateSetting("notificationSound", s.key);
-                  Haptics.selectionAsync();
-                }}
-                style={{
-                  paddingVertical: 16,
-                  paddingHorizontal: 18,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  borderBottomWidth: i < SOUNDS.length - 1 ? 1 : 0,
-                  borderBottomColor: "#EDEEF0",
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: "Manrope",
-                    fontSize: 15,
-                    fontWeight: "600",
-                    color: "#17181A",
-                  }}
-                >
-                  {s.label}
-                </Text>
-                {settings.notificationSound === s.key && (
-                  <Text
-                    style={{
-                      fontFamily: "Manrope",
-                      fontSize: 16,
-                      fontWeight: "700",
-                      color: "#3B82F6",
-                    }}
-                  >
-                    ✓
-                  </Text>
-                )}
-              </Pressable>
-            ))}
-          </View>
-        </View>
+        </Animated.View>
 
         {/* POWER FEATURES section — disabled for now */}
         {/* Will re-enable when ads/IAP go live */}
 
         {/* DATA section */}
-        <View style={{ marginBottom: 24 }}>
+        <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginBottom: 24 }}>
           <Text
             style={{
               fontFamily: "JetBrains Mono",
@@ -333,10 +252,10 @@ export default function SettingsScreen() {
               <Text style={{ color: "#C9CBCF", fontSize: 14 }}>›</Text>
             </Pressable>
           </View>
-        </View>
+        </Animated.View>
 
         {/* ABOUT section */}
-        <View style={{ marginBottom: 24 }}>
+        <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: 24 }}>
           <Text
             style={{
               fontFamily: "JetBrains Mono",
@@ -399,7 +318,7 @@ export default function SettingsScreen() {
               <Text style={{ color: "#C9CBCF", fontSize: 14 }}>›</Text>
             </Pressable>
           </View>
-        </View>
+        </Animated.View>
       </ScrollView>
     </View>
   );

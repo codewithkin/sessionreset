@@ -1,4 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { storage } from "@/lib/storage";
 
 export default function AlertsScreen() {
@@ -8,7 +9,10 @@ export default function AlertsScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <View style={{ paddingHorizontal: 20, paddingTop: 56, paddingBottom: 18 }}>
+      <Animated.View
+        entering={FadeIn.duration(400)}
+        style={{ paddingHorizontal: 20, paddingTop: 56, paddingBottom: 18 }}
+      >
         <Text
           style={{
             fontFamily: "Manrope",
@@ -20,13 +24,14 @@ export default function AlertsScreen() {
         >
           Alerts
         </Text>
-      </View>
+      </Animated.View>
 
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40 }}
       >
         {/* Alert status */}
-        <View
+        <Animated.View
+          entering={FadeInDown.duration(400).delay(100)}
           style={{
             backgroundColor: "#F5F6F7",
             borderRadius: 14,
@@ -57,11 +62,11 @@ export default function AlertsScreen() {
               ? "Enabled — You'll get notified 15 minutes before each reset."
               : "Disabled — Turn on to get notified before resets."}
           </Text>
-        </View>
+        </Animated.View>
 
         {/* Active alerts */}
         {withAlert.length > 0 ? (
-          <View>
+          <Animated.View entering={FadeInDown.duration(400).delay(200)}>
             <Text
               style={{
                 fontFamily: "JetBrains Mono",
@@ -74,9 +79,10 @@ export default function AlertsScreen() {
             >
               ACTIVE ALERTS
             </Text>
-            {withAlert.map((t) => (
-              <View
+            {withAlert.map((t, index) => (
+              <Animated.View
                 key={t.id}
+                entering={FadeInDown.duration(400).delay(300 + index * 80)}
                 style={{
                   backgroundColor: "#F5F6F7",
                   borderRadius: 14,
@@ -124,14 +130,17 @@ export default function AlertsScreen() {
                       color: "#FFFFFF",
                     }}
                   >
-                    🔔 15m
+                    15m
                   </Text>
                 </View>
-              </View>
+              </Animated.View>
             ))}
-          </View>
+          </Animated.View>
         ) : (
-          <View style={{ alignItems: "center", paddingTop: 60 }}>
+          <Animated.View
+            entering={FadeInDown.duration(500).delay(200)}
+            style={{ alignItems: "center", paddingTop: 60 }}
+          >
             <Text
               style={{
                 fontFamily: "Manrope",
@@ -142,7 +151,7 @@ export default function AlertsScreen() {
             >
               No active alerts. Enable alerts on your timers to see them here.
             </Text>
-          </View>
+          </Animated.View>
         )}
       </ScrollView>
     </View>

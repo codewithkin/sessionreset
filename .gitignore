@@ -51,10 +51,16 @@ lerna-debug.log*
 coverage
 .nyc_output
 
+# Native build artifacts (CNG-managed, generated fresh by EAS)
+apps/native/android/
+apps/native/ios/
+
 # Agent workflow (working notes, not product)
 plans/
 systems/
 designs/extracted/
+designs/raw/
+progress/
 
 # Misc
 *.tgz

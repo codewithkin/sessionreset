@@ -1,4 +1,5 @@
 import { View, Text } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,7 +19,10 @@ export default function FounderNoteScreen() {
         }}
       >
         {/* Progress dots */}
-        <View style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}>
+        <Animated.View
+          entering={FadeIn.duration(300)}
+          style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}
+        >
           {[0, 1, 2, 3, 4].map((i) => (
             <View
               key={i}
@@ -30,9 +34,12 @@ export default function FounderNoteScreen() {
               }}
             />
           ))}
-        </View>
+        </Animated.View>
 
-        <View style={{ alignItems: "center", gap: 24, marginTop: 40 }}>
+        <Animated.View
+          entering={FadeInDown.duration(500).delay(100)}
+          style={{ alignItems: "center", gap: 24, marginTop: 40 }}
+        >
           {/* Clock doodle placeholder */}
           <View
             style={{
@@ -92,10 +99,13 @@ export default function FounderNoteScreen() {
               — The SessionReset Team
             </Text>
           </View>
-        </View>
+        </Animated.View>
 
         {/* CTA */}
-        <View style={{ marginBottom: 12 }}>
+        <Animated.View
+          entering={FadeInDown.duration(500).delay(300)}
+          style={{ marginBottom: 12 }}
+        >
           <View
             style={{
               height: 56,
@@ -122,7 +132,7 @@ export default function FounderNoteScreen() {
               {t("onboarding.founderNote.cta")}
             </Text>
           </View>
-        </View>
+        </Animated.View>
       </View>
     </SafeAreaView>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -34,7 +35,10 @@ export default function NotificationsScreen() {
         }}
       >
         {/* Progress dots */}
-        <View style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}>
+        <Animated.View
+          entering={FadeIn.duration(300)}
+          style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}
+        >
           {[0, 1, 2, 3, 4].map((i) => (
             <View
               key={i}
@@ -46,11 +50,12 @@ export default function NotificationsScreen() {
               }}
             />
           ))}
-        </View>
+        </Animated.View>
 
         <View style={{ gap: 24, marginTop: 40, alignItems: "center" }}>
           {/* Mock notification card */}
-          <View
+          <Animated.View
+            entering={FadeInDown.duration(500).delay(100)}
             style={{
               backgroundColor: "#F5F6F7",
               borderRadius: 18,
@@ -111,9 +116,10 @@ export default function NotificationsScreen() {
                 </Text>
               </View>
             </View>
-          </View>
+          </Animated.View>
 
-          <Text
+          <Animated.Text
+            entering={FadeInDown.duration(400).delay(200)}
             style={{
               fontFamily: "Manrope",
               fontSize: 26,
@@ -124,9 +130,10 @@ export default function NotificationsScreen() {
             }}
           >
             {t("onboarding.notifications.headline")}
-          </Text>
+          </Animated.Text>
 
-          <Text
+          <Animated.Text
+            entering={FadeInDown.duration(400).delay(250)}
             style={{
               fontFamily: "Manrope",
               fontSize: 16,
@@ -137,11 +144,14 @@ export default function NotificationsScreen() {
             }}
           >
             {t("onboarding.notifications.body")}
-          </Text>
+          </Animated.Text>
         </View>
 
         {/* CTAs */}
-        <View style={{ gap: 18, marginBottom: 12 }}>
+        <Animated.View
+          entering={FadeInDown.duration(400).delay(300)}
+          style={{ gap: 18, marginBottom: 12 }}
+        >
           <View
             style={{
               height: 56,
@@ -182,7 +192,7 @@ export default function NotificationsScreen() {
           >
             Skip for now
           </Text>
-        </View>
+        </Animated.View>
       </View>
     </SafeAreaView>
   );

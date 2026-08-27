@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "sessionreset-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,26 +9,19 @@
     "start": "next start"
   },
   "dependencies": {
-    "@sessionreset/env": "workspace:*",
-    "@sessionreset/ui": "workspace:*",
-    "@swc/helpers": "^0.5.23",
-    "babel-plugin-react-compiler": "^1.0.0",
-    "dotenv": "catalog:",
-    "lucide-react": "catalog:",
-    "next": "^16.3.0",
-    "next-themes": "catalog:",
+    "lucide-react": "^0.523.0",
+    "next": "^16.2.12",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "sonner": "catalog:",
-    "zod": "catalog:"
+    "sonner": "^2.0.8",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@sessionreset/config": "workspace:*",
-    "@tailwindcss/postcss": "catalog:",
-    "@types/node": "catalog:",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^20.19.43",
     "@types/react": "^19.2.17",
-    "@types/react-dom": "catalog:",
-    "tailwindcss": "catalog:",
+    "@types/react-dom": "^19.1.7",
+    "tailwindcss": "^4.1.11",
     "typescript": "^6.0.3"
   }
 }

@@ -1,7 +1,5 @@
 export type Platform = 'claude' | 'codex';
 
-export type NotificationSound = 'chime' | 'radar' | 'subtle-ping';
-
 export interface Timer {
   id: string;
   platform: Platform;
@@ -14,7 +12,6 @@ export interface Timer {
 export interface Settings {
   isPro: boolean;
   proExpiresAt: number | null;
-  notificationSound: NotificationSound;
   preResetAlertEnabled: boolean;
 }
 
@@ -28,6 +25,5 @@ export interface UsageLog {
 export const DEFAULT_SETTINGS: Settings = {
   isPro: true,
   proExpiresAt: null,
-  notificationSound: 'chime',
   preResetAlertEnabled: true,
 };

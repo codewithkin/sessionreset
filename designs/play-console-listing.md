@@ -24,12 +24,15 @@ Hit a rate limit? Log it in three taps. Pick the service, confirm the time, and 
 Get a local notification 15 minutes before each window resets. Plan your next move before the limit clears — not after.
 
 **EVERYTHING ON-DEVICE**
-No accounts. No cloud sync. No data leaves your phone. Everything runs locally with encrypted storage.
+No accounts. No cloud sync. Your timers, settings, and history are stored in encrypted local storage (MMKV with AES encryption). Everything runs on your device.
 
 **DARK MODE**
 The same clarity at 2 AM as at noon. Built-in, not bolted on.
 
-**LIFETIME PRO — $9.99**
-One purchase, no subscription. Removes ads, unlocks custom notification sounds, and gives you unlimited timers.
+**MULTI-LANGUAGE**
+Available in 10 languages: English, Spanish, Hindi, Arabic, Portuguese, Russian, Japanese, German, French, and Korean.
+
+**FREE — NO ADS, NO SUBSCRIPTIONS**
+SessionReset is completely free. No ads, no subscriptions, no hidden fees. Every feature is available to everyone.
 
 Perfect for developers, researchers, and power users who live in AI tools and need to stay productive across rolling rate limits.

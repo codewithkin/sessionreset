@@ -20,16 +20,14 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@sessionreset/ui/*": ["../../packages/ui/src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": ["./node_modules"]
 }

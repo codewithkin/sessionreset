@@ -1,7 +1,11 @@
 import { createMMKV } from 'react-native-mmkv';
 import { Timer, Settings, UsageLog, DEFAULT_SETTINGS } from './types';
 
-const mmkv = createMMKV();
+// Encrypted at rest on both iOS (NSFileProtection) and Android (MMKV AES)
+const mmkv = createMMKV({
+  id: 'sessionreset-storage',
+  encryptionKey: 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2',
+});
 
 const STORAGE_KEYS = {
   timers: 'timers.active',

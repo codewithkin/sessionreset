@@ -1,9 +1,9 @@
 import { View, Text, ScrollView, Pressable, Alert } from "react-native";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTimers } from "@/contexts/TimerContext";
 import { TimerCard } from "@/components/TimerCard";
 import { BannerAd } from "@/components/BannerAd";
-import { storage } from "@/lib/storage";
 
 export default function DashboardScreen() {
   const { timers, toggleAlert, removeTimer } = useTimers();
@@ -30,7 +30,8 @@ export default function DashboardScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* Header */}
-      <View
+      <Animated.View
+        entering={FadeIn.duration(400)}
         style={{
           paddingHorizontal: 20,
           paddingTop: 56,
@@ -59,7 +60,7 @@ export default function DashboardScreen() {
         >
           {dateStr}
         </Text>
-      </View>
+      </Animated.View>
 
       {/* Timer list */}
       <ScrollView
@@ -73,7 +74,8 @@ export default function DashboardScreen() {
         showsVerticalScrollIndicator={false}
       >
         {timers.length === 0 ? (
-          <View
+          <Animated.View
+            entering={FadeInDown.duration(500).delay(200)}
             style={{
               alignItems: "center",
               justifyContent: "center",
@@ -102,15 +104,19 @@ export default function DashboardScreen() {
             >
               Tap below when you hit a wall.
             </Text>
-          </View>
+          </Animated.View>
         ) : (
-          timers.map((timer) => (
-            <TimerCard
+          timers.map((timer, index) => (
+            <Animated.View
               key={timer.id}
-              timer={timer}
-              onToggleAlert={toggleAlert}
-              onRemove={handleRemove}
-            />
+              entering={FadeInDown.duration(400).delay(index * 80)}
+            >
+              <TimerCard
+                timer={timer}
+                onToggleAlert={toggleAlert}
+                onRemove={handleRemove}
+              />
+            </Animated.View>
           ))
         )}
       </ScrollView>
@@ -119,7 +125,8 @@ export default function DashboardScreen() {
       {timers.length > 0 && <BannerAd />}
 
       {/* FAB */}
-      <View
+      <Animated.View
+        entering={FadeIn.duration(400).delay(300)}
         style={{
           position: "absolute",
           bottom: timers.length > 0 ? 80 : 32,
@@ -154,7 +161,7 @@ export default function DashboardScreen() {
             +
           </Text>
         </Pressable>
-      </View>
+      </Animated.View>
     </View>
   );
 }
