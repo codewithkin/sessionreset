@@ -37,6 +37,14 @@ export default function Layout() {
     const updatedSettings = storage.settings.get();
     console.log('[Storage Test] Updated settings:', updatedSettings);
     storage.settings.set(initialSettings);
+
+    // Test usage log
+    const initialLogs = storage.usageLog.get();
+    console.log('[Storage Test] Initial logs:', initialLogs);
+    storage.usageLog.set([...initialLogs, { id: 'log-1', platform: 'claude', hitAt: Date.now(), resetAt: Date.now() + 18000000 }]);
+    const afterLog = storage.usageLog.get();
+    console.log('[Storage Test] After add log:', afterLog);
+    storage.usageLog.set([]);
   }, []);
 
   return (
