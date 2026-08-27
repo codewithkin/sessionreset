@@ -15,6 +15,7 @@ import { storage } from "@/lib/storage";
 import { restorePurchases } from "@/lib/purchases";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing } from "@/lib/tokens";
+import { PressableScale } from "@/components/PressableScale";
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -84,28 +85,20 @@ export default function SettingsScreen() {
           paddingBottom: spacing[18],
         }}
       >
+        <PressableScale onPress={() => router.back()} style={{ padding: spacing[4] }}>
+          <Ionicons name="close" size={24} color={c.textPrimary} />
+        </PressableScale>
         <Text
           style={{
             fontFamily: "Manrope",
-            fontSize: fontSizes.bodyLg,
-            fontWeight: "700",
+            fontSize: fontSizes.h5,
+            fontWeight: "800",
             color: c.textPrimary,
           }}
         >
           Settings
         </Text>
-        <Pressable onPress={() => router.back()}>
-          <Text
-            style={{
-              fontFamily: "Manrope",
-              fontSize: 16,
-              fontWeight: "500",
-              color: c.accent,
-            }}
-          >
-            Done
-          </Text>
-        </Pressable>
+        <View style={{ width: 32 }} />
       </View>
 
       <ScrollView contentContainerStyle={{ paddingBottom: spacing[40] }}>

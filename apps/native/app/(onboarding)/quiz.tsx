@@ -98,8 +98,8 @@ export default function QuizScreen() {
                     width: "47%",
                     borderWidth: 2,
                     borderColor: active
-                      ? components.quizCard.light.activeBorder
-                      : components.quizCard.light.inactiveBorder,
+                      ? (isDark ? components.quizCard.dark.activeBorder : components.quizCard.light.activeBorder)
+                      : (isDark ? components.quizCard.dark.inactiveBorder : components.quizCard.light.inactiveBorder),
                     backgroundColor: active
                       ? (isDark ? components.quizCard.dark.activeBg : components.quizCard.light.activeBg)
                       : "transparent",
@@ -216,8 +216,8 @@ export default function QuizScreen() {
                     flex: 1,
                     borderWidth: 2,
                     borderColor: active
-                      ? components.quizCard.light.activeBorder
-                      : components.quizCard.light.inactiveBorder,
+                      ? (isDark ? components.quizCard.dark.activeBorder : components.quizCard.light.activeBorder)
+                      : (isDark ? components.quizCard.dark.inactiveBorder : components.quizCard.light.inactiveBorder),
                     backgroundColor: active
                       ? (isDark ? components.quizCard.dark.activeBg : components.quizCard.light.activeBg)
                       : "transparent",

@@ -109,9 +109,10 @@ export default function DashboardScreen() {
               alignItems: "center",
               justifyContent: "center",
               paddingTop: 120,
-              gap: 8,
+              gap: 12,
             }}
           >
+            <Ionicons name="timer-outline" size={48} color={c.textMuted} />
             <Text
               style={{
                 fontFamily: "Manrope",
@@ -178,16 +179,16 @@ export default function DashboardScreen() {
             elevation: 6,
           }}
         >
-          <Ionicons name="add" size={20} color="#FFFFFF" />
+          <Ionicons name="add" size={20} color={c.textOnAccent} />
           <Text
             style={{
               fontFamily: "Manrope",
               fontWeight: "700",
               fontSize: 16,
-              color: "#FFFFFF",
+              color: c.textOnAccent,
             }}
           >
-            Log Limit Hit
+            + Log Limit Hit
           </Text>
         </PressableScale>
       </Animated.View>

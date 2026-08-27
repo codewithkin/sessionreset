@@ -1,4 +1,5 @@
-import { Pressable, PressableProps } from "react-native";
+import { Platform, Pressable, PressableProps } from "react-native";
+import * as Haptics from "expo-haptics";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -9,13 +10,17 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 interface PressableScaleProps extends PressableProps {
   scale?: number;
+  haptic?: boolean;
   children: React.ReactNode;
 }
 
 export function PressableScale({
   scale = 0.96,
+  haptic = true,
   children,
   style,
+  onPressIn,
+  onPressOut,
   ...props
 }: PressableScaleProps) {
   const animatedScale = useSharedValue(1);
@@ -24,15 +29,24 @@ export function PressableScale({
     transform: [{ scale: withSpring(animatedScale.value, { damping: 0.8 }) }],
   }));
 
+  const handlePressIn = (e: any) => {
+    animatedScale.value = scale;
+    if (haptic && Platform.OS === "ios") {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+    onPressIn?.(e);
+  };
+
+  const handlePressOut = (e: any) => {
+    animatedScale.value = 1;
+    onPressOut?.(e);
+  };
+
   return (
     <AnimatedPressable
       style={[style, animatedStyle]}
-      onPressIn={() => {
-        animatedScale.value = scale;
-      }}
-      onPressOut={() => {
-        animatedScale.value = 1;
-      }}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       {...props}
     >
       {children}

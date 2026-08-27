@@ -4,6 +4,7 @@ import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import {
   requestNotificationPermission,
   getNotificationPermissionStatus,
@@ -95,7 +96,7 @@ export default function NotificationsScreen() {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ fontSize: 18 }}>⏱</Text>
+                <Ionicons name="time-outline" size={20} color="#FFFFFF" />
               </View>
               <View style={{ flex: 1, gap: spacing[3] }}>
                 <Text
