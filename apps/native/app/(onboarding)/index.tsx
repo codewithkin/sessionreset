@@ -227,9 +227,8 @@ function PrimaryButton({
     >
       <Text
         style={{
-          fontFamily: components.primaryButton.font.family,
+          fontFamily: fontFamily.manrope[700],
           fontSize: components.primaryButton.font.size,
-          fontWeight: components.primaryButton.font.weight,
           color: disabled ? c.textMuted : c.textOnAccent,
         }}
       >
@@ -253,9 +252,8 @@ function HookStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t
           entering={FadeInDown.duration(300).delay(120)}
           style={{
             marginTop: spacing[56],
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[800],
             fontSize: fontSizes.displaySm,
-            fontWeight: "800",
             letterSpacing: -1,
             lineHeight: 36,
             color: c.textPrimary,
@@ -267,9 +265,8 @@ function HookStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t
           entering={FadeInDown.duration(300).delay(200)}
           style={{
             marginTop: spacing[16],
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[500],
             fontSize: fontSizes.body,
-            fontWeight: "500",
             lineHeight: 24.8,
             color: c.textTertiary,
           }}
@@ -283,9 +280,8 @@ function HookStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t
         <Text
           style={{
             marginTop: spacing[18],
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[500],
             fontSize: fontSizes.xs,
-            fontWeight: "500",
             color: c.textMuted,
             textAlign: "center",
           }}
@@ -330,7 +326,7 @@ function RateLimitTimeline({ c, isDark }: { c: ThemeColors; isDark: boolean }) {
           <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.error }} />
         </View>
         <View style={{ backgroundColor: c.errorBg, borderRadius: radii.card, paddingVertical: 12, paddingHorizontal: 16 }}>
-          <Text style={{ fontFamily: "Manrope", fontSize: 14, fontWeight: "700", color: c.error }}>Rate Limit Hit</Text>
+          <Text style={{ fontFamily: fontFamily.manrope[700], fontSize: 14, color: c.error }}>Rate Limit Hit</Text>
         </View>
       </Animated.View>
 
@@ -341,7 +337,7 @@ function RateLimitTimeline({ c, isDark }: { c: ThemeColors; isDark: boolean }) {
         </View>
         <Animated.Text
           style={[
-            { paddingVertical: 18, fontFamily: "JetBrains Mono", fontSize: 44, fontWeight: "700", letterSpacing: -2, color: c.textPrimary },
+            { paddingVertical: 18, fontFamily: fontFamily.mono[700], fontSize: 44, letterSpacing: -2, color: c.textPrimary },
             rowStyle1,
           ]}
         >
@@ -356,7 +352,7 @@ function RateLimitTimeline({ c, isDark }: { c: ThemeColors; isDark: boolean }) {
         </View>
         <Animated.Text
           style={[
-            { paddingBottom: 18, fontFamily: "JetBrains Mono", fontSize: 44, fontWeight: "700", letterSpacing: -2, color: c.textDisabled },
+            { paddingBottom: 18, fontFamily: fontFamily.mono[700], fontSize: 44, letterSpacing: -2, color: c.textDisabled },
             rowStyle2,
           ]}
         >
@@ -370,7 +366,7 @@ function RateLimitTimeline({ c, isDark }: { c: ThemeColors; isDark: boolean }) {
           <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.success }} />
         </View>
         <View style={{ backgroundColor: c.success, borderRadius: radii.card, paddingVertical: 12, paddingHorizontal: 16 }}>
-          <Text style={{ fontFamily: "Manrope", fontSize: 14, fontWeight: "700", color: backToCodeText }}>Back to Code</Text>
+          <Text style={{ fontFamily: fontFamily.manrope[700], fontSize: 14, color: backToCodeText }}>Back to Code</Text>
         </View>
       </Animated.View>
     </View>
@@ -611,7 +607,7 @@ function FounderStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean
           style={{
             width: 80,
             height: 80,
-            borderRadius: radii.xl,
+            borderRadius: radii.dialog,
             backgroundColor: isDark ? components.founderCard.dark.bg : components.founderCard.light.bg,
             justifyContent: "center",
             alignItems: "center",
@@ -630,11 +626,10 @@ function FounderStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean
         >
           <Text
             style={{
-              fontFamily: components.founderCard.font.family,
+              fontFamily: fontFamily.manrope[500],
               fontSize: components.founderCard.font.size,
-              fontWeight: components.founderCard.font.weight,
               lineHeight: 26.4,
-              color: c.textSecondary,
+              color: c.textPrimary,
             }}
           >
             {t("onboarding.founderNote.body")}
@@ -643,7 +638,12 @@ function FounderStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean
 
         <Animated.Text
           entering={FadeInDown.duration(300).delay(300)}
-          style={{ fontFamily: "Manrope", fontSize: fontSizes.caption, fontWeight: "700", color: c.textTertiary, textAlign: "right" }}
+          style={{
+            fontFamily: fontFamily.manrope[700],
+            fontSize: fontSizes.caption,
+            color: isDark ? c.textSecondary : c.textTertiary,
+            textAlign: "right",
+          }}
         >
           — {t("onboarding.founderNote.signature")}
         </Animated.Text>
@@ -987,16 +987,15 @@ function StarterStep({
             alignItems: "center",
           }}
         >
-          <Text style={{ fontFamily: "Manrope", fontSize: 32, color: c.accent, lineHeight: 32 }}>✓</Text>
+          <Ionicons name="checkmark" size={36} color={c.accent} />
         </Animated.View>
 
         <Animated.Text
           entering={FadeInDown.duration(400).delay(200)}
           style={{
             marginTop: spacing[32],
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[800],
             fontSize: fontSizes.displaySm,
-            fontWeight: "800",
             letterSpacing: -1,
             lineHeight: 36,
             color: c.textPrimary,
@@ -1009,9 +1008,8 @@ function StarterStep({
           entering={FadeInDown.duration(400).delay(250)}
           style={{
             marginTop: spacing[14],
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[500],
             fontSize: fontSizes.body,
-            fontWeight: "500",
             lineHeight: 24.8,
             color: c.textTertiary,
           }}
@@ -1026,7 +1024,7 @@ function StarterStep({
           <View style={{ width: 12, alignItems: "center" }}>
             <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.accent }} />
           </View>
-          <Text style={{ fontFamily: "JetBrains Mono", fontSize: fontSizes.captionSm, fontWeight: "500", color: c.textTertiary }}>
+          <Text style={{ fontFamily: fontFamily.mono[500], fontSize: fontSizes.captionSm, color: c.textTertiary }}>
             NOW → 5H WINDOW OPENS
           </Text>
         </Animated.View>
@@ -1049,9 +1047,8 @@ function StarterStep({
         >
           <Text
             style={{
-              fontFamily: components.secondaryButton.font.family,
+              fontFamily: fontFamily.manrope[700],
               fontSize: components.secondaryButton.font.size,
-              fontWeight: components.secondaryButton.font.weight,
               color: isDark ? components.secondaryButton.dark.text : components.secondaryButton.light.text,
             }}
           >
