@@ -7,14 +7,20 @@ import { I18nextProvider } from "react-i18next";
 
 import { AppThemeProvider } from "@/contexts/app-theme-context";
 import i18n from "@/lib/i18n";
+import { storage } from "@/lib/storage";
 
 export const unstable_settings = {
-  initialRouteName: "(drawer)",
+  initialRouteName: storage.onboarding.isComplete() ? "(drawer)" : "(onboarding)",
 };
 
 function StackLayout() {
+  const initialRoute = storage.onboarding.isComplete()
+    ? "(drawer)"
+    : "(onboarding)";
+
   return (
-    <Stack screenOptions={{}}>
+    <Stack screenOptions={{}} initialRouteName={initialRoute}>
+      <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
       <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
       <Stack.Screen name="modal" options={{ title: "Modal", presentation: "modal" }} />
     </Stack>
