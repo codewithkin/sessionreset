@@ -8,10 +8,14 @@ import {
   requestNotificationPermission,
   NotificationPermissionStatus,
 } from "@/lib/notifications";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, components, fontSizes, spacing, radii, shadows, layout } from "@/lib/tokens";
 
 export default function NotificationsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
   const [status, setStatus] = useState<NotificationPermissionStatus>("undetermined");
 
   const handleEnable = async () => {
@@ -25,19 +29,19 @@ export default function NotificationsScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: c.bg }}>
       <View
         style={{
           flex: 1,
-          paddingHorizontal: 24,
-          paddingTop: 16,
+          paddingHorizontal: spacing[24],
+          paddingTop: spacing[16],
           justifyContent: "space-between",
         }}
       >
         {/* Progress dots */}
         <Animated.View
           entering={FadeIn.duration(300)}
-          style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}
+          style={{ flexDirection: "row", justifyContent: "center", gap: spacing[6] }}
         >
           {[0, 1, 2, 3, 4].map((i) => (
             <View
@@ -45,50 +49,52 @@ export default function NotificationsScreen() {
               style={{
                 width: 22,
                 height: 4,
-                borderRadius: 2,
-                backgroundColor: i === 4 ? "#3B82F6" : "#DDE0E4",
+                borderRadius: radii.sm,
+                backgroundColor: i === 4 ? c.progressFill : c.borderStrong,
               }}
             />
           ))}
         </Animated.View>
 
-        <View style={{ gap: 24, marginTop: 40, alignItems: "center" }}>
+        <View style={{ gap: spacing[24], marginTop: spacing[40], alignItems: "center" }}>
           {/* Mock notification card */}
           <Animated.View
             entering={FadeInDown.duration(500).delay(100)}
             style={{
-              backgroundColor: "#F5F6F7",
-              borderRadius: 18,
-              padding: 16,
+              backgroundColor: isDark
+                ? components.notificationCard.dark.bg
+                : components.notificationCard.light.bg,
+              borderRadius: components.notificationCard.radius,
+              padding: components.notificationCard.padding,
               width: "100%",
-              shadowColor: "#14161A",
+              shadowColor: isDark ? "#000000" : "#14161A",
               shadowOffset: { width: 0, height: 8 },
-              shadowOpacity: 0.1,
+              shadowOpacity: isDark ? 0.5 : 0.1,
               shadowRadius: 24,
               elevation: 4,
             }}
           >
-            <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
+            <View style={{ flexDirection: "row", gap: spacing[12], alignItems: "center" }}>
               <View
                 style={{
-                  width: 38,
-                  height: 38,
-                  borderRadius: 10,
-                  backgroundColor: "#3B82F6",
+                  width: layout.notification.iconSize,
+                  height: layout.notification.iconSize,
+                  borderRadius: layout.notification.iconRadius,
+                  backgroundColor: c.accent,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
                 <Text style={{ fontSize: 18 }}>⏱</Text>
               </View>
-              <View style={{ flex: 1, gap: 3 }}>
+              <View style={{ flex: 1, gap: spacing[3] }}>
                 <Text
                   style={{
                     fontFamily: "JetBrains Mono",
-                    fontSize: 12,
+                    fontSize: fontSizes.xs,
                     fontWeight: "700",
                     letterSpacing: 0.4,
-                    color: "#6C7076",
+                    color: c.textTertiary,
                   }}
                 >
                   {t("onboarding.notifications.previewTitle")}
@@ -96,9 +102,9 @@ export default function NotificationsScreen() {
                 <Text
                   style={{
                     fontFamily: "Manrope",
-                    fontSize: 15,
+                    fontSize: fontSizes.bodySm,
                     fontWeight: "700",
-                    color: "#17181A",
+                    color: c.textPrimary,
                   }}
                 >
                   {t("onboarding.notifications.previewHeadline")}
@@ -106,9 +112,9 @@ export default function NotificationsScreen() {
                 <Text
                   style={{
                     fontFamily: "Manrope",
-                    fontSize: 14,
+                    fontSize: fontSizes.caption,
                     fontWeight: "500",
-                    color: "#6C7076",
+                    color: c.textTertiary,
                     lineHeight: 19.6,
                   }}
                 >
@@ -122,10 +128,10 @@ export default function NotificationsScreen() {
             entering={FadeInDown.duration(400).delay(200)}
             style={{
               fontFamily: "Manrope",
-              fontSize: 26,
+              fontSize: fontSizes.h2,
               fontWeight: "800",
               letterSpacing: -0.8,
-              color: "#17181A",
+              color: c.textPrimary,
               textAlign: "center",
             }}
           >
@@ -136,10 +142,10 @@ export default function NotificationsScreen() {
             entering={FadeInDown.duration(400).delay(250)}
             style={{
               fontFamily: "Manrope",
-              fontSize: 16,
+              fontSize: fontSizes.body,
               fontWeight: "500",
               lineHeight: 24.8,
-              color: "#6C7076",
+              color: c.textTertiary,
               textAlign: "center",
             }}
           >
@@ -150,16 +156,16 @@ export default function NotificationsScreen() {
         {/* CTAs */}
         <Animated.View
           entering={FadeInDown.duration(400).delay(300)}
-          style={{ gap: 18, marginBottom: 12 }}
+          style={{ gap: spacing[18], marginBottom: spacing[12] }}
         >
           <View
             style={{
-              height: 56,
-              borderRadius: 16,
-              backgroundColor: "#3B82F6",
+              height: components.primaryButton.height,
+              borderRadius: components.primaryButton.radius,
+              backgroundColor: c.accent,
               justifyContent: "center",
               alignItems: "center",
-              shadowColor: "#3B82F6",
+              shadowColor: c.accent,
               shadowOffset: { width: 0, height: 6 },
               shadowOpacity: 0.32,
               shadowRadius: 18,
@@ -168,10 +174,10 @@ export default function NotificationsScreen() {
           >
             <Text
               style={{
-                fontFamily: "Manrope",
-                fontSize: 16,
-                fontWeight: "700",
-                color: "#FFFFFF",
+                fontFamily: components.primaryButton.font.family,
+                fontSize: components.primaryButton.font.size,
+                fontWeight: components.primaryButton.font.weight,
+                color: c.textOnAccent,
               }}
               onPress={handleEnable}
             >
@@ -183,9 +189,9 @@ export default function NotificationsScreen() {
           <Text
             style={{
               fontFamily: "Manrope",
-              fontSize: 13,
+              fontSize: fontSizes.micro,
               fontWeight: "500",
-              color: "#9DA1A7",
+              color: c.textMuted,
               textAlign: "center",
             }}
             onPress={handleSkip}

@@ -1,5 +1,6 @@
-import { View, Text, Pressable } from "react-native";
-import { useThemeColor } from "heroui-native";
+import { View, Text, Pressable, Platform } from "react-native";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, radii, components } from "@/lib/tokens";
 import { Timer } from "@/lib/types";
 import { useCountdown } from "@/hooks/useCountdown";
 import { getResetTimeString } from "@/lib/timer-engine";
@@ -10,11 +11,6 @@ interface TimerCardProps {
   onRemove: (id: string) => void;
 }
 
-const BRAND_COLORS = {
-  claude: "#CC785C",
-  codex: "#10A37F",
-} as const;
-
 const BRAND_NAMES = {
   claude: "Claude 3.5 Sonnet",
   codex: "Codex",
@@ -22,27 +18,32 @@ const BRAND_NAMES = {
 
 export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
   const { timeString, progress, isWarning, isUrgent } = useCountdown(timer);
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
 
-  const bg = useThemeColor("background");
-  const fg = useThemeColor("foreground");
-
-  const brandColor = BRAND_COLORS[timer.platform];
   const brandName = BRAND_NAMES[timer.platform];
 
-  const progressColor = isWarning ? "#F59E0B" : "#3B82F6";
+  const progressColor = isWarning ? c.progressWarning : c.progressFill;
   const timeColor = isUrgent
-    ? "#EF4444"
+    ? c.error
     : isWarning
-      ? "#D97706"
-      : fg;
+      ? c.warningDark
+      : c.textPrimary;
+
+  const cardBg = isDark ? components.timerCard.dark.bg : components.timerCard.light.bg;
 
   return (
     <Pressable
       onLongPress={() => onRemove(timer.id)}
       style={{
-        backgroundColor: bg === "#000000" ? "#1A1A1A" : "#F5F6F7",
-        borderRadius: 18,
-        padding: 18,
+        backgroundColor: cardBg,
+        borderRadius: radii.timer,
+        padding: components.timerCard.padding,
+        shadowColor: c.textPrimary,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: isDark ? 0 : 0.06,
+        shadowRadius: 4,
+        elevation: 2,
       }}
     >
       {/* Title row */}
@@ -57,9 +58,9 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
         <Text
           style={{
             fontFamily: "Manrope",
-            fontSize: 15,
+            fontSize: components.timerCard.titleFont.size,
             fontWeight: "700",
-            color: fg,
+            color: c.textPrimary,
           }}
         >
           {brandName}
@@ -67,8 +68,8 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
         <Pressable onPress={() => onToggleAlert(timer.id)}>
           <View
             style={{
-              backgroundColor: timer.preResetAlert ? "#3B82F6" : bg === "#000000" ? "#2A2A2A" : "#E6E7EA",
-              borderRadius: 999,
+              backgroundColor: timer.preResetAlert ? c.accent : c.border,
+              borderRadius: radii.full,
               paddingHorizontal: 10,
               paddingVertical: 5,
             }}
@@ -76,9 +77,9 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
             <Text
               style={{
                 fontFamily: "JetBrains Mono",
-                fontSize: 11,
+                fontSize: components.timerCard.alertBadgeFont.size,
                 fontWeight: "700",
-                color: timer.preResetAlert ? "#FFFFFF" : "#9DA1A7",
+                color: timer.preResetAlert ? c.textOnAccent : c.textMuted,
               }}
             >
               {timer.preResetAlert ? "🔔 15m" : "🔔 15m Off"}
@@ -91,9 +92,9 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
       <Text
         style={{
           fontFamily: "JetBrains Mono",
-          fontSize: 28,
+          fontSize: components.timerCard.countdownFont.size,
           fontWeight: "700",
-          letterSpacing: -1.4,
+          letterSpacing: components.timerCard.countdownLetterSpacing,
           lineHeight: 1,
           color: timeColor,
           marginBottom: 12,
@@ -105,9 +106,9 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
       {/* Progress bar */}
       <View
         style={{
-          height: 4,
-          borderRadius: 2,
-          backgroundColor: bg === "#000000" ? "#2A2A2A" : "#E1E3E6",
+          height: components.progressBar.height,
+          borderRadius: components.progressBar.radius,
+          backgroundColor: c.progressTrack,
           overflow: "hidden",
           marginBottom: 14,
         }}
@@ -115,7 +116,7 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
         <View
           style={{
             height: "100%",
-            borderRadius: 2,
+            borderRadius: components.progressBar.radius,
             width: `${progress}%`,
             backgroundColor: progressColor,
           }}
@@ -128,7 +129,7 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
           fontFamily: "Manrope",
           fontSize: 12,
           fontWeight: "500",
-          color: "#9DA1A7",
+          color: c.textMuted,
         }}
       >
         Resets at {getResetTimeString(timer)}

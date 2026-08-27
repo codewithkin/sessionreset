@@ -1,8 +1,12 @@
 import { View, Text, ScrollView } from "react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { storage } from "@/lib/storage";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, components, fontSizes, spacing, radii, shadows } from "@/lib/tokens";
 
 export default function HistoryScreen() {
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
   const allTimers = storage.timers.get();
   const inactive = allTimers
     .filter((t) => !t.active)
@@ -23,18 +27,18 @@ export default function HistoryScreen() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <View style={{ flex: 1, backgroundColor: c.bg }}>
       <Animated.View
         entering={FadeIn.duration(400)}
-        style={{ paddingHorizontal: 20, paddingTop: 56, paddingBottom: 18 }}
+        style={{ paddingHorizontal: spacing[20], paddingTop: spacing[56], paddingBottom: spacing[18] }}
       >
         <Text
           style={{
             fontFamily: "Manrope",
-            fontSize: 22,
+            fontSize: fontSizes.h3,
             fontWeight: "800",
             letterSpacing: -0.5,
-            color: "#17181A",
+            color: c.textPrimary,
           }}
         >
           History
@@ -42,19 +46,19 @@ export default function HistoryScreen() {
       </Animated.View>
 
       <ScrollView
-        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40 }}
+        contentContainerStyle={{ paddingHorizontal: spacing[20], paddingBottom: spacing[40] }}
       >
         {inactive.length === 0 ? (
           <Animated.View
             entering={FadeInDown.duration(500).delay(200)}
-            style={{ alignItems: "center", paddingTop: 120 }}
+            style={{ alignItems: "center", paddingTop: spacing[56] }}
           >
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 16,
+                fontSize: fontSizes.body,
                 fontWeight: "500",
-                color: "#9DA1A7",
+                color: c.textMuted,
               }}
             >
               No past timers yet.
@@ -65,15 +69,15 @@ export default function HistoryScreen() {
             <Animated.View
               key={date}
               entering={FadeInDown.duration(400).delay(groupIndex * 100)}
-              style={{ marginBottom: 24 }}
+              style={{ marginBottom: spacing[24] }}
             >
               <Text
                 style={{
                   fontFamily: "Manrope",
-                  fontSize: 15,
+                  fontSize: fontSizes.bodySm,
                   fontWeight: "700",
-                  color: "#17181A",
-                  marginBottom: 10,
+                  color: c.textPrimary,
+                  marginBottom: spacing[10],
                 }}
               >
                 {date}
@@ -82,31 +86,31 @@ export default function HistoryScreen() {
                 <View
                   key={t.id}
                   style={{
-                    backgroundColor: "#F5F6F7",
-                    borderRadius: 14,
-                    padding: 16,
-                    marginBottom: 8,
+                    backgroundColor: c.surface,
+                    borderRadius: radii.badge,
+                    padding: spacing[16],
+                    marginBottom: spacing[8],
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
                   }}
                 >
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
                     <View
                       style={{
-                        width: 8,
-                        height: 8,
+                        width: components.timeline.lineWidth * 4,
+                        height: components.timeline.lineWidth * 4,
                         borderRadius: 50,
                         backgroundColor:
-                          t.platform === "claude" ? "#CC785C" : "#10A37F",
+                          t.platform === "claude" ? c.claude : c.codex,
                       }}
                     />
                     <Text
                       style={{
                         fontFamily: "Manrope",
-                        fontSize: 14,
+                        fontSize: fontSizes.caption,
                         fontWeight: "600",
-                        color: "#17181A",
+                        color: c.textPrimary,
                       }}
                     >
                       {t.platform === "claude" ? "Claude" : "Codex"}
@@ -115,9 +119,9 @@ export default function HistoryScreen() {
                   <Text
                     style={{
                       fontFamily: "JetBrains Mono",
-                      fontSize: 12,
+                      fontSize: fontSizes.xs,
                       fontWeight: "500",
-                      color: "#6C7076",
+                      color: c.textTertiary,
                     }}
                   >
                     {new Date(t.resetTime).toLocaleTimeString([], {

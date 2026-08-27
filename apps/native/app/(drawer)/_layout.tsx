@@ -5,29 +5,34 @@ import React, { useCallback } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors } from "@/lib/tokens";
 
 function DrawerLayout() {
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
+
   const renderHeaderRight = useCallback(
     () => (
       <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginRight: 16 }}>
         <ThemeToggle />
         <Link href="/settings" asChild>
           <Pressable>
-            <Ionicons name="settings-outline" size={22} color="#6C7076" />
+            <Ionicons name="settings-outline" size={22} color={c.textTertiary} />
           </Pressable>
         </Link>
       </View>
     ),
-    []
+    [c]
   );
 
   return (
     <Drawer
       screenOptions={{
-        headerStyle: { backgroundColor: "#FFFFFF", elevation: 0, shadowOpacity: 0 },
+        headerStyle: { backgroundColor: c.bg, elevation: 0, shadowOpacity: 0 },
         headerTitleStyle: { display: "none" },
         headerRight: renderHeaderRight,
-        drawerStyle: { backgroundColor: "#FFFFFF", width: 280 },
+        drawerStyle: { backgroundColor: c.bg, width: 280 },
       }}
     >
       <Drawer.Screen
@@ -40,7 +45,7 @@ function DrawerLayout() {
                 fontFamily: "Manrope",
                 fontSize: 15,
                 fontWeight: focused ? "700" : "500",
-                color: focused ? "#17181A" : "#6C7076",
+                color: focused ? c.textPrimary : c.textTertiary,
               }}
             >
               Dashboard
@@ -50,7 +55,7 @@ function DrawerLayout() {
             <Ionicons
               name="grid-outline"
               size={20}
-              color={focused ? "#17181A" : "#6C7076"}
+              color={focused ? c.textPrimary : c.textTertiary}
             />
           ),
         }}
@@ -65,7 +70,7 @@ function DrawerLayout() {
                 fontFamily: "Manrope",
                 fontSize: 15,
                 fontWeight: focused ? "700" : "500",
-                color: focused ? "#17181A" : "#6C7076",
+                color: focused ? c.textPrimary : c.textTertiary,
               }}
             >
               History
@@ -75,7 +80,7 @@ function DrawerLayout() {
             <Ionicons
               name="time-outline"
               size={20}
-              color={focused ? "#17181A" : "#6C7076"}
+              color={focused ? c.textPrimary : c.textTertiary}
             />
           ),
         }}
@@ -90,7 +95,7 @@ function DrawerLayout() {
                 fontFamily: "Manrope",
                 fontSize: 15,
                 fontWeight: focused ? "700" : "500",
-                color: focused ? "#17181A" : "#6C7076",
+                color: focused ? c.textPrimary : c.textTertiary,
               }}
             >
               Alerts
@@ -100,7 +105,7 @@ function DrawerLayout() {
             <Ionicons
               name="notifications-outline"
               size={20}
-              color={focused ? "#17181A" : "#6C7076"}
+              color={focused ? c.textPrimary : c.textTertiary}
             />
           ),
         }}

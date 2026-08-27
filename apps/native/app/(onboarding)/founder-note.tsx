@@ -3,25 +3,30 @@ import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, components, fontSizes, spacing, radii, shadows } from "@/lib/tokens";
 
 export default function FounderNoteScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: c.bg }}>
       <View
         style={{
           flex: 1,
-          paddingHorizontal: 24,
-          paddingTop: 16,
+          paddingHorizontal: spacing[24],
+          paddingTop: spacing[16],
           justifyContent: "space-between",
         }}
       >
         {/* Progress dots */}
         <Animated.View
           entering={FadeIn.duration(300)}
-          style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}
+          style={{ flexDirection: "row", justifyContent: "center", gap: spacing[6] }}
         >
           {[0, 1, 2, 3, 4].map((i) => (
             <View
@@ -29,8 +34,8 @@ export default function FounderNoteScreen() {
               style={{
                 width: 22,
                 height: 4,
-                borderRadius: 2,
-                backgroundColor: i === 2 ? "#3B82F6" : "#DDE0E4",
+                borderRadius: radii.sm,
+                backgroundColor: i === 2 ? c.progressFill : c.borderStrong,
               }}
             />
           ))}
@@ -38,29 +43,29 @@ export default function FounderNoteScreen() {
 
         <Animated.View
           entering={FadeInDown.duration(500).delay(100)}
-          style={{ alignItems: "center", gap: 24, marginTop: 40 }}
+          style={{ alignItems: "center", gap: spacing[24], marginTop: spacing[40] }}
         >
-          {/* Clock doodle placeholder */}
+          {/* Clock icon */}
           <View
             style={{
               width: 80,
               height: 80,
-              borderRadius: 20,
-              backgroundColor: "#F5F6F7",
+              borderRadius: radii.xl,
+              backgroundColor: isDark ? components.founderCard.dark.bg : components.founderCard.light.bg,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 32 }}>🕐</Text>
+            <Ionicons name="time-outline" size={48} color={c.textTertiary} />
           </View>
 
           <Text
             style={{
               fontFamily: "Manrope",
-              fontSize: 26,
+              fontSize: fontSizes.h2,
               fontWeight: "800",
               letterSpacing: -0.8,
-              color: "#17181A",
+              color: c.textPrimary,
               textAlign: "center",
             }}
           >
@@ -70,18 +75,18 @@ export default function FounderNoteScreen() {
           {/* Quote card */}
           <View
             style={{
-              backgroundColor: "#F5F6F7",
-              borderRadius: 16,
-              padding: 28,
+              backgroundColor: isDark ? components.founderCard.dark.bg : components.founderCard.light.bg,
+              borderRadius: components.founderCard.radius,
+              padding: components.founderCard.padding,
             }}
           >
             <Text
               style={{
-                fontFamily: "Manrope",
-                fontSize: 16,
-                fontWeight: "500",
+                fontFamily: components.founderCard.font.family,
+                fontSize: components.founderCard.font.size,
+                fontWeight: components.founderCard.font.weight,
                 lineHeight: 26.4,
-                color: "#4A4E54",
+                color: c.textSecondary,
               }}
             >
               {t("onboarding.founderNote.body")}
@@ -89,11 +94,11 @@ export default function FounderNoteScreen() {
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 14,
+                fontSize: fontSizes.caption,
                 fontWeight: "700",
-                color: "#6C7076",
+                color: c.textTertiary,
                 textAlign: "right",
-                marginTop: 16,
+                marginTop: spacing[16],
               }}
             >
               — The SessionReset Team
@@ -104,16 +109,16 @@ export default function FounderNoteScreen() {
         {/* CTA */}
         <Animated.View
           entering={FadeInDown.duration(500).delay(300)}
-          style={{ marginBottom: 12 }}
+          style={{ marginBottom: spacing[12] }}
         >
           <View
             style={{
-              height: 56,
-              borderRadius: 16,
-              backgroundColor: "#3B82F6",
+              height: components.primaryButton.height,
+              borderRadius: components.primaryButton.radius,
+              backgroundColor: c.accent,
               justifyContent: "center",
               alignItems: "center",
-              shadowColor: "#3B82F6",
+              shadowColor: c.accent,
               shadowOffset: { width: 0, height: 6 },
               shadowOpacity: 0.32,
               shadowRadius: 18,
@@ -122,10 +127,10 @@ export default function FounderNoteScreen() {
           >
             <Text
               style={{
-                fontFamily: "Manrope",
-                fontSize: 16,
-                fontWeight: "700",
-                color: "#FFFFFF",
+                fontFamily: components.primaryButton.font.family,
+                fontSize: components.primaryButton.font.size,
+                fontWeight: components.primaryButton.font.weight,
+                color: c.textOnAccent,
               }}
               onPress={() => router.push("/(onboarding)/paywall")}
             >

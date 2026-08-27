@@ -4,10 +4,12 @@ import { useRouter } from "expo-router";
 import { useTimers } from "@/contexts/TimerContext";
 import { Platform } from "@/lib/types";
 import { showInterstitial, canShowInterstitial } from "@/lib/ads";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, components, fontSizes, spacing, radii, shadows, layout } from "@/lib/tokens";
 
 const SERVICES: { key: Platform; label: string; color: string }[] = [
-  { key: "claude", label: "Claude", color: "#CC785C" },
-  { key: "codex", label: "Codex", color: "#10A37F" },
+  { key: "claude", label: "Claude", color: colors.light.claude },
+  { key: "codex", label: "Codex", color: colors.light.codex },
 ];
 
 const OFFSETS = [
@@ -19,6 +21,8 @@ const OFFSETS = [
 
 export default function QuickLogScreen() {
   const router = useRouter();
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
   const { addTimer, timers } = useTimers();
   const [selectedService, setSelectedService] = useState<Platform>("claude");
   const [selectedOffset, setSelectedOffset] = useState(0);
@@ -57,7 +61,7 @@ export default function QuickLogScreen() {
     <View
       style={{
         flex: 1,
-        backgroundColor: "rgba(23,24,26,0.5)",
+        backgroundColor: c.overlay,
         justifyContent: "flex-end",
       }}
     >
@@ -65,22 +69,22 @@ export default function QuickLogScreen() {
 
       <View
         style={{
-          backgroundColor: "#FFFFFF",
-          borderTopLeftRadius: 24,
-          borderTopRightRadius: 24,
-          paddingTop: 12,
-          paddingHorizontal: 24,
-          paddingBottom: 32,
+          backgroundColor: c.bg,
+          borderTopLeftRadius: components.bottomSheet.radius,
+          borderTopRightRadius: components.bottomSheet.radius,
+          paddingTop: components.bottomSheet.padding.top,
+          paddingHorizontal: components.bottomSheet.padding.horizontal,
+          paddingBottom: spacing[32],
         }}
       >
         {/* Handle */}
-        <View style={{ alignItems: "center", marginBottom: 18 }}>
+        <View style={{ alignItems: "center", marginBottom: spacing[18] }}>
           <View
             style={{
-              width: 40,
-              height: 4,
-              borderRadius: 2,
-              backgroundColor: "#DDE0E4",
+              width: components.bottomSheet.handleWidth,
+              height: components.bottomSheet.handleHeight,
+              borderRadius: components.bottomSheet.handleRadius,
+              backgroundColor: isDark ? components.bottomSheet.dark.handle : components.bottomSheet.light.handle,
             }}
           />
         </View>
@@ -88,11 +92,11 @@ export default function QuickLogScreen() {
         <Text
           style={{
             fontFamily: "Manrope",
-            fontSize: 19,
+            fontSize: fontSizes.h5,
             fontWeight: "800",
             letterSpacing: -0.3,
-            color: "#17181A",
-            marginBottom: 20,
+            color: c.textPrimary,
+            marginBottom: spacing[20],
           }}
         >
           Log Limit Hit
@@ -102,15 +106,15 @@ export default function QuickLogScreen() {
         <Text
           style={{
             fontFamily: "Manrope",
-            fontSize: 13,
+            fontSize: fontSizes.micro,
             fontWeight: "700",
-            color: "#6C7076",
-            marginBottom: 10,
+            color: c.textTertiary,
+            marginBottom: spacing[10],
           }}
         >
           Which service?
         </Text>
-        <View style={{ flexDirection: "row", gap: 10, marginBottom: 22 }}>
+        <View style={{ flexDirection: "row", gap: spacing[10], marginBottom: spacing[22] }}>
           {SERVICES.map((s) => {
             const active = selectedService === s.key;
             return (
@@ -120,29 +124,29 @@ export default function QuickLogScreen() {
                 style={{
                   flex: 1,
                   borderWidth: 2,
-                  borderColor: active ? s.color : "#E6E7EA",
+                  borderColor: active ? s.color : c.border,
                   backgroundColor: active ? s.color : "transparent",
-                  borderRadius: 16,
-                  padding: 16,
+                  borderRadius: components.primaryButton.radius,
+                  padding: spacing[16],
                   flexDirection: "row",
                   alignItems: "center",
-                  gap: 12,
+                  gap: spacing[12],
                 }}
               >
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: layout.serviceDot.size,
+                    height: layout.serviceDot.size,
                     borderRadius: 50,
-                    backgroundColor: active ? "#FFFFFF" : s.color,
+                    backgroundColor: active ? c.textOnAccent : s.color,
                   }}
                 />
                 <Text
                   style={{
                     fontFamily: "Manrope",
-                    fontSize: 15,
+                    fontSize: fontSizes.body,
                     fontWeight: "700",
-                    color: active ? "#FFFFFF" : "#17181A",
+                    color: active ? c.textOnAccent : c.textPrimary,
                   }}
                 >
                   {s.label}
@@ -156,15 +160,15 @@ export default function QuickLogScreen() {
         <Text
           style={{
             fontFamily: "Manrope",
-            fontSize: 13,
+            fontSize: fontSizes.micro,
             fontWeight: "700",
-            color: "#6C7076",
-            marginBottom: 10,
+            color: c.textTertiary,
+            marginBottom: spacing[10],
           }}
         >
           When did you hit the limit?
         </Text>
-        <View style={{ flexDirection: "row", gap: 8, marginBottom: 22 }}>
+        <View style={{ flexDirection: "row", gap: spacing[8], marginBottom: spacing[22] }}>
           {OFFSETS.map((o) => {
             const active = selectedOffset === o.minutes;
             return (
@@ -174,19 +178,19 @@ export default function QuickLogScreen() {
                 style={{
                   flex: 1,
                   borderWidth: 1.5,
-                  borderColor: active ? "#3B82F6" : "#E6E7EA",
-                  backgroundColor: active ? "#3B82F6" : "transparent",
-                  borderRadius: 999,
-                  paddingVertical: active ? 11 : 10,
+                  borderColor: active ? (isDark ? components.offsetPill.dark.activeBg : components.offsetPill.light.activeBg) : (isDark ? components.offsetPill.dark.inactiveBorder : components.offsetPill.light.inactiveBorder),
+                  backgroundColor: active ? (isDark ? components.offsetPill.dark.activeBg : components.offsetPill.light.activeBg) : "transparent",
+                  borderRadius: radii.full,
+                  paddingVertical: active ? spacing[12] : spacing[10],
                   alignItems: "center",
                 }}
               >
                 <Text
                   style={{
                     fontFamily: "JetBrains Mono",
-                    fontSize: 13,
+                    fontSize: fontSizes.micro,
                     fontWeight: "700",
-                    color: active ? "#FFFFFF" : "#4A4E54",
+                    color: active ? (isDark ? components.offsetPill.dark.activeText : components.offsetPill.light.activeText) : c.textSecondary,
                   }}
                 >
                   {o.label}
@@ -200,42 +204,42 @@ export default function QuickLogScreen() {
         <Pressable
           onPress={() => setPreResetAlert(!preResetAlert)}
           style={{
-            backgroundColor: "#F5F6F7",
-            borderRadius: 16,
-            padding: 16,
+            backgroundColor: c.surface,
+            borderRadius: components.primaryButton.radius,
+            padding: spacing[16],
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: 22,
+            marginBottom: spacing[22],
           }}
         >
           <Text
             style={{
               fontFamily: "Manrope",
-              fontSize: 14,
+              fontSize: fontSizes.caption,
               fontWeight: "600",
-              color: "#17181A",
+              color: c.textPrimary,
             }}
           >
             Remind me 15 minutes before reset
           </Text>
           <View
             style={{
-              width: 46,
-              height: 28,
-              borderRadius: 14,
-              backgroundColor: preResetAlert ? "#3B82F6" : "#E6E7EA",
-              padding: 3,
+              width: components.toggle.width,
+              height: components.toggle.height,
+              borderRadius: components.toggle.radius,
+              backgroundColor: preResetAlert ? (isDark ? components.toggle.dark.on : components.toggle.light.on) : c.border,
+              padding: components.toggle.padding,
               justifyContent: "center",
               alignItems: preResetAlert ? "flex-end" : "flex-start",
             }}
           >
             <View
               style={{
-                width: 22,
-                height: 22,
+                width: components.toggle.knobSize,
+                height: components.toggle.knobSize,
                 borderRadius: 50,
-                backgroundColor: "#FFFFFF",
+                backgroundColor: preResetAlert ? (isDark ? components.toggle.dark.knob : components.toggle.light.knob) : c.textOnAccent,
               }}
             />
           </View>
@@ -245,12 +249,12 @@ export default function QuickLogScreen() {
         <Pressable
           onPress={handleStart}
           style={{
-            height: 56,
-            borderRadius: 16,
-            backgroundColor: "#3B82F6",
+            height: components.primaryButton.height,
+            borderRadius: components.primaryButton.radius,
+            backgroundColor: isDark ? components.primaryButton.dark.bg : components.primaryButton.light.bg,
             justifyContent: "center",
             alignItems: "center",
-            shadowColor: "#3B82F6",
+            shadowColor: c.accent,
             shadowOffset: { width: 0, height: 6 },
             shadowOpacity: 0.32,
             shadowRadius: 18,
@@ -260,9 +264,9 @@ export default function QuickLogScreen() {
           <Text
             style={{
               fontFamily: "Manrope",
-              fontSize: 16,
+              fontSize: fontSizes.body,
               fontWeight: "700",
-              color: "#FFFFFF",
+              color: isDark ? components.primaryButton.dark.text : components.primaryButton.light.text,
             }}
           >
             Start 5-Hour Timer

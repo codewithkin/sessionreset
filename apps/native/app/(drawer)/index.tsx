@@ -1,13 +1,17 @@
 import { View, Text, ScrollView, Pressable, Alert } from "react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, radii } from "@/lib/tokens";
 import { useTimers } from "@/contexts/TimerContext";
 import { TimerCard } from "@/components/TimerCard";
-import { BannerAd } from "@/components/BannerAd";
 
 export default function DashboardScreen() {
   const { timers, toggleAlert, removeTimer } = useTimers();
   const router = useRouter();
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
 
   const today = new Date();
   const dateStr = today.toLocaleDateString("en-US", {
@@ -28,48 +32,56 @@ export default function DashboardScreen() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <View style={{ flex: 1, backgroundColor: c.bg }}>
       {/* Header */}
       <Animated.View
         entering={FadeIn.duration(400)}
         style={{
-          paddingHorizontal: 20,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingHorizontal: 16,
           paddingTop: 56,
           paddingBottom: 4,
         }}
       >
-        <Text
-          style={{
-            fontFamily: "Manrope",
-            fontSize: 22,
-            fontWeight: "800",
-            letterSpacing: -0.5,
-            color: "#17181A",
-          }}
-        >
-          Today
-        </Text>
-        <Text
-          style={{
-            fontFamily: "JetBrains Mono",
-            fontSize: 12,
-            fontWeight: "500",
-            color: "#9DA1A7",
-            marginTop: 2,
-          }}
-        >
-          {dateStr}
-        </Text>
+        <View>
+          <Text
+            style={{
+              fontFamily: "Manrope",
+              fontSize: 22,
+              fontWeight: "800",
+              letterSpacing: -0.5,
+              color: c.textPrimary,
+            }}
+          >
+            Today
+          </Text>
+          <Text
+            style={{
+              fontFamily: "JetBrains Mono",
+              fontSize: 12,
+              fontWeight: "500",
+              color: c.textMuted,
+              marginTop: 2,
+            }}
+          >
+            {dateStr}
+          </Text>
+        </View>
+        <Pressable onPress={() => router.push("/settings")}>
+          <Ionicons name="settings-outline" size={24} color={c.textPrimary} />
+        </Pressable>
       </Animated.View>
 
       {/* Timer list */}
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{
-          paddingHorizontal: 20,
+          paddingHorizontal: 16,
           paddingTop: 18,
           paddingBottom: timers.length > 0 ? 120 : 40,
-          gap: 14,
+          gap: 12,
         }}
         showsVerticalScrollIndicator={false}
       >
@@ -89,7 +101,7 @@ export default function DashboardScreen() {
                 fontSize: 22,
                 fontWeight: "800",
                 letterSpacing: -0.5,
-                color: "#17181A",
+                color: c.textPrimary,
               }}
             >
               No active limits.
@@ -99,7 +111,7 @@ export default function DashboardScreen() {
                 fontFamily: "Manrope",
                 fontSize: 16,
                 fontWeight: "500",
-                color: "#9DA1A7",
+                color: c.textMuted,
               }}
             >
               Tap below when you hit a wall.
@@ -121,44 +133,44 @@ export default function DashboardScreen() {
         )}
       </ScrollView>
 
-      {/* Banner ad (free tier only) */}
-      {timers.length > 0 && <BannerAd />}
-
       {/* FAB */}
       <Animated.View
         entering={FadeIn.duration(400).delay(300)}
         style={{
           position: "absolute",
           bottom: timers.length > 0 ? 80 : 32,
-          alignSelf: "center",
+          left: 0,
+          right: 0,
         }}
       >
         <Pressable
           onPress={() => router.push("/quick-log")}
           style={{
-            backgroundColor: "#3B82F6",
-            borderRadius: 50,
-            width: 60,
-            height: 60,
-            justifyContent: "center",
+            marginHorizontal: 16,
+            height: 56,
+            borderRadius: radii.button,
+            backgroundColor: c.accent,
+            flexDirection: "row",
             alignItems: "center",
-            shadowColor: "#3B82F6",
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.36,
-            shadowRadius: 20,
-            elevation: 8,
+            justifyContent: "center",
+            gap: 8,
+            shadowColor: c.accent,
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.3,
+            shadowRadius: 12,
+            elevation: 6,
           }}
         >
+          <Ionicons name="add" size={20} color="#FFFFFF" />
           <Text
             style={{
               fontFamily: "Manrope",
-              fontSize: 30,
-              fontWeight: "400",
+              fontWeight: "700",
+              fontSize: 16,
               color: "#FFFFFF",
-              lineHeight: 1,
             }}
           >
-            +
+            Log Limit Hit
           </Text>
         </Pressable>
       </Animated.View>

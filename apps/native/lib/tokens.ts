@@ -63,6 +63,7 @@ export const colors = {
     bg: '#000000',
     surface: '#1A1A1A',
     surfaceAlt: '#111111',
+    canvas: '#111111',
 
     // Text
     textPrimary: '#FFFFFF',
@@ -75,13 +76,17 @@ export const colors = {
 
     // Accent
     accent: '#60A5FA',
+    accentHover: '#93C5FD',
     accentTint: '#0E1A2B',
+    accentShadow: 'rgba(96,165,250,0.32)',
 
     // Status
     error: '#F87171',
     errorBg: '#2A1616',
     warning: '#FBBF24',
+    warningDark: '#F59E0B',
     success: '#10A37F',
+    successText: '#FFFFFF',
 
     // Brand
     claude: '#CC785C',
@@ -102,6 +107,10 @@ export const colors = {
     // Overlay
     overlay: 'rgba(0,0,0,0.62)',
     overlayHeavy: 'rgba(0,0,0,0.68)',
+
+    // Link
+    link: '#60A5FA',
+    linkHover: '#93C5FD',
   },
 } as const;
 

@@ -1,25 +1,29 @@
 import { View, Text, ScrollView } from "react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { storage } from "@/lib/storage";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing, layout } from "@/lib/tokens";
 
 export default function AlertsScreen() {
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
   const settings = storage.settings.get();
   const timers = storage.timers.getActive();
   const withAlert = timers.filter((t) => t.preResetAlert);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <View style={{ flex: 1, backgroundColor: c.bg }}>
       <Animated.View
         entering={FadeIn.duration(400)}
-        style={{ paddingHorizontal: 20, paddingTop: 56, paddingBottom: 18 }}
+        style={{ paddingHorizontal: spacing[20], paddingTop: spacing[56], paddingBottom: spacing[18] }}
       >
         <Text
           style={{
             fontFamily: "Manrope",
-            fontSize: 22,
+            fontSize: fontSizes.h3,
             fontWeight: "800",
             letterSpacing: -0.5,
-            color: "#17181A",
+            color: c.textPrimary,
           }}
         >
           Alerts
@@ -27,25 +31,25 @@ export default function AlertsScreen() {
       </Animated.View>
 
       <ScrollView
-        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40 }}
+        contentContainerStyle={{ paddingHorizontal: spacing[20], paddingBottom: spacing[40] }}
       >
         {/* Alert status */}
         <Animated.View
           entering={FadeInDown.duration(400).delay(100)}
           style={{
-            backgroundColor: "#F5F6F7",
-            borderRadius: 14,
-            padding: 18,
-            marginBottom: 16,
+            backgroundColor: c.surface,
+            borderRadius: radii.badge,
+            padding: spacing[18],
+            marginBottom: spacing[16],
           }}
         >
           <Text
             style={{
               fontFamily: "Manrope",
-              fontSize: 15,
+              fontSize: fontSizes.body,
               fontWeight: "700",
-              color: "#17181A",
-              marginBottom: 4,
+              color: c.textPrimary,
+              marginBottom: spacing[4],
             }}
           >
             Pre-Reset Alerts
@@ -53,9 +57,9 @@ export default function AlertsScreen() {
           <Text
             style={{
               fontFamily: "Manrope",
-              fontSize: 13,
+              fontSize: fontSizes.micro,
               fontWeight: "500",
-              color: "#6C7076",
+              color: c.textTertiary,
             }}
           >
             {settings.preResetAlertEnabled
@@ -70,11 +74,11 @@ export default function AlertsScreen() {
             <Text
               style={{
                 fontFamily: "JetBrains Mono",
-                fontSize: 11,
+                fontSize: fontSizes.xs,
                 fontWeight: "700",
-                letterSpacing: 1.4,
-                color: "#9DA1A7",
-                marginBottom: 10,
+                letterSpacing: letterSpacing.wideMd,
+                color: c.textMuted,
+                marginBottom: spacing[10],
               }}
             >
               ACTIVE ALERTS
@@ -84,31 +88,31 @@ export default function AlertsScreen() {
                 key={t.id}
                 entering={FadeInDown.duration(400).delay(300 + index * 80)}
                 style={{
-                  backgroundColor: "#F5F6F7",
-                  borderRadius: 14,
-                  padding: 16,
-                  marginBottom: 8,
+                  backgroundColor: c.surface,
+                  borderRadius: radii.badge,
+                  padding: spacing[16],
+                  marginBottom: spacing[8],
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
                   <View
                     style={{
-                      width: 8,
-                      height: 8,
+                      width: layout.serviceDot.size,
+                      height: layout.serviceDot.size,
                       borderRadius: 50,
                       backgroundColor:
-                        t.platform === "claude" ? "#CC785C" : "#10A37F",
+                        t.platform === "claude" ? c.claude : c.codex,
                     }}
                   />
                   <Text
                     style={{
                       fontFamily: "Manrope",
-                      fontSize: 14,
+                      fontSize: fontSizes.caption,
                       fontWeight: "600",
-                      color: "#17181A",
+                      color: c.textPrimary,
                     }}
                   >
                     {t.platform === "claude" ? "Claude" : "Codex"}
@@ -116,18 +120,18 @@ export default function AlertsScreen() {
                 </View>
                 <View
                   style={{
-                    backgroundColor: "#3B82F6",
-                    borderRadius: 999,
-                    paddingHorizontal: 10,
-                    paddingVertical: 5,
+                    backgroundColor: isDark ? components.offsetPill.dark.activeBg : components.offsetPill.light.activeBg,
+                    borderRadius: radii.full,
+                    paddingHorizontal: spacing[10],
+                    paddingVertical: spacing[5],
                   }}
                 >
                   <Text
                     style={{
                       fontFamily: "JetBrains Mono",
-                      fontSize: 11,
+                      fontSize: fontSizes.xs,
                       fontWeight: "700",
-                      color: "#FFFFFF",
+                      color: isDark ? components.offsetPill.dark.activeText : components.offsetPill.light.activeText,
                     }}
                   >
                     15m
@@ -139,14 +143,14 @@ export default function AlertsScreen() {
         ) : (
           <Animated.View
             entering={FadeInDown.duration(500).delay(200)}
-            style={{ alignItems: "center", paddingTop: 60 }}
+            style={{ alignItems: "center", paddingTop: spacing[56] }}
           >
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 16,
+                fontSize: fontSizes.body,
                 fontWeight: "500",
-                color: "#9DA1A7",
+                color: c.textMuted,
               }}
             >
               No active alerts. Enable alerts on your timers to see them here.

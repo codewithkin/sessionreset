@@ -9,12 +9,16 @@ import {
   getOfferings,
   initializePurchases,
 } from "@/lib/purchases";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, components, fontSizes, spacing, radii, shadows } from "@/lib/tokens";
 
 const FEATURES = ["alerts", "widgets", "sounds"] as const;
 
 export default function PaywallScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
   const [purchasing, setPurchasing] = useState(false);
   const [price, setPrice] = useState("$1.99");
 
@@ -45,19 +49,19 @@ export default function PaywallScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: c.bg }}>
       <View
         style={{
           flex: 1,
-          paddingHorizontal: 24,
-          paddingTop: 16,
+          paddingHorizontal: spacing[24],
+          paddingTop: spacing[16],
           justifyContent: "space-between",
         }}
       >
         {/* Progress dots */}
         <Animated.View
           entering={FadeIn.duration(300)}
-          style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}
+          style={{ flexDirection: "row", justifyContent: "center", gap: spacing[6] }}
         >
           {[0, 1, 2, 3, 4].map((i) => (
             <View
@@ -65,22 +69,22 @@ export default function PaywallScreen() {
               style={{
                 width: 22,
                 height: 4,
-                borderRadius: 2,
-                backgroundColor: i === 3 ? "#3B82F6" : "#DDE0E4",
+                borderRadius: radii.sm,
+                backgroundColor: i === 3 ? c.progressFill : c.borderStrong,
               }}
             />
           ))}
         </Animated.View>
 
-        <View style={{ gap: 24, marginTop: 40 }}>
+        <View style={{ gap: spacing[24], marginTop: spacing[40] }}>
           {/* Social proof */}
           <Animated.Text
             entering={FadeInDown.duration(400).delay(100)}
             style={{
               fontFamily: "Manrope",
-              fontSize: 13,
+              fontSize: fontSizes.micro,
               fontWeight: "500",
-              color: "#9DA1A7",
+              color: c.textMuted,
               textAlign: "center",
             }}
           >
@@ -91,10 +95,10 @@ export default function PaywallScreen() {
             entering={FadeInDown.duration(400).delay(150)}
             style={{
               fontFamily: "Manrope",
-              fontSize: 26,
+              fontSize: fontSizes.h2,
               fontWeight: "800",
               letterSpacing: -0.8,
-              color: "#17181A",
+              color: c.textPrimary,
               textAlign: "center",
             }}
           >
@@ -104,29 +108,33 @@ export default function PaywallScreen() {
           {/* Feature checklist */}
           <Animated.View
             entering={FadeInDown.duration(400).delay(200)}
-            style={{ gap: 14 }}
+            style={{ gap: components.checklistItem.gap }}
           >
             {FEATURES.map((f) => (
               <View
                 key={f}
-                style={{ flexDirection: "row", alignItems: "center", gap: 14 }}
+                style={{ flexDirection: "row", alignItems: "center", gap: components.checklistItem.gap }}
               >
                 <View
                   style={{
-                    width: 20,
-                    height: 20,
+                    width: components.checklistItem.circleSize,
+                    height: components.checklistItem.circleSize,
                     borderRadius: 50,
-                    backgroundColor: "#F0F6FF",
+                    backgroundColor: isDark
+                      ? components.checklistItem.dark.circleBg
+                      : components.checklistItem.light.circleBg,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
                   <Text
                     style={{
-                      fontFamily: "Manrope",
-                      fontSize: 11,
-                      fontWeight: "700",
-                      color: "#3B82F6",
+                      fontFamily: components.checklistItem.font.family,
+                      fontSize: components.checklistItem.font.size,
+                      fontWeight: components.checklistItem.font.weight,
+                      color: isDark
+                        ? components.checklistItem.dark.circleText
+                        : components.checklistItem.light.circleText,
                     }}
                   >
                     ✓
@@ -134,10 +142,11 @@ export default function PaywallScreen() {
                 </View>
                 <Text
                   style={{
-                    fontFamily: "Manrope",
-                    fontSize: 16,
-                    fontWeight: "500",
-                    color: "#17181A",
+                    fontFamily: components.checklistItem.labelFont.family,
+                    fontSize: components.checklistItem.labelFont.size,
+                    fontWeight: components.checklistItem.labelFont.weight,
+                    lineHeight: 23.2,
+                    color: c.textPrimary,
                     flex: 1,
                   }}
                 >
@@ -151,11 +160,11 @@ export default function PaywallScreen() {
           <Animated.View
             entering={FadeInDown.duration(400).delay(300)}
             style={{
-              backgroundColor: "#F5F6F7",
-              borderLeftWidth: 3,
-              borderLeftColor: "#3B82F6",
-              borderRadius: 12,
-              padding: 20,
+              backgroundColor: isDark ? components.priceCard.dark.bg : components.priceCard.light.bg,
+              borderLeftWidth: components.priceCard.leftBorderWidth,
+              borderLeftColor: isDark ? components.priceCard.dark.border : components.priceCard.light.border,
+              borderRadius: components.priceCard.radius,
+              padding: components.priceCard.padding,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
@@ -164,21 +173,21 @@ export default function PaywallScreen() {
             <View>
               <Text
                 style={{
-                  fontFamily: "JetBrains Mono",
-                  fontSize: 34,
-                  fontWeight: "700",
-                  letterSpacing: -1.5,
-                  color: "#17181A",
+                  fontFamily: components.priceCard.priceFont.family,
+                  fontSize: components.priceCard.priceFont.size,
+                  fontWeight: components.priceCard.priceFont.weight,
+                  letterSpacing: components.priceCard.priceLetterSpacing,
+                  color: c.textPrimary,
                 }}
               >
                 {price}
               </Text>
               <Text
                 style={{
-                  fontFamily: "JetBrains Mono",
-                  fontSize: 15,
-                  fontWeight: "500",
-                  color: "#9DA1A7",
+                  fontFamily: components.priceCard.strikethroughFont.family,
+                  fontSize: components.priceCard.strikethroughFont.size,
+                  fontWeight: components.priceCard.strikethroughFont.weight,
+                  color: c.textMuted,
                   textDecorationLine: "line-through",
                 }}
               >
@@ -187,19 +196,19 @@ export default function PaywallScreen() {
             </View>
             <View
               style={{
-                backgroundColor: "#17181A",
-                borderRadius: 6,
-                paddingHorizontal: 9,
-                paddingVertical: 5,
+                backgroundColor: c.textPrimary,
+                borderRadius: radii.badge,
+                paddingHorizontal: spacing[8],
+                paddingVertical: spacing[5],
               }}
             >
               <Text
                 style={{
                   fontFamily: "JetBrains Mono",
-                  fontSize: 10,
+                  fontSize: fontSizes.tiny,
                   fontWeight: "700",
                   letterSpacing: 1.2,
-                  color: "#FFFFFF",
+                  color: c.bg,
                 }}
               >
                 LIFETIME
@@ -211,9 +220,9 @@ export default function PaywallScreen() {
             entering={FadeInDown.duration(400).delay(350)}
             style={{
               fontFamily: "Manrope",
-              fontSize: 13,
+              fontSize: fontSizes.micro,
               fontWeight: "500",
-              color: "#9DA1A7",
+              color: c.textMuted,
               textAlign: "center",
             }}
           >
@@ -224,17 +233,17 @@ export default function PaywallScreen() {
         {/* CTAs */}
         <Animated.View
           entering={FadeInDown.duration(400).delay(400)}
-          style={{ gap: 18, marginBottom: 12 }}
+          style={{ gap: spacing[18], marginBottom: spacing[12] }}
         >
           <Pressable
             onPress={handlePurchase}
             style={{
-              height: 56,
-              borderRadius: 16,
-              backgroundColor: purchasing ? "#9DA1A7" : "#3B82F6",
+              height: components.primaryButton.height,
+              borderRadius: components.primaryButton.radius,
+              backgroundColor: purchasing ? c.textMuted : c.accent,
               justifyContent: "center",
               alignItems: "center",
-              shadowColor: "#3B82F6",
+              shadowColor: c.accent,
               shadowOffset: { width: 0, height: 6 },
               shadowOpacity: purchasing ? 0 : 0.32,
               shadowRadius: 18,
@@ -243,10 +252,10 @@ export default function PaywallScreen() {
           >
             <Text
               style={{
-                fontFamily: "Manrope",
-                fontSize: 16,
-                fontWeight: "700",
-                color: "#FFFFFF",
+                fontFamily: components.primaryButton.font.family,
+                fontSize: components.primaryButton.font.size,
+                fontWeight: components.primaryButton.font.weight,
+                color: c.textOnAccent,
               }}
             >
               {purchasing ? "Processing..." : t("onboarding.paywall.cta")}
@@ -256,9 +265,9 @@ export default function PaywallScreen() {
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 13,
+                fontSize: fontSizes.micro,
                 fontWeight: "500",
-                color: "#9DA1A7",
+                color: c.textMuted,
                 textAlign: "center",
               }}
             >

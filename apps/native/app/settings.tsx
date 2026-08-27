@@ -11,9 +11,13 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { storage } from "@/lib/storage";
 import { restorePurchases } from "@/lib/purchases";
+import { useAppTheme } from "@/contexts/app-theme-context";
+import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing } from "@/lib/tokens";
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const { isDark } = useAppTheme();
+  const c = isDark ? colors.dark : colors.light;
   const [settings, setSettings] = useState(() => storage.settings.get());
   const [restoring, setRestoring] = useState(false);
 
@@ -57,24 +61,24 @@ export default function SettingsScreen() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <View style={{ flex: 1, backgroundColor: c.bg }}>
       {/* Header */}
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          paddingHorizontal: 20,
-          paddingTop: 56,
-          paddingBottom: 18,
+          paddingHorizontal: spacing[20],
+          paddingTop: spacing[56],
+          paddingBottom: spacing[18],
         }}
       >
         <Text
           style={{
             fontFamily: "Manrope",
-            fontSize: 17,
+            fontSize: fontSizes.bodyLg,
             fontWeight: "700",
-            color: "#17181A",
+            color: c.textPrimary,
           }}
         >
           Settings
@@ -85,7 +89,7 @@ export default function SettingsScreen() {
               fontFamily: "Manrope",
               fontSize: 16,
               fontWeight: "500",
-              color: "#3B82F6",
+              color: c.accent,
             }}
           >
             Done
@@ -93,27 +97,27 @@ export default function SettingsScreen() {
         </Pressable>
       </View>
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: spacing[40] }}>
         {/* Pro upgrade / status */}
         <Animated.View entering={FadeInDown.duration(400).delay(100)}>
         {settings.isPro ? (
           <View
             style={{
-              marginHorizontal: 20,
-              backgroundColor: "#F5F6F7",
-              borderLeftWidth: 3,
-              borderLeftColor: "#10A37F",
-              borderRadius: 14,
-              padding: 18,
-              marginBottom: 24,
+              marginHorizontal: spacing[20],
+              backgroundColor: isDark ? components.upgradeCard.dark.bg : components.upgradeCard.light.bg,
+              borderLeftWidth: components.upgradeCard.leftBorderWidth,
+              borderLeftColor: c.success,
+              borderRadius: components.upgradeCard.radius,
+              padding: components.upgradeCard.padding,
+              marginBottom: spacing[24],
             }}
           >
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 15,
+                fontSize: fontSizes.body,
                 fontWeight: "700",
-                color: "#10A37F",
+                color: c.success,
               }}
             >
               You're Pro
@@ -121,10 +125,10 @@ export default function SettingsScreen() {
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 13,
+                fontSize: fontSizes.micro,
                 fontWeight: "500",
-                color: "#6C7076",
-                marginTop: 4,
+                color: c.textTertiary,
+                marginTop: spacing[4],
               }}
             >
               All features unlocked, ads removed.
@@ -134,21 +138,21 @@ export default function SettingsScreen() {
           <Pressable
             onPress={() => router.push("/(onboarding)/paywall")}
             style={{
-              marginHorizontal: 20,
-              backgroundColor: "#F5F6F7",
-              borderLeftWidth: 3,
-              borderLeftColor: "#3B82F6",
-              borderRadius: 14,
-              padding: 18,
-              marginBottom: 24,
+              marginHorizontal: spacing[20],
+              backgroundColor: isDark ? components.upgradeCard.dark.bg : components.upgradeCard.light.bg,
+              borderLeftWidth: components.upgradeCard.leftBorderWidth,
+              borderLeftColor: isDark ? components.upgradeCard.dark.border : components.upgradeCard.light.border,
+              borderRadius: components.upgradeCard.radius,
+              padding: components.upgradeCard.padding,
+              marginBottom: spacing[24],
             }}
           >
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 15,
+                fontSize: fontSizes.body,
                 fontWeight: "700",
-                color: "#3B82F6",
+                color: isDark ? components.upgradeCard.dark.border : components.upgradeCard.light.border,
               }}
             >
               Unlock Pro
@@ -156,10 +160,10 @@ export default function SettingsScreen() {
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 13,
+                fontSize: fontSizes.micro,
                 fontWeight: "500",
-                color: "#6C7076",
-                marginTop: 4,
+                color: c.textTertiary,
+                marginTop: spacing[4],
               }}
             >
               Remove Ads & Unlock Widgets — $1.99
@@ -167,10 +171,10 @@ export default function SettingsScreen() {
             <Text
               style={{
                 fontFamily: "Manrope",
-                fontSize: 12,
+                fontSize: fontSizes.xs,
                 fontWeight: "500",
-                color: "#9DA1A7",
-                marginTop: 2,
+                color: c.textMuted,
+                marginTop: spacing[2],
               }}
             >
               Lifetime Access • Launch Price
@@ -183,56 +187,56 @@ export default function SettingsScreen() {
         {/* Will re-enable when ads/IAP go live */}
 
         {/* DATA section */}
-        <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginBottom: 24 }}>
+        <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginBottom: spacing[24] }}>
           <Text
             style={{
               fontFamily: "JetBrains Mono",
-              fontSize: 11,
+              fontSize: fontSizes.xs,
               fontWeight: "700",
-              letterSpacing: 1.4,
-              color: "#9DA1A7",
-              paddingHorizontal: 20,
-              marginBottom: 10,
+              letterSpacing: letterSpacing.wideMd,
+              color: c.textMuted,
+              paddingHorizontal: spacing[20],
+              marginBottom: spacing[10],
             }}
           >
             DATA
           </Text>
           <View
             style={{
-              marginHorizontal: 20,
-              backgroundColor: "#F5F6F7",
-              borderRadius: 14,
+              marginHorizontal: spacing[20],
+              backgroundColor: c.surface,
+              borderRadius: radii.badge,
               overflow: "hidden",
             }}
           >
             <Pressable
               onPress={handleExport}
               style={{
-                paddingVertical: 16,
+                paddingVertical: components.settingsRow.padding.vertical,
                 paddingHorizontal: 18,
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
                 borderBottomWidth: 1,
-                borderBottomColor: "#EDEEF0",
+                borderBottomColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
               }}
             >
               <Text
                 style={{
                   fontFamily: "Manrope",
-                  fontSize: 15,
-                  fontWeight: "600",
-                  color: "#17181A",
+                  fontSize: components.settingsRow.titleFont.size,
+                  fontWeight: components.settingsRow.titleFont.weight as any,
+                  color: c.textPrimary,
                 }}
               >
                 Export Timer History
               </Text>
-              <Text style={{ color: "#C9CBCF", fontSize: 14 }}>›</Text>
+              <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
             </Pressable>
             <Pressable
               onPress={handleRestore}
               style={{
-                paddingVertical: 16,
+                paddingVertical: components.settingsRow.padding.vertical,
                 paddingHorizontal: 18,
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -242,55 +246,55 @@ export default function SettingsScreen() {
               <Text
                 style={{
                   fontFamily: "Manrope",
-                  fontSize: 15,
-                  fontWeight: "600",
-                  color: restoring ? "#9DA1A7" : "#17181A",
+                  fontSize: components.settingsRow.titleFont.size,
+                  fontWeight: components.settingsRow.titleFont.weight as any,
+                  color: restoring ? c.textMuted : c.textPrimary,
                 }}
               >
                 {restoring ? "Restoring..." : "Restore Purchases"}
               </Text>
-              <Text style={{ color: "#C9CBCF", fontSize: 14 }}>›</Text>
+              <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
             </Pressable>
           </View>
         </Animated.View>
 
         {/* ABOUT section */}
-        <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: 24 }}>
+        <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: spacing[24] }}>
           <Text
             style={{
               fontFamily: "JetBrains Mono",
-              fontSize: 11,
+              fontSize: fontSizes.xs,
               fontWeight: "700",
-              letterSpacing: 1.4,
-              color: "#9DA1A7",
-              paddingHorizontal: 20,
-              marginBottom: 10,
+              letterSpacing: letterSpacing.wideMd,
+              color: c.textMuted,
+              paddingHorizontal: spacing[20],
+              marginBottom: spacing[10],
             }}
           >
             ABOUT
           </Text>
           <View
             style={{
-              marginHorizontal: 20,
-              backgroundColor: "#F5F6F7",
-              borderRadius: 14,
+              marginHorizontal: spacing[20],
+              backgroundColor: c.surface,
+              borderRadius: radii.badge,
               overflow: "hidden",
             }}
           >
             <View
               style={{
-                paddingVertical: 16,
+                paddingVertical: components.settingsRow.padding.vertical,
                 paddingHorizontal: 18,
                 borderBottomWidth: 1,
-                borderBottomColor: "#EDEEF0",
+                borderBottomColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
               }}
             >
               <Text
                 style={{
                   fontFamily: "JetBrains Mono",
-                  fontSize: 12,
+                  fontSize: fontSizes.xs,
                   fontWeight: "500",
-                  color: "#C9CBCF",
+                  color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron,
                 }}
               >
                 SessionReset v1.0.0
@@ -298,7 +302,7 @@ export default function SettingsScreen() {
             </View>
             <Pressable
               style={{
-                paddingVertical: 16,
+                paddingVertical: components.settingsRow.padding.vertical,
                 paddingHorizontal: 18,
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -308,14 +312,14 @@ export default function SettingsScreen() {
               <Text
                 style={{
                   fontFamily: "Manrope",
-                  fontSize: 15,
-                  fontWeight: "600",
-                  color: "#17181A",
+                  fontSize: components.settingsRow.titleFont.size,
+                  fontWeight: components.settingsRow.titleFont.weight as any,
+                  color: c.textPrimary,
                 }}
               >
                 Contact / Feedback
               </Text>
-              <Text style={{ color: "#C9CBCF", fontSize: 14 }}>›</Text>
+              <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
             </Pressable>
           </View>
         </Animated.View>
