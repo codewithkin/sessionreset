@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, Text, TouchableOpacity, Pressable } from "react-native";
-import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
+import Animated, { FadeInDown, FadeIn, ZoomIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -132,7 +132,9 @@ export default function QuizScreen() {
                       }}
                     />
                     {active ? (
-                      <View
+                      <Animated.View
+                        key={`check-${s}`}
+                        entering={ZoomIn.springify().damping(0.8)}
                         style={{
                           width: components.quizCard.checkboxSize,
                           height: components.quizCard.checkboxSize,
@@ -152,7 +154,7 @@ export default function QuizScreen() {
                         >
                           ✓
                         </Text>
-                      </View>
+                      </Animated.View>
                     ) : (
                       <View
                         style={{
