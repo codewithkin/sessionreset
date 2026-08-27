@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "SessionReset"
+  },
+  "onboarding": {
+    "outcomeHook": {
+      "headline": "لا تفقد حالة التدفق بسبب حدود الذكاء الاصطناعي غير المتوقعة.",
+      "subtitle": "منبهات إعادة تعيين فورية لمدة 5 ساعات لـ Claude وCodex وأدوات الذكاء الاصطناعي.",
+      "cta": "ابدأ →",
+      "footer": "لا حاجة لحساب • 100% بيانات محلية"
+    },
+    "quiz": {
+      "question1": "أي مساعدات ذكاء اصطناعي تعتمد عليها يومياً؟",
+      "question2": "كم مرة تقطع حدود الاستخدام برمجتك؟",
+      "options": {
+        "claude": "Claude 3.5 Sonnet",
+        "codex": "OpenAI Codex / ChatGPT",
+        "claudeCode": "Claude Code CLI",
+        "cursor": "Cursor / Copilot",
+        "low": "1–2 مرة/أسبوع",
+        "medium": "3–5 مرات/أسبوع",
+        "high": "كل يوم"
+      },
+      "cta": "متابعة →"
+    },
+    "founderNote": {
+      "title": "ملاحظة من المؤسس",
+      "body": "مرحباً! بنيت SessionReset لأن الوصول إلى حد 5 ساعات أثناء إعادة الهيكلة جعلني مجنوناً. لا حسابات، لا قواعد بيانات سحابية تتبع بياناتك—فقط أداة نقية لإبقائك في المنطقة.",
+      "cta": "يبدو جيداً →"
+    },
+    "paywall": {
+      "socialProof": "انضم أكثر من 2,000 مطور من GitHub وVercel وStripe.",
+      "features": {
+        "alerts": "تنبيهات فورية قبل 15 دقيقة من إعادة التعيين",
+        "widgets": "ودجات شاشة البداية وشاشة القفل",
+        "sounds": "مؤثرات صوتية مخصصة وبدون إعلانات",
+        "claudeAlerts": "تنبيهات فورية قبل 15 دقيقة لـ Claude",
+        "codexAlerts": "تنبيهات فورية قبل 15 دقيقة لـ Codex",
+        "dualAlerts": "تنبيهات فورية قبل 15 دقيقة (Claude + Codex)",
+        "customTimers": "تتبع أي خدمة ذكاء اصطناعي بمؤقتات مخصصة"
+      },
+      "price": "$1.99",
+      "period": "Pro مدى الحياة • سعر الإطلاق",
+      "originalPrice": "$4.99",
+      "cta": "فتح Pro مدى الحياة",
+      "skip": "المتابعة بالمجاني"
+    },
+    "notifications": {
+      "previewTitle": "SessionReset • قبل 15 دقيقة",
+      "previewHeadline": "⚡ إعادة تعيين Claude خلال 15 دقيقة",
+      "previewBody": "أكمل مهمتك الحالية—نافذة السياق الخاصة بك لمدة 5 ساعات على وشك المسح.",
+      "headline": "لا تفوّت أبداً نافذة إعادة التعيين",
+      "body": "نرسل فقط منبهات محلية لمؤقتاتك النشطة. بدون رسالة مزعجة.",
+      "cta": "تفعيل الإشعارات",
+      "enabled": "تم تفعيل الإشعارات ✓"
+    },
+    "starter": {
+      "headline": "سجّل إعادة التعيين الأولى",
+      "subtext": "اضغط أدناه لبدء تتبع نافذتك الأولى لمدة 5 ساعات.",
+      "blocked": "أنا محظور الآن",
+      "demo": "بدء مؤقت تجريبي"
+    }
+  },
+  "dashboard": {
+    "title": "SessionReset",
+    "empty": {
+      "title": "لا حدود نشطة.",
+      "subtext": "اضغط أدناه عند الاصطدام بجدار."
+    },
+    "timer": {
+      "resetsAt": "يُعاد التعيين الساعة {{time}}",
+      "alertOn": "🔔 15 د",
+      "alertOff": "🔔 15 د مغلق",
+      "claude": "Claude 3.5 Sonnet",
+      "codex": "Codex"
+    },
+    "fab": "+ سجّل الحد"
+  },
+  "quickLog": {
+    "title": "سجّل الحد",
+    "serviceLabel": "أي خدمة؟",
+    "claude": "Claude",
+    "codex": "Codex",
+    "timeLabel": "متى وصلت للحد؟",
+    "justNow": "الآن",
+    "minutesAgo": "قبل {{minutes}} د",
+    "alertLabel": "ذكّرني قبل 15 دقيقة من إعادة التعيين",
+    "cta": "بدء مؤقت 5 ساعات",
+    "replaceWarning": "استبدال المؤقت الحالي لـ {{platform}}؟ سيإلغاء العد التنازلي.",
+    "confirm": "استبدال",
+    "cancel": "إلغاء"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "pro": {
+      "upgrade": "فتح Pro",
+      "upgradeSubtext": "إزالة الإعلانات وفتح الودجات — $1.99",
+      "upgradePeriod": "وصول مدى الحياة • سعر الإطلاق",
+      "active": "أنت Pro",
+      "activeSubtext": "جميع الميزات مفتوحة، الإعلانات محذوفة."
+    },
+    "notifications": {
+      "sound": "صوت الإشعار",
+      "preResetAlert": "تنبيه إعادة التعيين الافتراضي"
+    },
+    "power": {
+      "watchAd": "شاهد إعلان لـ 24 ساعة Pro",
+      "watchAdSubtext": "شاهد فيديو 15 ثانية لفتح جميع الميزات"
+    },
+    "data": {
+      "export": "تصدير سجل المؤقتات",
+      "restore": "استعادة المشتريات"
+    },
+    "about": {
+      "version": "SessionReset v{{version}}",
+      "contact": "تواصل / ملاحظات"
+    }
+  },
+  "rewardedAd": {
+    "headline": "فتح Pro لمدة 24 ساعة",
+    "body": "شاهد فيديو قصير 15 ثانية لاستخدام جميع ميزات Pro في اليوم التالي.",
+    "cta": "شاهد فيديو قصير",
+    "dismiss": "لا شكراً",
+    "success": "تم فتح Pro لمدة 24 ساعة!"
+  },
+  "notifications_alerts": {
+    "resetTitle": "تم إعادة تعيين نافذة {{platform}}! 🚀",
+    "resetBody": "تم مسح حد نافذة السياق الخاصة بك لمدة 5 ساعات من {{platform}}.",
+    "preResetTitle": "⚡ إعادة تعيين {{platform}} خلال 15 دقيقة",
+    "preResetBody": "أكمل مهمتك الحالية—نافذة السياق الخاصة بك لمدة 5 ساعات على وشك المسح."
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ ما",
+    "retry": "حاول مرة أخرى",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "next": "التالي"
+  }
+}

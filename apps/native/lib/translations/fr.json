@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "SessionReset"
+  },
+  "onboarding": {
+    "outcomeHook": {
+      "headline": "Ne perdez jamais votre état de flux à cause de limites IA inattendues.",
+      "subtitle": "Alarmes de réinitialisation de 5 heures pour Claude, Codex et les outils IA.",
+      "cta": "Commencer →",
+      "footer": "Aucun compte requis • 100% Données locales"
+    },
+    "quiz": {
+      "question1": "Quels assistants IA utilisez-vous quotidiennement ?",
+      "question2": "À quelle fréquence les limites interrompent-elles votre codage ?",
+      "options": {
+        "claude": "Claude 3.5 Sonnet",
+        "codex": "OpenAI Codex / ChatGPT",
+        "claudeCode": "Claude Code CLI",
+        "cursor": "Cursor / Copilot",
+        "low": "1–2 fois/semaine",
+        "medium": "3–5 fois/semaine",
+        "high": "Tous les jours"
+      },
+      "cta": "Continuer →"
+    },
+    "founderNote": {
+      "title": "Un mot du fondateur",
+      "body": "Salut ! J'ai créé SessionReset parce qu'atteindre une limite de 5 heures en plein refactoring me rendait fou. Pas de comptes, pas de bases de données cloud qui suivent vos données—juste un outil pur pour vous garder dans la zone.",
+      "cta": "Ça me va →"
+    },
+    "paywall": {
+      "socialProof": "Rejoint par 2 000+ développeurs de GitHub, Vercel et Stripe.",
+      "features": {
+        "alerts": "Alertes instantanées 15 minutes avant la réinitialisation",
+        "widgets": "Widgets écran d'accueil et écran de verrouillage",
+        "sounds": "Effets sonores personnalisés & zéro publicité",
+        "claudeAlerts": "Alertes instantanées 15 min pour Claude",
+        "codexAlerts": "Alertes instantanées 15 min pour Codex",
+        "dualAlerts": "Alertes instantanées 15 min (Claude + Codex)",
+        "customTimers": "Suivre n'importe quel service IA avec des minuteries personnalisées"
+      },
+      "price": "1,99 €",
+      "period": "Pro à vie • Prix de lancement",
+      "originalPrice": "4,99 €",
+      "cta": "Débloquer Pro à vie",
+      "skip": "Continuer avec la version gratuite"
+    },
+    "notifications": {
+      "previewTitle": "SessionReset • il y a 15 min",
+      "previewHeadline": "⚡ Claude réinitialise dans 15 minutes",
+      "previewBody": "Terminez votre tâche actuelle—votre fenêtre de contexte de 5 heures est sur le point d'être effacée.",
+      "headline": "Ne manquez jamais votre fenêtre de réinitialisation",
+      "body": "Nous envoyons uniquement des alarmes locales pour vos minuteurs actifs. Zéro spam.",
+      "cta": "Activer les notifications",
+      "enabled": "Notifications activées ✓"
+    },
+    "starter": {
+      "headline": "Enregistrez votre première réinitialisation",
+      "subtext": "Appuyez ci-dessous pour commencer à suivre votre première fenêtre de 5 heures.",
+      "blocked": "Je suis bloqué maintenant",
+      "demo": "Démarrer un minuteur de démo"
+    }
+  },
+  "dashboard": {
+    "title": "SessionReset",
+    "empty": {
+      "title": "Aucune limite active.",
+      "subtext": "Appuyez ci-dessous quand vous heurtez un mur."
+    },
+    "timer": {
+      "resetsAt": "Réinitialisation à {{time}}",
+      "alertOn": "🔔 15 min",
+      "alertOff": "🔔 15 min Arr",
+      "claude": "Claude 3.5 Sonnet",
+      "codex": "Codex"
+    },
+    "fab": "+ Enregistrer la limite"
+  },
+  "quickLog": {
+    "title": "Enregistrer la limite",
+    "serviceLabel": "Quel service ?",
+    "claude": "Claude",
+    "codex": "Codex",
+    "timeLabel": "Quand avez-vous atteint la limite ?",
+    "justNow": "À l'instant",
+    "minutesAgo": "il y a {{minutes}} min",
+    "alertLabel": "Me rappeler 15 minutes avant la réinitialisation",
+    "cta": "Démarrer un minuteur de 5 heures",
+    "replaceWarning": "Remplacer le minuteur {{platform}} existant ? Cela annulera le compte à rebours.",
+    "confirm": "Remplacer",
+    "cancel": "Annuler"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "pro": {
+      "upgrade": "Débloquer Pro",
+      "upgradeSubtext": "Supprimer les pubs & débloquer les widgets — 1,99 €",
+      "upgradePeriod": "Accès à vie • Prix de lancement",
+      "active": "Vous êtes Pro",
+      "activeSubtext": "Toutes les fonctionnalités débloquées, publicités supprimées."
+    },
+    "notifications": {
+      "sound": "Son de notification",
+      "preResetAlert": "Alerte par défaut avant réinitialisation"
+    },
+    "power": {
+      "watchAd": "Regarder une pub pour 24h de Pro",
+      "watchAdSubtext": "Regardez une vidéo de 15s pour débloquer toutes les fonctionnalités"
+    },
+    "data": {
+      "export": "Exporter l'historique des minuteurs",
+      "restore": "Restaurer les achats"
+    },
+    "about": {
+      "version": "SessionReset v{{version}}",
+      "contact": "Contact / Avis"
+    }
+  },
+  "rewardedAd": {
+    "headline": "Débloquer Pro pendant 24 heures",
+    "body": "Regardez une courte vidéo de 15 secondes pour utiliser toutes les fonctionnalités Pro le jour suivant.",
+    "cta": "Regarder la courte vidéo",
+    "dismiss": "Non merci",
+    "success": "Pro débloqué pour 24 heures !"
+  },
+  "notifications_alerts": {
+    "resetTitle": "Fenêtre {{platform}} réinitialisée ! 🚀",
+    "resetBody": "Votre limite de fenêtre de contexte de 5 heures pour {{platform}} a été effacée.",
+    "preResetTitle": "⚡ {{platform}} réinitialise dans 15 minutes",
+    "preResetBody": "Terminez votre tâche actuelle—votre fenêtre de contexte de 5 heures est sur le point d'être effacée."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Quelque chose a mal tourné",
+    "retry": "Réessayer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "next": "Suivant"
+  }
+}

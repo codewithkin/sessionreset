@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "SessionReset"
+  },
+  "onboarding": {
+    "outcomeHook": {
+      "headline": "予期しないAI制限にフローステートを奪われないでください。",
+      "subtitle": "Claude、Codex、AI CLIツールのための5時間ローリングリセットアラーム。",
+      "cta": "始める →",
+      "footer": "アカウント不要 • 100% オンデバイスデータ"
+    },
+    "quiz": {
+      "question1": "毎日どのAIアシスタントに依存していますか？",
+      "question2": "レート制限はどの頻度でコーディングを妨げますか？",
+      "options": {
+        "claude": "Claude 3.5 Sonnet",
+        "codex": "OpenAI Codex / ChatGPT",
+        "claudeCode": "Claude Code CLI",
+        "cursor": "Cursor / Copilot",
+        "low": "週1–2回",
+        "medium": "週3–5回",
+        "high": "毎日"
+      },
+      "cta": "続ける →"
+    },
+    "founderNote": {
+      "title": "創業者からのメッセージ",
+      "body": "こんにちは！リファクタリングの最中に5時間の制限に達することがフラストレーションでSessionResetを作りました。アカウントなし、クラウドデータベースでデータを追跡しない—ただあなたをゾーンに保つための純粋なユーティリティです。",
+      "cta": "いいね →"
+    },
+    "paywall": {
+      "socialProof": "GitHub、Vercel、Stripeの2,000以上の開発者が参加。",
+      "features": {
+        "alerts": "リセット15分前の即時アラート",
+        "widgets": "ホーム画面とロック画面のウィジェット",
+        "sounds": "カスタムサウンドエフェクト＆バナー広告なし",
+        "claudeAlerts": "Claude用の15分前アラート",
+        "codexAlerts": "Codex用の15分前アラート",
+        "dualAlerts": "15分前アラート（Claude + Codex）",
+        "customTimers": "カスタムタイマーで任意のAIサービスを追跡"
+      },
+      "price": "¥290",
+      "period": "ライフタイムPro • ランチ割引",
+      "originalPrice": "¥590",
+      "cta": "Proをロック解除",
+      "skip": "無料版で続ける"
+    },
+    "notifications": {
+      "previewTitle": "SessionReset • 15分前",
+      "previewHeadline": "⚡ Claude 15分でリセット",
+      "previewBody": "現在のタスクを完了してください—5時間のコンテキストウィンドウがまもなくクリアされます。",
+      "headline": "リセットウィンドウを見逃さない",
+      "body": "アクティブなタイマーにのみローカルアラームを送信。スパムゼロ。",
+      "cta": "通知を有効にする",
+      "enabled": "通知有効 ✓"
+    },
+    "starter": {
+      "headline": "最初のリセットを記録",
+      "subtext": "最初の5時間ウィンドウの追跡を開始するには下をタップ。",
+      "blocked": "今ブロックされている",
+      "demo": "デモタイマーを開始"
+    }
+  },
+  "dashboard": {
+    "title": "SessionReset",
+    "empty": {
+      "title": "アクティブな制限なし。",
+      "subtext": "壁に当たったときに下をタップ。"
+    },
+    "timer": {
+      "resetsAt": "{{time}}にリセット",
+      "alertOn": "🔔 15分",
+      "alertOff": "🔔 15分 オフ",
+      "claude": "Claude 3.5 Sonnet",
+      "codex": "Codex"
+    },
+    "fab": "+ 制限を記録"
+  },
+  "quickLog": {
+    "title": "制限を記録",
+    "serviceLabel": "どのサービス？",
+    "claude": "Claude",
+    "codex": "Codex",
+    "timeLabel": "いつ制限に達しましたか？",
+    "justNow": "今すぐ",
+    "minutesAgo": "{{minutes}}分前",
+    "alertLabel": "リセット15分前にリマインド",
+    "cta": "5時間タイマーを開始",
+    "replaceWarning": "既存の{{platform}}タイマーを置き換えますか？現在のカウントダウンがキャンセルされます。",
+    "confirm": "置き換え",
+    "cancel": "キャンセル"
+  },
+  "settings": {
+    "title": "設定",
+    "pro": {
+      "upgrade": "Proをロック解除",
+      "upgradeSubtext": "広告を削除しウィジェットを解除 — $1.99",
+      "upgradePeriod": "ライフタイムアクセス • ランチ価格",
+      "active": "Proです",
+      "activeSubtext": "全機能ロック解除、広告削除済み。"
+    },
+    "notifications": {
+      "sound": "通知サウンド",
+      "preResetAlert": "プリリセットアラートのデフォルト"
+    },
+    "power": {
+      "watchAd": "24時間Proのために広告を見る",
+      "watchAdSubtext": "全機能を解除するために15秒の動画を見る"
+    },
+    "data": {
+      "export": "タイマー履歴をエクスポート",
+      "restore": "購入を復元"
+    },
+    "about": {
+      "version": "SessionReset v{{version}}",
+      "contact": "お問い合わせ / フィードバック"
+    }
+  },
+  "rewardedAd": {
+    "headline": "24時間Proをロック解除",
+    "body": "翌日にすべてのPro機能を使用するための短い15秒の動画を見てください。",
+    "cta": "短い動画を見る",
+    "dismiss": "いいえ、結構です",
+    "success": "Proが24時間ロック解除！"
+  },
+  "notifications_alerts": {
+    "resetTitle": "{{platform}}ウィンドウリセット！ 🚀",
+    "resetBody": "5時間の{{platform}}コンテキストウィンドウ制限がクリアされました。",
+    "preResetTitle": "⚡ {{platform}} 15分でリセット",
+    "preResetBody": "現在のタスクを完了してください—5時間のコンテキストウィンドウがまもなくクリアされます。"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "問題が発生しました",
+    "retry": "再試行",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "back": "戻る",
+    "next": "次へ"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "SessionReset"
+  },
+  "onboarding": {
+    "outcomeHook": {
+      "headline": "예상치 못한 AI 제한으로 흐름 상태를 잃지 마세요.",
+      "subtitle": "Claude, Codex 및 AI CLI 도구를 위한 즉각적인 5시간 롤링 리셋 알람.",
+      "cta": "시작하기 →",
+      "footer": "계정 불필요 • 100% 온디바이스 데이터"
+    },
+    "quiz": {
+      "question1": "매일 어떤 AI 어시스턴트에 의존하나요?",
+      "question2": "사용량 제한이 코딩을 방해하는 빈도는?",
+      "options": {
+        "claude": "Claude 3.5 Sonnet",
+        "codex": "OpenAI Codex / ChatGPT",
+        "claudeCode": "Claude Code CLI",
+        "cursor": "Cursor / Copilot",
+        "low": "주 1–2회",
+        "medium": "주 3–5회",
+        "high": "매일"
+      },
+      "cta": "계속 →"
+    },
+    "founderNote": {
+      "title": "창립자 메시지",
+      "body": "안녕하세요! 리팩터링 중간에 5시간 제한에 도달하는 것이 너무 답답해서 SessionReset을 만들었습니다. 계정도 없고, 데이터를 추적하는 클라우드 데이터베이스도 없이—당신을 존에 유지하기 위한 순수한 도구입니다.",
+      "cta": "좋네요 →"
+    },
+    "paywall": {
+      "socialProof": "GitHub, Vercel, Stripe의 2,000명 이상의 개발자가 참여.",
+      "features": {
+        "alerts": "리셋 15분 전 즉시 알림",
+        "widgets": "홈 화면 및 잠금 화면 위젯",
+        "sounds": "사운드 이펙트 & 배너 광고 없음",
+        "claudeAlerts": "Claude용 15분 전 알림",
+        "codexAlerts": "Codex용 15분 전 알림",
+        "dualAlerts": "15분 전 알림 (Claude + Codex)",
+        "customTimers": "사용자 정의 타이머로 모든 AI 서비스 추적"
+      },
+      "price": "₩2,900",
+      "period": "평생 Pro • 런칭 할인",
+      "originalPrice": "₩5,900",
+      "cta": "Pro 잠금 해제",
+      "skip": "무료 버전으로 계속"
+    },
+    "notifications": {
+      "previewTitle": "SessionReset • 15분 전",
+      "previewHeadline": "⚡ Claude 15분 후 리셋",
+      "previewBody": "현재 작업을 완료하세요—5시간 컨텍스트 윈도우가 곧 초기화됩니다.",
+      "headline": "리셋 윈도우를 놓치지 마세요",
+      "body": "활성 타이머에만 로컬 알람을 보냅니다. 스팸 제로.",
+      "cta": "알림 활성화",
+      "enabled": "알림 활성화됨 ✓"
+    },
+    "starter": {
+      "headline": "첫 리셋을 기록하세요",
+      "subtext": "첫 5시간 윈도우 추적을 시작하려면 아래를 탭하세요.",
+      "blocked": "지금 차단됨",
+      "demo": "데모 타이머 시작"
+    }
+  },
+  "dashboard": {
+    "title": "SessionReset",
+    "empty": {
+      "title": "활성 제한 없음.",
+      "subtext": "벽에 부딪힐 때 아래를 탭하세요."
+    },
+    "timer": {
+      "resetsAt": "{{time}}에 리셋",
+      "alertOn": "🔔 15분",
+      "alertOff": "🔔 15분 끔",
+      "claude": "Claude 3.5 Sonnet",
+      "codex": "Codex"
+    },
+    "fab": "+ 제한 기록"
+  },
+  "quickLog": {
+    "title": "제한 기록",
+    "serviceLabel": "어떤 서비스?",
+    "claude": "Claude",
+    "codex": "Codex",
+    "timeLabel": "언제 제한에 도달했나요?",
+    "justNow": "방금",
+    "minutesAgo": "{{minutes}}분 전",
+    "alertLabel": "리셋 15분 전에 알림",
+    "cta": "5시간 타이머 시작",
+    "replaceWarning": "기존 {{platform}} 타이머를 교체하시겠습니까? 현재 카운트다운이 취소됩니다.",
+    "confirm": "교체",
+    "cancel": "취소"
+  },
+  "settings": {
+    "title": "설정",
+    "pro": {
+      "upgrade": "Pro 잠금 해제",
+      "upgradeSubtext": "광고 제거 & 위젯 잠금 해제 — ₩2,900",
+      "upgradePeriod": "평생 이용 • 런칭 가격",
+      "active": "Pro입니다",
+      "activeSubtext": "모든 기능 잠금 해제, 광고 제거됨."
+    },
+    "notifications": {
+      "sound": "알림 사운드",
+      "preResetAlert": "기본 리셋 전 알림"
+    },
+    "power": {
+      "watchAd": "24시간 Pro 광고 시청",
+      "watchAdSubtext": "모든 기능을 잠금 해제하려면 15초 영상 시청"
+    },
+    "data": {
+      "export": "타이머 기록 내보내기",
+      "restore": "구매 복원"
+    },
+    "about": {
+      "version": "SessionReset v{{version}}",
+      "contact": "문의 / 피드백"
+    }
+  },
+  "rewardedAd": {
+    "headline": "24시간 Pro 잠금 해제",
+    "body": "다음 날 모든 Pro 기능을 사용하려면 15초 짧은 영상을 시청하세요.",
+    "cta": "짧은 영상 시청",
+    "dismiss": "아니요, 괜찮습니다",
+    "success": "Pro 24시간 잠금 해제!"
+  },
+  "notifications_alerts": {
+    "resetTitle": "{{platform}} 윈도우 리셋! 🚀",
+    "resetBody": "5시간 {{platform}} 컨텍스트 윈도우 제한이 초기화되었습니다.",
+    "preResetTitle": "⚡ {{platform}} 15분 후 리셋",
+    "preResetBody": "현재 작업을 완료하세요—5시간 컨텍스트 윈도우가 곧 초기화됩니다."
+  },
+  "common": {
+    "loading": "로딩 중...",
+    "error": "문제가 발생했습니다",
+    "retry": "다시 시도",
+    "save": "저장",
+    "cancel": "취소",
+    "confirm": "확인",
+    "back": "뒤로",
+    "next": "다음"
+  }
+}

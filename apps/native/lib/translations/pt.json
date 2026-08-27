@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "SessionReset"
+  },
+  "onboarding": {
+    "outcomeHook": {
+      "headline": "Nunca perca seu estado de fluxo por limites inesperados de IA.",
+      "subtitle": "Alarmes de redefinição de 5 horas para Claude, Codex e ferramentas de IA.",
+      "cta": "Começar →",
+      "footer": "Sem conta necessária • 100% Dados locais"
+    },
+    "quiz": {
+      "question1": "Quais assistentes de IA você usa diariamente?",
+      "question2": "Com que frequência os limites interrompem sua programação?",
+      "options": {
+        "claude": "Claude 3.5 Sonnet",
+        "codex": "OpenAI Codex / ChatGPT",
+        "claudeCode": "Claude Code CLI",
+        "cursor": "Cursor / Copilot",
+        "low": "1–2 vezes/semana",
+        "medium": "3–5 vezes/semana",
+        "high": "Todos os dias"
+      },
+      "cta": "Continuar →"
+    },
+    "founderNote": {
+      "title": "Uma nota do fundador",
+      "body": "Olá! Criei o SessionReset porque atingir um limite de 5 horas no meio de uma refatoração me deixava louco. Sem contas, sem bancos de dados na nuvem rastreando seus dados—apenas utilidade pura para manter você na zona.",
+      "cta": "Parece bom →"
+    },
+    "paywall": {
+      "socialProof": "Unidos por 2.000+ desenvolvedores do GitHub, Vercel e Stripe.",
+      "features": {
+        "alerts": "Alertas instantâneos de 15 minutos antes da redefinição",
+        "widgets": "Widgets da tela inicial e tela de bloqueio",
+        "sounds": "Efeitos sonoros personalizados e sem anúncios",
+        "claudeAlerts": "Alertas instantâneos de 15 minutos para Claude",
+        "codexAlerts": "Alertas instantâneos de 15 minutos para Codex",
+        "dualAlerts": "Alertas instantâneos de 15 minutos (Claude + Codex)",
+        "customTimers": "Rastreie qualquer serviço de IA com temporizadores personalizados"
+      },
+      "price": "$1.99",
+      "period": "Pro vitalício • Preço de lançamento",
+      "originalPrice": "$4.99",
+      "cta": "Desbloquear Pro vitalício",
+      "skip": "Continuar com versão gratuita"
+    },
+    "notifications": {
+      "previewTitle": "SessionReset • 15m atrás",
+      "previewHeadline": "⚡ Claude redefine em 15 minutos",
+      "previewBody": "Conclua sua tarefa atual—sua janela de contexto de 5 horas está prestes a ser limpa.",
+      "headline": "Nunca perca sua janela de redefinição",
+      "body": "Enviamos apenas alarmes locais para seus temporizadores ativos. Zero spam.",
+      "cta": "Ativar notificações",
+      "enabled": "Notificações ativadas ✓"
+    },
+    "starter": {
+      "headline": "Registre sua primeira redefinição",
+      "subtext": "Toque abaixo para começar a rastrear sua primeira janela de 5 horas.",
+      "blocked": "Estou bloqueado agora",
+      "demo": "Iniciar temporizador de teste"
+    }
+  },
+  "dashboard": {
+    "title": "SessionReset",
+    "empty": {
+      "title": "Sem limites ativos.",
+      "subtext": "Toque abaixo quando encontrar um obstáculo."
+    },
+    "timer": {
+      "resetsAt": "Redefine às {{time}}",
+      "alertOn": "🔔 15m",
+      "alertOff": "🔔 15m Deslig.",
+      "claude": "Claude 3.5 Sonnet",
+      "codex": "Codex"
+    },
+    "fab": "+ Registrar limite"
+  },
+  "quickLog": {
+    "title": "Registrar limite",
+    "serviceLabel": "Qual serviço?",
+    "claude": "Claude",
+    "codex": "Codex",
+    "timeLabel": "Quando você atingiu o limite?",
+    "justNow": "Agora",
+    "minutesAgo": "{{minutes}}m atrás",
+    "alertLabel": "Lembrar 15 minutos antes da redefinição",
+    "cta": "Iniciar temporizador de 5 horas",
+    "replaceWarning": "Substituir temporizador existente de {{platform}}? Isso cancelará a contagem regressiva.",
+    "confirm": "Substituir",
+    "cancel": "Cancelar"
+  },
+  "settings": {
+    "title": "Configurações",
+    "pro": {
+      "upgrade": "Desbloquear Pro",
+      "upgradeSubtext": "Remover anúncios e desbloquear widgets — $1.99",
+      "upgradePeriod": "Acesso vitalício • Preço de lançamento",
+      "active": "Você é Pro",
+      "activeSubtext": "Todos os recursos desbloqueados, anúncios removidos."
+    },
+    "notifications": {
+      "sound": "Som de notificação",
+      "preResetAlert": "Alerta pré-redefinição padrão"
+    },
+    "power": {
+      "watchAd": "Assistir anúncio por 24h de Pro",
+      "watchAdSubtext": "Assista um vídeo de 15s para desbloquear todos os recursos"
+    },
+    "data": {
+      "export": "Exportar histórico de temporizadores",
+      "restore": "Restaurar compras"
+    },
+    "about": {
+      "version": "SessionReset v{{version}}",
+      "contact": "Contato / Feedback"
+    }
+  },
+  "rewardedAd": {
+    "headline": "Desbloquear Pro por 24 horas",
+    "body": "Assista um vídeo curto de 15 segundos para usar todos os recursos Pro no próximo dia.",
+    "cta": "Assistir vídeo curto",
+    "dismiss": "Não, obrigado",
+    "success": "Pro desbloqueado por 24 horas!"
+  },
+  "notifications_alerts": {
+    "resetTitle": "Janela {{platform}} redefinida! 🚀",
+    "resetBody": "Seu limite de janela de contexto de 5 horas do {{platform}} foi limpo.",
+    "preResetTitle": "⚡ {{platform}} redefine em 15 minutos",
+    "preResetBody": "Conclua sua tarefa atual—sua janela de contexto de 5 horas está prestes a ser limpa."
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Algo deu errado",
+    "retry": "Tentar novamente",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo"
+  }
+}

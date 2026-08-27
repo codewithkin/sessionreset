@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "SessionReset"
+  },
+  "onboarding": {
+    "outcomeHook": {
+      "headline": "Verlieren Sie nie Ihren Flow-Zustand wegen unerwarteter KI-Limits.",
+      "subtitle": "Sofortige 5-Stunden-Rolling-Reset-Alarme für Claude, Codex und KI-CLI-Tools.",
+      "cta": "Loslegen →",
+      "footer": "Kein Konto erforderlich • 100% Gerätedaten"
+    },
+    "quiz": {
+      "question1": "Welche KI-Assistenten nutzen Sie täglich?",
+      "question2": "Wie oft unterbrechen Ratenlimits Ihr Programmieren?",
+      "options": {
+        "claude": "Claude 3.5 Sonnet",
+        "codex": "OpenAI Codex / ChatGPT",
+        "claudeCode": "Claude Code CLI",
+        "cursor": "Cursor / Copilot",
+        "low": "1–2 mal/Woche",
+        "medium": "3–5 mal/Woche",
+        "high": "Jeden Tag"
+      },
+      "cta": "Weiter →"
+    },
+    "founderNote": {
+      "title": "Eine Nachricht vom Gründer",
+      "body": "Hallo! Ich habe SessionReset gebaut, weil das Erreichen eines 5-Stunden-Limits mitten in einem Refactoring mich wahnsinnig gemacht hat. Keine Konten, keine Cloud-Datenbanken, die Ihre Daten verfolgen—nur reines Werkzeug, um Sie in der Zone zu halten.",
+      "cta": "Klingt gut →"
+    },
+    "paywall": {
+      "socialProof": "Von 2.000+ Entwicklern von GitHub, Vercel und Stripe beigetreten.",
+      "features": {
+        "alerts": "Sofortige 15-Minuten-Vorwarnung vor dem Reset",
+        "widgets": "Home-Screen- und Lock-Screen-Widgets",
+        "sounds": "Benutzerdefinierte Soundeffekte & keine Banner-Werbung",
+        "claudeAlerts": "Sofortige 15-Minuten-Vorwarnung für Claude",
+        "codexAlerts": "Sofortige 15-Minuten-Vorwarnung für Codex",
+        "dualAlerts": "Sofortige 15-Minuten-Vorwarnung (Claude + Codex)",
+        "customTimers": "Jeden KI-Dienst mit benutzerdefinierten Timern verfolgen"
+      },
+      "price": "$1.99",
+      "period": "Lebenslanger Pro • Startpreis",
+      "originalPrice": "$4.99",
+      "cta": "Pro freischalten",
+      "skip": "Mit kostenloser Version fortfahren"
+    },
+    "notifications": {
+      "previewTitle": "SessionReset • vor 15 Min",
+      "previewHeadline": "⚡ Claude Reset in 15 Minuten",
+      "previewBody": "Schließen Sie Ihre aktuelle Aufgabe ab— Ihr 5-Stunden-Kontextfenster wird gleich gelöscht.",
+      "headline": "Verpassen Sie nie Ihr Reset-Fenster",
+      "body": "Wir senden nur lokale Alarme für Ihre aktiven Timer. Kein Spam.",
+      "cta": "Benachrichtigungen aktivieren",
+      "enabled": "Benachrichtigungen aktiviert ✓"
+    },
+    "starter": {
+      "headline": "Protokollieren Sie Ihren ersten Reset",
+      "subtext": "Tippen Sie unten, um mit der Verfolgung Ihres ersten 5-Stunden-Fensters zu beginnen.",
+      "blocked": "Ich bin gerade blockiert",
+      "demo": "Demo-Timer starten"
+    }
+  },
+  "dashboard": {
+    "title": "SessionReset",
+    "empty": {
+      "title": "Keine aktiven Limits.",
+      "subtext": "Tippen Sie unten, wenn Sie auf eine Wand stoßen."
+    },
+    "timer": {
+      "resetsAt": "Reset um {{time}}",
+      "alertOn": "🔔 15 Min",
+      "alertOff": "🔔 15 Min Aus",
+      "claude": "Claude 3.5 Sonnet",
+      "codex": "Codex"
+    },
+    "fab": "+ Limit protokollieren"
+  },
+  "quickLog": {
+    "title": "Limit protokollieren",
+    "serviceLabel": "Welcher Dienst?",
+    "claude": "Claude",
+    "codex": "Codex",
+    "timeLabel": "Wann haben Sie das Limit erreicht?",
+    "justNow": "Gerade eben",
+    "minutesAgo": "vor {{minutes}} Min",
+    "alertLabel": "15 Minuten vor Reset erinnern",
+    "cta": "5-Stunden-Timer starten",
+    "replaceWarning": "Vorhandenen {{platform}}-Timer ersetzen? Dies wird den aktuellen Countdown abbrechen.",
+    "confirm": "Ersetzen",
+    "cancel": "Abbrechen"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "pro": {
+      "upgrade": "Pro freischalten",
+      "upgradeSubtext": "Werbung entfernen & Widgets freischalten — $1.99",
+      "upgradePeriod": "Lebenslanger Zugang • Startpreis",
+      "active": "Sie sind Pro",
+      "activeSubtext": "Alle Funktionen freigeschaltet, Werbung entfernt."
+    },
+    "notifications": {
+      "sound": "Benachrichtigungston",
+      "preResetAlert": "Standard-Vorwarnung"
+    },
+    "power": {
+      "watchAd": "Werbung ansehen für 24h Pro",
+      "watchAdSubtext": "Sehen Sie sich ein 15-Sekunden-Video an, um alle Funktionen freizuschalten"
+    },
+    "data": {
+      "export": "Timer-Verlauf exportieren",
+      "restore": "Käufe wiederherstellen"
+    },
+    "about": {
+      "version": "SessionReset v{{version}}",
+      "contact": "Kontakt / Feedback"
+    }
+  },
+  "rewardedAd": {
+    "headline": "Pro für 24 Stunden freischalten",
+    "body": "Sehen Sie sich ein kurzes 15-Sekunden-Video an, um alle Pro-Funktionen am nächsten Tag zu nutzen.",
+    "cta": "Kurzes Video ansehen",
+    "dismiss": "Nein danke",
+    "success": "Pro für 24 Stunden freigeschaltet!"
+  },
+  "notifications_alerts": {
+    "resetTitle": "{{platform}}-Fenster zurückgesetzt! 🚀",
+    "resetBody": "Ihr 5-Stunden-{{platform}}-Kontextfenster-Limit wurde gelöscht.",
+    "preResetTitle": "⚡ {{platform}} Reset in 15 Minuten",
+    "preResetBody": "Schließen Sie Ihre aktuelle Aufgabe ab—Ihr 5-Stunden-Kontextfenster wird gleich gelöscht."
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Etwas ist schiefgelaufen",
+    "retry": "Erneut versuchen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "back": "Zurück",
+    "next": "Weiter"
+  }
+}

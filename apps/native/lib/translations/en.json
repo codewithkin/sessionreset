@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "SessionReset"
+  },
+  "onboarding": {
+    "outcomeHook": {
+      "headline": "Never lose your flow state to unexpected AI limits.",
+      "subtitle": "Instant 5-hour rolling reset alarms for Claude, Codex, and AI CLI tools.",
+      "cta": "Get Started →",
+      "footer": "No account required • 100% On-Device Data"
+    },
+    "quiz": {
+      "question1": "Which AI assistants do you rely on daily?",
+      "question2": "How often do rate limits interrupt your coding?",
+      "options": {
+        "claude": "Claude 3.5 Sonnet",
+        "codex": "OpenAI Codex / ChatGPT",
+        "claudeCode": "Claude Code CLI",
+        "cursor": "Cursor / Copilot",
+        "low": "1–2 times/week",
+        "medium": "3–5 times/week",
+        "high": "Every single day"
+      },
+      "cta": "Continue →"
+    },
+    "founderNote": {
+      "title": "A note from the founder",
+      "body": "Hey! I built SessionReset because hitting a 5-hour limit in the middle of a refactor drove me crazy. No accounts, no cloud databases tracking your data—just pure utility to keep you in the zone.",
+      "cta": "Sounds Good →"
+    },
+    "paywall": {
+      "socialProof": "Joined by 2,000+ developers from GitHub, Vercel & Stripe.",
+      "features": {
+        "alerts": "Instant 15-Minute Pre-Reset Alerts",
+        "widgets": "Home Screen & Lock Screen Widgets",
+        "sounds": "Custom Sound Effects & Zero Banner Ads",
+        "claudeAlerts": "Instant 15-Minute Pre-Reset Alerts for Claude",
+        "codexAlerts": "Instant 15-Minute Pre-Reset Alerts for Codex",
+        "dualAlerts": "Instant 15-Minute Pre-Reset Alerts (Claude + Codex)",
+        "customTimers": "Track Any AI Service with Custom Timers"
+      },
+      "price": "$1.99",
+      "period": "Lifetime Pro • Launch Discount",
+      "originalPrice": "$4.99",
+      "cta": "Unlock Lifetime Pro",
+      "skip": "Continue with Free Version"
+    },
+    "notifications": {
+      "previewTitle": "SessionReset • 15m ago",
+      "previewHeadline": "⚡ Claude Reset in 15 Minutes",
+      "previewBody": "Finish your current task—your 5-hour context window is about to clear.",
+      "headline": "Never miss your reset window",
+      "body": "We only send local alarms for your active timers. Zero marketing push spam.",
+      "cta": "Enable Notifications",
+      "enabled": "Notifications Enabled ✓"
+    },
+    "starter": {
+      "headline": "Let's log your first reset",
+      "subtext": "Tap below to start tracking your first 5-hour window.",
+      "blocked": "I'm Blocked Right Now",
+      "demo": "Start Demo Timer"
+    }
+  },
+  "dashboard": {
+    "title": "SessionReset",
+    "empty": {
+      "title": "No active limits.",
+      "subtext": "Tap below when you hit a wall."
+    },
+    "timer": {
+      "resetsAt": "Resets at {{time}}",
+      "alertOn": "🔔 15m",
+      "alertOff": "🔔 15m Off",
+      "claude": "Claude 3.5 Sonnet",
+      "codex": "Codex"
+    },
+    "fab": "+ Log Limit Hit"
+  },
+  "quickLog": {
+    "title": "Log Limit Hit",
+    "serviceLabel": "Which service?",
+    "claude": "Claude",
+    "codex": "Codex",
+    "timeLabel": "When did you hit the limit?",
+    "justNow": "Just Now",
+    "minutesAgo": "{{minutes}}m ago",
+    "alertLabel": "Remind me 15 minutes before reset",
+    "cta": "Start 5-Hour Timer",
+    "replaceWarning": "Replace existing {{platform}} timer? This will cancel the current countdown.",
+    "confirm": "Replace",
+    "cancel": "Cancel"
+  },
+  "settings": {
+    "title": "Settings",
+    "pro": {
+      "upgrade": "Unlock Pro",
+      "upgradeSubtext": "Remove Ads & Unlock Widgets — $1.99",
+      "upgradePeriod": "Lifetime Access • Launch Price",
+      "active": "You're Pro",
+      "activeSubtext": "All features unlocked, ads removed."
+    },
+    "notifications": {
+      "sound": "Notification Sound",
+      "preResetAlert": "Pre-Reset Alert Default"
+    },
+    "power": {
+      "watchAd": "Watch Ad for 24h Pro Access",
+      "watchAdSubtext": "Watch a 15s video to unlock all features"
+    },
+    "data": {
+      "export": "Export Timer History",
+      "restore": "Restore Purchases"
+    },
+    "about": {
+      "version": "SessionReset v{{version}}",
+      "contact": "Contact / Feedback"
+    }
+  },
+  "rewardedAd": {
+    "headline": "Unlock Pro for 24 Hours",
+    "body": "Watch a short 15-second video to use all Pro features for the next day.",
+    "cta": "Watch Short Video",
+    "dismiss": "No Thanks",
+    "success": "Pro unlocked for 24 hours!"
+  },
+  "notifications_alerts": {
+    "resetTitle": "{{platform}} Window Reset! 🚀",
+    "resetBody": "Your 5-hour {{platform}} context window limit has cleared.",
+    "preResetTitle": "⚡ {{platform}} Reset in 15 Minutes",
+    "preResetBody": "Finish your current task—your 5-hour context window is about to clear."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next"
+  }
+}
