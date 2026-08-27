@@ -1,20 +1,22 @@
 import { View, Text, ScrollView } from "react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { storage } from "@/lib/storage";
+import { useTranslation } from "react-i18next";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, shadows } from "@/lib/tokens";
+import { colors, components, fontSizes, spacing, radii, shadows, fontFamily } from "@/lib/tokens";
 
 export default function HistoryScreen() {
+  const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
   const allTimers = storage.timers.get();
   const inactive = allTimers
-    .filter((t) => !t.active)
+    .filter((timer) => !timer.active)
     .sort((a, b) => b.resetTime - a.resetTime);
 
   const grouped = inactive.reduce(
     (acc, t) => {
-      const date = new Date(t.resetTime).toLocaleDateString("en-US", {
+      const date = new Date(timer.resetTime).toLocaleDateString("en-US", {
         weekday: "short",
         month: "short",
         day: "numeric",
@@ -34,14 +36,13 @@ export default function HistoryScreen() {
       >
         <Text
           style={{
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[800],
             fontSize: fontSizes.h3,
-            fontWeight: "800",
             letterSpacing: -0.5,
             color: c.textPrimary,
           }}
         >
-          History
+          {t("history.title")}
         </Text>
       </Animated.View>
 
@@ -55,13 +56,12 @@ export default function HistoryScreen() {
           >
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[500],
                 fontSize: fontSizes.body,
-                fontWeight: "500",
                 color: c.textMuted,
               }}
             >
-              No past timers yet.
+              {t("history.empty")}
             </Text>
           </Animated.View>
         ) : (
@@ -73,18 +73,17 @@ export default function HistoryScreen() {
             >
               <Text
                 style={{
-                  fontFamily: "Manrope",
+                  fontFamily: fontFamily.manrope[700],
                   fontSize: fontSizes.bodySm,
-                  fontWeight: "700",
                   color: c.textPrimary,
                   marginBottom: spacing[10],
                 }}
               >
                 {date}
               </Text>
-              {timers.map((t) => (
+              {timers.map((timer) => (
                 <View
-                  key={t.id}
+                  key={timer.id}
                   style={{
                     backgroundColor: c.surface,
                     borderRadius: radii.badge,
@@ -102,29 +101,27 @@ export default function HistoryScreen() {
                         height: components.timeline.lineWidth * 4,
                         borderRadius: 50,
                         backgroundColor:
-                          t.platform === "claude" ? c.claude : c.codex,
+                          timer.platform === "claude" ? c.claude : c.codex,
                       }}
                     />
                     <Text
                       style={{
-                        fontFamily: "Manrope",
+                        fontFamily: fontFamily.manrope[600],
                         fontSize: fontSizes.caption,
-                        fontWeight: "600",
                         color: c.textPrimary,
                       }}
                     >
-                      {t.platform === "claude" ? "Claude" : "Codex"}
+                      {t(`dashboard.timer.${timer.platform}`)}
                     </Text>
                   </View>
                   <Text
                     style={{
-                      fontFamily: "JetBrains Mono",
+                      fontFamily: fontFamily.mono[500],
                       fontSize: fontSizes.xs,
-                      fontWeight: "500",
                       color: c.textTertiary,
                     }}
                   >
-                    {new Date(t.resetTime).toLocaleTimeString([], {
+                    {new Date(timer.resetTime).toLocaleTimeString([], {
                       hour: "numeric",
                       minute: "2-digit",
                     })}

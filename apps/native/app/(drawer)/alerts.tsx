@@ -1,15 +1,17 @@
 import { View, Text, ScrollView } from "react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { storage } from "@/lib/storage";
+import { useTranslation } from "react-i18next";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing, layout } from "@/lib/tokens";
+import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing, layout, fontFamily } from "@/lib/tokens";
 
 export default function AlertsScreen() {
+  const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
   const settings = storage.settings.get();
   const timers = storage.timers.getActive();
-  const withAlert = timers.filter((t) => t.preResetAlert);
+  const withAlert = timers.filter((timer) => timer.preResetAlert);
 
   return (
     <View style={{ flex: 1, backgroundColor: c.bg }}>
@@ -19,14 +21,13 @@ export default function AlertsScreen() {
       >
         <Text
           style={{
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[800],
             fontSize: fontSizes.h3,
-            fontWeight: "800",
             letterSpacing: -0.5,
             color: c.textPrimary,
           }}
         >
-          Alerts
+          {t("alerts.title")}
         </Text>
       </Animated.View>
 
@@ -45,20 +46,18 @@ export default function AlertsScreen() {
         >
           <Text
             style={{
-              fontFamily: "Manrope",
+              fontFamily: fontFamily.manrope[700],
               fontSize: fontSizes.body,
-              fontWeight: "700",
               color: c.textPrimary,
               marginBottom: spacing[4],
             }}
           >
-            Pre-Reset Alerts
+            {t("alerts.subtitle")}
           </Text>
           <Text
             style={{
-              fontFamily: "Manrope",
+              fontFamily: fontFamily.manrope[500],
               fontSize: fontSizes.micro,
-              fontWeight: "500",
               color: c.textTertiary,
             }}
           >
@@ -73,19 +72,18 @@ export default function AlertsScreen() {
           <Animated.View entering={FadeInDown.duration(400).delay(200)}>
             <Text
               style={{
-                fontFamily: "JetBrains Mono",
+                fontFamily: fontFamily.mono[700],
                 fontSize: fontSizes.xs,
-                fontWeight: "700",
                 letterSpacing: letterSpacing.wideMd,
                 color: c.textMuted,
                 marginBottom: spacing[10],
               }}
             >
-              ACTIVE ALERTS
+              {t("alerts.active")}
             </Text>
-            {withAlert.map((t, index) => (
+            {withAlert.map((timer, index) => (
               <Animated.View
-                key={t.id}
+                key={timer.id}
                 entering={FadeInDown.duration(400).delay(300 + index * 80)}
                 style={{
                   backgroundColor: c.surface,
@@ -104,18 +102,17 @@ export default function AlertsScreen() {
                       height: layout.serviceDot.size,
                       borderRadius: 50,
                       backgroundColor:
-                        t.platform === "claude" ? c.claude : c.codex,
+                        timer.platform === "claude" ? c.claude : c.codex,
                     }}
                   />
                   <Text
                     style={{
-                      fontFamily: "Manrope",
+                      fontFamily: fontFamily.manrope[600],
                       fontSize: fontSizes.caption,
-                      fontWeight: "600",
                       color: c.textPrimary,
                     }}
                   >
-                    {t.platform === "claude" ? "Claude" : "Codex"}
+                    {t(`dashboard.timer.${timer.platform}`)}
                   </Text>
                 </View>
                 <View
@@ -128,9 +125,8 @@ export default function AlertsScreen() {
                 >
                   <Text
                     style={{
-                      fontFamily: "JetBrains Mono",
+                      fontFamily: fontFamily.mono[700],
                       fontSize: fontSizes.xs,
-                      fontWeight: "700",
                       color: isDark ? components.offsetPill.dark.activeText : components.offsetPill.light.activeText,
                     }}
                   >
@@ -147,13 +143,12 @@ export default function AlertsScreen() {
           >
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[500],
                 fontSize: fontSizes.body,
-                fontWeight: "500",
                 color: c.textMuted,
               }}
             >
-              No active alerts. Enable alerts on your timers to see them here.
+              {t("alerts.empty")}
             </Text>
           </Animated.View>
         )}
