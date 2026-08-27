@@ -6,9 +6,11 @@ import {
   Pressable,
   Alert,
   Platform as RNPlatform,
+  Linking,
 } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { storage } from "@/lib/storage";
 import { restorePurchases } from "@/lib/purchases";
 import { useAppTheme } from "@/contexts/app-theme-context";
@@ -34,7 +36,6 @@ export default function SettingsScreen() {
       const { Share } = require("react-native");
       await Share.share({ message: data, title: "SessionReset Data Export" });
     } else {
-      // Android: copy to clipboard
       const { Clipboard } = require("react-native");
       Clipboard.setString(data);
       Alert.alert("Exported", "Data copied to clipboard.");
@@ -58,6 +59,16 @@ export default function SettingsScreen() {
     } finally {
       setRestoring(false);
     }
+  };
+
+  const handleTogglePreResetAlert = () => {
+    const updated = { ...settings, preResetAlertEnabled: !settings.preResetAlertEnabled };
+    storage.settings.set(updated);
+    setSettings(updated);
+  };
+
+  const handleContact = () => {
+    Linking.openURL("mailto:support@sessionreset.app?subject=SessionReset Feedback");
   };
 
   return (
@@ -183,6 +194,114 @@ export default function SettingsScreen() {
         )}
         </Animated.View>
 
+        {/* NOTIFICATIONS section */}
+        <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ marginBottom: spacing[24] }}>
+          <Text
+            style={{
+              fontFamily: "JetBrains Mono",
+              fontSize: fontSizes.xs,
+              fontWeight: "700",
+              letterSpacing: letterSpacing.wideMd,
+              color: c.textMuted,
+              paddingHorizontal: spacing[20],
+              marginBottom: spacing[10],
+            }}
+          >
+            NOTIFICATIONS
+          </Text>
+          <View
+            style={{
+              marginHorizontal: spacing[20],
+              backgroundColor: c.surface,
+              borderRadius: radii.badge,
+              overflow: "hidden",
+            }}
+          >
+            <View
+              style={{
+                paddingVertical: components.settingsRow.padding.vertical,
+                paddingHorizontal: 18,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                borderBottomWidth: 1,
+                borderBottomColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
+                <Ionicons name="notifications-outline" size={18} color={c.textTertiary} />
+                <Text
+                  style={{
+                    fontFamily: "Manrope",
+                    fontSize: components.settingsRow.titleFont.size,
+                    fontWeight: components.settingsRow.titleFont.weight as any,
+                    color: c.textPrimary,
+                  }}
+                >
+                  Notification Sound
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[6] }}>
+                <Text
+                  style={{
+                    fontFamily: "Manrope",
+                    fontSize: components.settingsRow.valueFont.size,
+                    fontWeight: components.settingsRow.valueFont.weight as any,
+                    color: isDark ? components.settingsRow.dark.value : components.settingsRow.light.value,
+                  }}
+                >
+                  Default
+                </Text>
+                <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
+              </View>
+            </View>
+            <Pressable
+              onPress={handleTogglePreResetAlert}
+              style={{
+                paddingVertical: components.settingsRow.padding.vertical,
+                paddingHorizontal: 18,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
+                <Ionicons name="time-outline" size={18} color={c.textTertiary} />
+                <Text
+                  style={{
+                    fontFamily: "Manrope",
+                    fontSize: components.settingsRow.titleFont.size,
+                    fontWeight: components.settingsRow.titleFont.weight as any,
+                    color: c.textPrimary,
+                  }}
+                >
+                  Pre-Reset Alert Default
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: components.toggle.width,
+                  height: components.toggle.height,
+                  borderRadius: components.toggle.radius,
+                  backgroundColor: settings.preResetAlertEnabled ? (isDark ? components.toggle.dark.on : components.toggle.light.on) : c.border,
+                  padding: components.toggle.padding,
+                  justifyContent: "center",
+                  alignItems: settings.preResetAlertEnabled ? "flex-end" : "flex-start",
+                }}
+              >
+                <View
+                  style={{
+                    width: components.toggle.knobSize,
+                    height: components.toggle.knobSize,
+                    borderRadius: 50,
+                    backgroundColor: settings.preResetAlertEnabled ? (isDark ? components.toggle.dark.knob : components.toggle.light.knob) : c.textOnAccent,
+                  }}
+                />
+              </View>
+            </Pressable>
+          </View>
+        </Animated.View>
+
         {/* POWER FEATURES section — disabled for now */}
         {/* Will re-enable when ads/IAP go live */}
 
@@ -221,16 +340,19 @@ export default function SettingsScreen() {
                 borderBottomColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: "Manrope",
-                  fontSize: components.settingsRow.titleFont.size,
-                  fontWeight: components.settingsRow.titleFont.weight as any,
-                  color: c.textPrimary,
-                }}
-              >
-                Export Timer History
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
+                <Ionicons name="download-outline" size={18} color={c.textTertiary} />
+                <Text
+                  style={{
+                    fontFamily: "Manrope",
+                    fontSize: components.settingsRow.titleFont.size,
+                    fontWeight: components.settingsRow.titleFont.weight as any,
+                    color: c.textPrimary,
+                  }}
+                >
+                  Export Timer History
+                </Text>
+              </View>
               <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
             </Pressable>
             <Pressable
@@ -243,16 +365,19 @@ export default function SettingsScreen() {
                 alignItems: "center",
               }}
             >
-              <Text
-                style={{
-                  fontFamily: "Manrope",
-                  fontSize: components.settingsRow.titleFont.size,
-                  fontWeight: components.settingsRow.titleFont.weight as any,
-                  color: restoring ? c.textMuted : c.textPrimary,
-                }}
-              >
-                {restoring ? "Restoring..." : "Restore Purchases"}
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
+                <Ionicons name="refresh-outline" size={18} color={c.textTertiary} />
+                <Text
+                  style={{
+                    fontFamily: "Manrope",
+                    fontSize: components.settingsRow.titleFont.size,
+                    fontWeight: components.settingsRow.titleFont.weight as any,
+                    color: restoring ? c.textMuted : c.textPrimary,
+                  }}
+                >
+                  {restoring ? "Restoring..." : "Restore Purchases"}
+                </Text>
+              </View>
               <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
             </Pressable>
           </View>
@@ -301,6 +426,7 @@ export default function SettingsScreen() {
               </Text>
             </View>
             <Pressable
+              onPress={handleContact}
               style={{
                 paddingVertical: components.settingsRow.padding.vertical,
                 paddingHorizontal: 18,
@@ -309,16 +435,19 @@ export default function SettingsScreen() {
                 alignItems: "center",
               }}
             >
-              <Text
-                style={{
-                  fontFamily: "Manrope",
-                  fontSize: components.settingsRow.titleFont.size,
-                  fontWeight: components.settingsRow.titleFont.weight as any,
-                  color: c.textPrimary,
-                }}
-              >
-                Contact / Feedback
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
+                <Ionicons name="mail-outline" size={18} color={c.textTertiary} />
+                <Text
+                  style={{
+                    fontFamily: "Manrope",
+                    fontSize: components.settingsRow.titleFont.size,
+                    fontWeight: components.settingsRow.titleFont.weight as any,
+                    color: c.textPrimary,
+                  }}
+                >
+                  Contact / Feedback
+                </Text>
+              </View>
               <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
             </Pressable>
           </View>
