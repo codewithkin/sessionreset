@@ -5,7 +5,7 @@ You are picking up **SessionReset**, a local-only Expo app that reminds develope
 > Read `AGENT-WORKFLOW.md` first — that is *how* work is done here.
 > This file is *what* to build next.
 
-Last updated: end of session 3 (design tokens, dark mode, animations, missing features).
+Last updated: end of session 4 (onboarding rebuilt as a single-route state machine, matched pixel-for-pixel to `designs/extracted/all-screens-template.html`).
 
 ## The rule that comes before everything else
 

@@ -4,6 +4,30 @@ Newest first.
 
 ---
 
+## Session 4
+
+**Onboarding rebuilt as a single-route state machine, rewritten pixel-for-pixel against `designs/extracted/all-screens-template.html`.**
+
+### Onboarding architecture change
+- `(onboarding)/quiz.tsx`, `founder-note.tsx`, `paywall.tsx`, `notifications.tsx`, `starter.tsx` deleted — replaced by step components inside `(onboarding)/index.tsx`, switched via local `step` state (0–5) instead of `router.push`. Removes the visible screen-to-screen transition the old multi-route version had; the only navigation left is the single `router.replace("/(drawer)")` when onboarding completes.
+- `(onboarding)/_layout.tsx` simplified to one `Stack.Screen`.
+- Root `_layout.tsx` was already resolving `storage.onboarding.isComplete()` synchronously (MMKV) for `initialRouteName`, so app launch already lands directly on the right group with no flash — left as-is.
+
+### Design accuracy fixes (against the extracted HTML, not the old hand-built version)
+- Screen 01: replaced the placeholder checkmark icon with the actual "Rate Limit Hit → 05:00:00 → 00:00:00 → Back to Code" status rail from the mockup, with a looping highlight sweep (Reanimated `interpolate` over a repeating shared value) standing in for the spec'd frame animation.
+- Screen 03 (Founder Note): removed a headline that isn't in the design; moved the attribution line outside/below the quote card to match.
+- Screen 04 (Paywall): price card's "LIFETIME" tag was a filled pill — design has it as plain accent-colored text; moved the "Lifetime Pro • …" line inside the price card (was a separate paragraph below it); paywall CTA now branches on `settings.isPro` (already `true` for everyone) and shows the design's own "You're Pro ✓" state instead of always showing "Unlock Lifetime Pro".
+- Screen 05 (Notifications): mock notification icon was a bell/clock glyph — design uses an "SR" wordmark badge; added the missing "Local alarms only • nothing leaves the device" footer line; split the preview header into app name + relative time (two elements, design has them at opposite ends of the row) instead of one concatenated string.
+- Quiz frequency pills were single-line; design shows two lines (bold number + muted unit, e.g. "1–2" / "a week") — rebuilt to match.
+
+### Trade-offs (see chat for full list)
+- RevenueCat purchase and AdMob ad calls were intentionally **not** wired into the rebuilt paywall — pressing "Unlock Lifetime Pro" shows a placeholder alert instead of calling the real (placeholder-keyed) `purchases.ts` SDK. `settings.tsx`'s now-dead "Unlock Pro" entry point (unreachable while `isPro` defaults to `true`) was pointed at the same placeholder instead of the deleted `/(onboarding)/paywall` route it used to push to.
+- New/changed onboarding copy (paywall headline, quiz "pick all that apply", frequency pill sub-labels, notification footer, etc.) was only added to `en.json`. The other 9 locale files fall back to English for these specific strings via `fallbackLng: 'en'` rather than risk unverified translations.
+- Kept the design's literal `$14.99` strikethrough out of `en.json` — using it would have put English out of sync with the other 9 locales' already-localized "original price" (₹349, ¥590, etc.), all pegged to the product-decided $4.99 → $1.99 discount from `systems/06-onboarding.md`. Treated the mockup's number as illustrative, not the source of truth.
+- Added `storage.onboarding.{get,set}QuizAnswers` (was speced in T22 but never actually implemented) so quiz answers persist; nothing downstream reads them yet (paywall checklist is fixed, not quiz-tailored, matching the actual design mockup rather than the older systems-doc description of a tailored checklist).
+
+---
+
 ## Session 3
 
 **Design token adoption, dark mode, animation polish, interaction fixes, missing features.**
