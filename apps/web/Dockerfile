@@ -12,13 +12,13 @@ ENV NODE_ENV=development
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml .npmrc ./
 COPY apps/web/package.json apps/web/
 
-RUN pnpm install --frozen-lockfile --filter web...
+RUN pnpm install --frozen-lockfile --filter sessionreset-web...
 
 COPY apps/web/ apps/web/
 
 ENV NODE_ENV=production
 
-RUN pnpm --filter web build
+RUN pnpm --filter sessionreset-web build
 
 # ---- Runner ----
 FROM node:22-slim AS runner
