@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import { useThemeColor } from "heroui-native";
 import { shouldShowBanner } from "@/lib/ads";
+import { fontFamily } from "@/lib/tokens";
 
 export function BannerAd() {
   const bg = useThemeColor("background");
@@ -20,7 +21,7 @@ export function BannerAd() {
     >
       <Text
         style={{
-          fontFamily: "JetBrains Mono",
+          fontFamily: fontFamily.mono[500],
           fontSize: 11,
           color: bg === "#000000" ? "#8A8A8A" : "#6C7076",
         }}
