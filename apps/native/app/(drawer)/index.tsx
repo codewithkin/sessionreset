@@ -44,7 +44,7 @@ export default function DashboardScreen() {
     <View style={{ flex: 1, backgroundColor: c.bg }}>
       {/* Header */}
       <Animated.View
-        entering={FadeIn.duration(400)}
+        entering={FadeIn.duration(300)}
         style={{
           flexDirection: "row",
           alignItems: "center",

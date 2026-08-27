@@ -43,7 +43,7 @@ export default function FounderNoteScreen() {
         </Animated.View>
 
         <Animated.View
-          entering={FadeInDown.duration(500).delay(100)}
+          entering={FadeInDown.duration(300).delay(100)}
           style={{ alignItems: "center", gap: spacing[24], marginTop: spacing[40] }}
         >
           {/* Clock icon */}

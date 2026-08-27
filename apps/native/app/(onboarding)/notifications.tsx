@@ -69,7 +69,7 @@ export default function NotificationsScreen() {
         <View style={{ gap: spacing[24], marginTop: spacing[40], alignItems: "center" }}>
           {/* Mock notification card */}
           <Animated.View
-            entering={FadeInDown.duration(500).delay(100)}
+            entering={FadeInDown.duration(300).delay(100)}
             style={{
               backgroundColor: isDark
                 ? components.notificationCard.dark.bg

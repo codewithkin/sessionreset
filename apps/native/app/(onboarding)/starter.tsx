@@ -67,7 +67,7 @@ export default function StarterScreen() {
         <View style={{ gap: spacing[24], marginTop: spacing[40], alignItems: "center" }}>
           {/* Checkmark circle */}
           <Animated.View
-            entering={FadeInDown.duration(500).delay(100)}
+            entering={FadeInDown.duration(300).delay(100)}
             style={{
               width: 76,
               height: 76,

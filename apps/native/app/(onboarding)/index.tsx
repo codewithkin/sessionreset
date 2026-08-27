@@ -24,7 +24,7 @@ export default function OutcomeHookScreen() {
           justifyContent: "space-between",
         }}
       >
-        <Animated.View entering={FadeInDown.duration(500)} style={{ gap: spacing[16] }}>
+        <Animated.View entering={FadeInDown.duration(300)} style={{ gap: spacing[16] }}>
           <Ionicons name="checkmark-circle" size={80} color={c.accent} />
           <Text
             style={{
