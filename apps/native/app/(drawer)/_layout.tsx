@@ -1,67 +1,107 @@
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { Drawer } from "expo-router/drawer";
-import { useThemeColor } from "heroui-native";
 import React, { useCallback } from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 
 function DrawerLayout() {
-  const themeColorForeground = useThemeColor("foreground");
-  const themeColorBackground = useThemeColor("background");
-
-  const renderThemeToggle = useCallback(() => <ThemeToggle />, []);
+  const renderHeaderRight = useCallback(
+    () => (
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginRight: 16 }}>
+        <ThemeToggle />
+        <Link href="/settings" asChild>
+          <Pressable>
+            <Ionicons name="settings-outline" size={22} color="#6C7076" />
+          </Pressable>
+        </Link>
+      </View>
+    ),
+    []
+  );
 
   return (
     <Drawer
       screenOptions={{
-        headerTintColor: themeColorForeground,
-        headerStyle: { backgroundColor: themeColorBackground },
-        headerTitleStyle: {
-          fontWeight: "600",
-          color: themeColorForeground,
-        },
-        headerRight: renderThemeToggle,
-        drawerStyle: { backgroundColor: themeColorBackground },
+        headerStyle: { backgroundColor: "#FFFFFF", elevation: 0, shadowOpacity: 0 },
+        headerTitleStyle: { display: "none" },
+        headerRight: renderHeaderRight,
+        drawerStyle: { backgroundColor: "#FFFFFF", width: 280 },
       }}
     >
       <Drawer.Screen
         name="index"
         options={{
-          headerTitle: "Home",
+          headerTitle: "",
           drawerLabel: ({ color, focused }) => (
-            <Text style={{ color: focused ? color : themeColorForeground }}>Home</Text>
+            <Text
+              style={{
+                fontFamily: "Manrope",
+                fontSize: 15,
+                fontWeight: focused ? "700" : "500",
+                color: focused ? "#17181A" : "#6C7076",
+              }}
+            >
+              Dashboard
+            </Text>
           ),
-          drawerIcon: ({ size, color, focused }) => (
+          drawerIcon: ({ size, focused }) => (
             <Ionicons
-              name="home-outline"
-              size={size}
-              color={focused ? color : themeColorForeground}
+              name="grid-outline"
+              size={20}
+              color={focused ? "#17181A" : "#6C7076"}
             />
           ),
         }}
       />
       <Drawer.Screen
-        name="(tabs)"
+        name="history"
         options={{
-          headerTitle: "Tabs",
+          headerTitle: "",
           drawerLabel: ({ color, focused }) => (
-            <Text style={{ color: focused ? color : themeColorForeground }}>Tabs</Text>
+            <Text
+              style={{
+                fontFamily: "Manrope",
+                fontSize: 15,
+                fontWeight: focused ? "700" : "500",
+                color: focused ? "#17181A" : "#6C7076",
+              }}
+            >
+              History
+            </Text>
           ),
-          drawerIcon: ({ size, color, focused }) => (
-            <MaterialIcons
-              name="border-bottom"
-              size={size}
-              color={focused ? color : themeColorForeground}
+          drawerIcon: ({ size, focused }) => (
+            <Ionicons
+              name="time-outline"
+              size={20}
+              color={focused ? "#17181A" : "#6C7076"}
             />
           ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable className="mr-4">
-                <Ionicons name="add-outline" size={24} color={themeColorForeground} />
-              </Pressable>
-            </Link>
+        }}
+      />
+      <Drawer.Screen
+        name="alerts"
+        options={{
+          headerTitle: "",
+          drawerLabel: ({ color, focused }) => (
+            <Text
+              style={{
+                fontFamily: "Manrope",
+                fontSize: 15,
+                fontWeight: focused ? "700" : "500",
+                color: focused ? "#17181A" : "#6C7076",
+              }}
+            >
+              Alerts
+            </Text>
+          ),
+          drawerIcon: ({ size, focused }) => (
+            <Ionicons
+              name="notifications-outline"
+              size={20}
+              color={focused ? "#17181A" : "#6C7076"}
+            />
           ),
         }}
       />

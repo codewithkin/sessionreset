@@ -1,14 +1,34 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { storage } from "@/lib/storage";
+import { createTimer } from "@/lib/timer-engine";
+import { scheduleTimerNotifications } from "@/lib/notifications";
 
 export default function StarterScreen() {
   const router = useRouter();
   const { t } = useTranslation();
 
   const handleFinish = () => {
+    storage.onboarding.markComplete();
+    router.replace("/(drawer)");
+  };
+
+  const handleDemoTimer = async () => {
+    // Create a real demo timer for Claude
+    const timer = createTimer("claude", Date.now(), true);
+    storage.timers.add(timer);
+    await scheduleTimerNotifications(timer);
+    storage.onboarding.markComplete();
+    router.replace("/(drawer)");
+  };
+
+  const handleBlocked = async () => {
+    // Create a real timer immediately (as if limit was just hit)
+    const timer = createTimer("claude", Date.now(), true);
+    storage.timers.add(timer);
+    await scheduleTimerNotifications(timer);
     storage.onboarding.markComplete();
     router.replace("/(drawer)");
   };
@@ -23,7 +43,7 @@ export default function StarterScreen() {
           justifyContent: "space-between",
         }}
       >
-        {/* Progress dots */}
+        {/* Progress dots — all complete */}
         <View style={{ flexDirection: "row", justifyContent: "center", gap: 6 }}>
           {[0, 1, 2, 3, 4].map((i) => (
             <View
@@ -50,7 +70,14 @@ export default function StarterScreen() {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 32 }}>✓</Text>
+            <Text
+              style={{
+                fontSize: 32,
+                color: "#3B82F6",
+              }}
+            >
+              ✓
+            </Text>
           </View>
 
           <Text
@@ -83,7 +110,8 @@ export default function StarterScreen() {
 
         {/* CTAs */}
         <View style={{ gap: 12, marginBottom: 12 }}>
-          <View
+          <Pressable
+            onPress={handleBlocked}
             style={{
               height: 56,
               borderRadius: 16,
@@ -104,12 +132,12 @@ export default function StarterScreen() {
                 fontWeight: "700",
                 color: "#FFFFFF",
               }}
-              onPress={handleFinish}
             >
               {t("onboarding.starter.blocked")}
             </Text>
-          </View>
-          <View
+          </Pressable>
+          <Pressable
+            onPress={handleDemoTimer}
             style={{
               height: 56,
               borderRadius: 16,
@@ -126,11 +154,10 @@ export default function StarterScreen() {
                 fontWeight: "700",
                 color: "#17181A",
               }}
-              onPress={handleFinish}
             >
               {t("onboarding.starter.demo")}
             </Text>
-          </View>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

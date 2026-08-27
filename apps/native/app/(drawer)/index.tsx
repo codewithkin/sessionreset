@@ -1,57 +1,163 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Button, Chip, Separator, Spinner, Surface, useThemeColor } from "heroui-native";
-import { Text, View } from "react-native";
+import { useState } from "react";
+import { View, Text, ScrollView, Pressable, Alert } from "react-native";
+import { useRouter } from "expo-router";
+import { useTimers } from "@/contexts/TimerContext";
+import { TimerCard } from "@/components/TimerCard";
+import { BannerAd } from "@/components/BannerAd";
+import { storage } from "@/lib/storage";
 
-import { Container } from "@/components/container";
+export default function DashboardScreen() {
+  const { timers, toggleAlert, removeTimer } = useTimers();
+  const router = useRouter();
 
-export default function Home() {
-  const successColor = useThemeColor("success");
-  const dangerColor = useThemeColor("danger");
+  const today = new Date();
+  const dateStr = today.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+
+  const handleRemove = (id: string) => {
+    Alert.alert("Remove Timer", "Remove this timer from your dashboard?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Remove",
+        style: "destructive",
+        onPress: () => removeTimer(id),
+      },
+    ]);
+  };
 
   return (
-    <Container className="px-4 pb-4">
-      <View className="py-6 mb-5">
-        <Text className="text-3xl font-semibold text-foreground tracking-tight">
-          Better T Stack
+    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      {/* Header */}
+      <View
+        style={{
+          paddingHorizontal: 20,
+          paddingTop: 56,
+          paddingBottom: 4,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Manrope",
+            fontSize: 22,
+            fontWeight: "800",
+            letterSpacing: -0.5,
+            color: "#17181A",
+          }}
+        >
+          Today
         </Text>
-        <Text className="text-muted text-sm mt-1">Full-stack TypeScript starter</Text>
+        <Text
+          style={{
+            fontFamily: "JetBrains Mono",
+            fontSize: 12,
+            fontWeight: "500",
+            color: "#9DA1A7",
+            marginTop: 2,
+          }}
+        >
+          {dateStr}
+        </Text>
       </View>
 
-      <Surface variant="secondary" className="p-4 rounded-xl">
-        <View className="flex-row items-center justify-between mb-3">
-          <Text className="text-foreground font-medium">System Status</Text>
-          <Chip variant="secondary" color={isConnected ? "success" : "danger"} size="sm">
-            <Chip.Label>{isConnected ? "LIVE" : "OFFLINE"}</Chip.Label>
-          </Chip>
-        </View>
-
-        <Separator className="mb-3" />
-
-        <Surface variant="tertiary" className="p-3 rounded-lg">
-          <View className="flex-row items-center">
-            <View
-              className={`w-2 h-2 rounded-full mr-3 ${isConnected ? "bg-success" : "bg-muted"}`}
-            />
-            <View className="flex-1">
-              <Text className="text-foreground text-sm font-medium"></Text>
-              <Text className="text-muted text-xs mt-0.5">
-                {isLoading
-                  ? "Checking connection..."
-                  : isConnected
-                    ? "Connected to API"
-                    : "API Disconnected"}
-              </Text>
-            </View>
-            {isLoading && <Spinner size="sm" />}
-            {!isLoading && isConnected && (
-              <Ionicons name="checkmark-circle" size={18} color={successColor} />
-            )}
-            {!isLoading && !isConnected && (
-              <Ionicons name="close-circle" size={18} color={dangerColor} />
-            )}
+      {/* Timer list */}
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+          paddingHorizontal: 20,
+          paddingTop: 18,
+          paddingBottom: 120,
+          gap: 14,
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        {timers.length === 0 ? (
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: 120,
+              gap: 8,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Manrope",
+                fontSize: 22,
+                fontWeight: "800",
+                letterSpacing: -0.5,
+                color: "#17181A",
+              }}
+            >
+              No active limits.
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Manrope",
+                fontSize: 16,
+                fontWeight: "500",
+                color: "#9DA1A7",
+              }}
+            >
+              Tap below when you hit a wall.
+            </Text>
           </View>
-        </Surface>
-      </Surface>
-    </Container>
+        ) : (
+          timers.map((timer) => (
+            <TimerCard
+              key={timer.id}
+              timer={timer}
+              onToggleAlert={toggleAlert}
+              onRemove={handleRemove}
+            />
+          ))
+        )}
+
+        {/* Banner ad placeholder (for non-Pro) */}
+        {storage.settings.get().isPro === false && timers.length > 0 && (
+          <BannerAd />
+        )}
+      </ScrollView>
+
+      {/* FAB */}
+      <View
+        style={{
+          position: "absolute",
+          bottom: 32,
+          alignSelf: "center",
+        }}
+      >
+        <Pressable
+          onPress={() => router.push("/quick-log")}
+          style={{
+            backgroundColor: "#3B82F6",
+            borderRadius: 50,
+            width: 60,
+            height: 60,
+            justifyContent: "center",
+            alignItems: "center",
+            shadowColor: "#3B82F6",
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.36,
+            shadowRadius: 20,
+            elevation: 8,
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "Manrope",
+              fontSize: 30,
+              fontWeight: "400",
+              color: "#FFFFFF",
+              lineHeight: 1,
+            }}
+          >
+            +
+          </Text>
+        </Pressable>
+      </View>
+    </View>
   );
 }

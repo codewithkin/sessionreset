@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as Notifications from "expo-notifications";
+import {
+  requestNotificationPermission,
+  NotificationPermissionStatus,
+} from "@/lib/notifications";
 
 export default function NotificationsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [enabled, setEnabled] = useState(false);
+  const [status, setStatus] = useState<NotificationPermissionStatus>("undetermined");
 
   const handleEnable = async () => {
-    const { status } = await Notifications.requestPermissionsAsync();
-    setEnabled(status === "granted");
+    const result = await requestNotificationPermission();
+    setStatus(result);
     router.push("/(onboarding)/starter");
   };
 
@@ -162,7 +165,7 @@ export default function NotificationsScreen() {
               }}
               onPress={handleEnable}
             >
-              {enabled
+              {status === "granted"
                 ? t("onboarding.notifications.enabled")
                 : t("onboarding.notifications.cta")}
             </Text>
