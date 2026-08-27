@@ -9,7 +9,9 @@ import {
 
 interface TimerContextValue {
   timers: Timer[];
-  addTimer: (platform: Platform, preResetAlert?: boolean) => Promise<void>;
+  /** `startTime` defaults to now; pass an earlier value when the user reports
+   *  having hit the limit a while ago, so the 5h window is measured from then. */
+  addTimer: (platform: Platform, preResetAlert?: boolean, startTime?: number) => Promise<void>;
   removeTimer: (id: string) => Promise<void>;
   toggleAlert: (id: string) => Promise<void>;
   refreshTimers: () => void;
@@ -25,8 +27,8 @@ export function TimerProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const addTimer = useCallback(
-    async (platform: Platform, preResetAlert = true) => {
-      const timer = createTimer(platform, Date.now(), preResetAlert);
+    async (platform: Platform, preResetAlert = true, startTime = Date.now()) => {
+      const timer = createTimer(platform, startTime, preResetAlert);
       storage.timers.add(timer);
       await scheduleTimerNotifications(timer);
       refreshTimers();

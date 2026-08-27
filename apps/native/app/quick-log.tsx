@@ -36,7 +36,9 @@ export default function QuickLogScreen() {
     );
 
     const doStart = async () => {
-      await addTimer(selectedService, preResetAlert);
+      // The window opened when they hit the limit, not when they logged it.
+      const startTime = Date.now() - selectedOffset * 60_000;
+      await addTimer(selectedService, preResetAlert, startTime);
       router.back();
       // Show interstitial after logging (free tier, once per session)
       if (canShowInterstitial()) {
