@@ -5,27 +5,11 @@ You are picking up **SessionReset**, a local-only Expo app that reminds develope
 > Read `AGENT-WORKFLOW.md` first — that is *how* work is done here.
 > This file is *what* to build next.
 
-Last updated: end of session 1 (scaffold).
+Last updated: end of session 3 (design tokens, dark mode, animations, missing features).
 
 ## The rule that comes before everything else
 
-Every screen you build, you build from its design file. Currently there are no design files — screens are described in `systems/06-onboarding.md` and `systems/07-screens.md`. When designs arrive, they take precedence.
-
-## Your task
-
-**Phase 1 — Foundations (no UI):**
-1. Run `plans/01-infrastructure.md` — T01 through T08
-2. Run `plans/02-notifications.md` — T09 through T14
-
-**Phase 2 — Core screens:**
-3. Run `plans/03-onboarding.md` — T15 through T22
-4. Run `plans/04-dashboard.md` — T23 through T30
-5. Run `plans/05-settings.md` — T31 through T36
-
-**Phase 3 — Monetization:**
-6. Run `plans/06-ads-iap.md` — T37 through T44
-
-Start with T01 in `plans/01-infrastructure.md`. One todo, one commit.
+Every screen you build, you build from its design file. Design specs are in `designs/screens.md` and the design system is in `systems/03-design-system.md`. Design tokens are in `apps/native/lib/tokens.ts`.
 
 ## What SessionReset is, in five rules
 
@@ -37,46 +21,62 @@ Start with T01 in `plans/01-infrastructure.md`. One todo, one commit.
 
 ## What is already built
 
-- Turborepo monorepo scaffold (Expo native + Next.js web + shared packages)
+- Turborepo monorepo scaffold (Expo native + Next.js web)
 - Expo 57 with expo-router, Uniwind, HeroUI Native, Reanimated, Gesture Handler
-- Shared packages: config (tsconfig), env (t3-env), ui (shadcn — web only)
-- **Nothing app-specific yet.** All SessionReset code is ahead.
+- **All 44 plan todos completed** (infrastructure, notifications, onboarding, dashboard, settings, ads/IAP)
+- **10 languages** via i18next + expo-localization
+- **Design tokens** (`lib/tokens.ts`) — 540 lines, full light/dark palettes, component tokens
+- **Dark mode** — all 15 screens use `useAppTheme()` + token references
+- **Animations** — spring damping 0.8 on bottom sheets, press scale on all buttons, quiz chip ZoomIn
+- **Haptic feedback** — Light impact on iOS for primary actions
+- **Settings** — Notifications section, pre-reset alert toggle, Contact/Feedback row
+- **Quick-Log** — No default service, CTA disabled until selected, spring animation
+- **Dashboard** — Pull-to-refresh, empty state icon, + Log Limit Hit FAB
+- **AdMob removed** — Incompatible with Expo SDK 57 (Kotlin 2.3 vs 2.1.20)
+- **RevenueCat IAP** — Installed but disabled (everyone gets Pro)
+- **Website** — Next.js with privacy/terms pages, Dockerfile for Coolify
+- **Play Store listing** — EN + 9 locale translations
+- **EAS build** — 823 KB archive, prebuild succeeds, 0 TypeScript errors
 
-## Read this before you write a line
+## Tech stack
 
-- The native app is at `apps/native/`. Do not touch `apps/web/` — it's out of scope.
-- `packages/ui` has shadcn components for web. Native uses `heroui-native` — check before importing.
-- MMKV is synchronous. No need for async/await on reads.
-- AdMob requires native build — will not work in Expo Go.
-- One timer per platform max. New log replaces old timer for same platform.
-- `systems/09-decisions.md` is empty. Add decisions as you make them.
-
-## How to work here
-
-- One todo, one commit. See plan files for commit message format.
-- Change the plan first if the plan is wrong. Add `**Note (session N):**`.
-- Update the changelog with reasoning, not just file lists.
-- Run `pnpm check-types` after each change.
+- Expo 57 + expo-router
+- Uniwind (Tailwind for React Native)
+- HeroUI Native
+- react-native-mmkv (encrypted storage)
+- expo-notifications (local)
+- react-native-reanimated (animations)
+- react-native-purchases + react-native-purchases-ui (RevenueCat, disabled)
+- i18next + expo-localization (10 languages)
+- @expo/vector-icons (Ionicons)
 
 ## Where things are
 
 | Path | What | Tracked |
 |------|------|---------|
 | `apps/native/` | Expo app (our focus) | Yes |
-| `packages/config/` | Shared tsconfig | Yes |
-| `packages/env/` | Environment validation | Yes |
-| `packages/ui/` | Web UI components (out of scope) | Yes |
+| `apps/web/` | Next.js website | Yes |
+| `designs/` | Design specs + Play Store listing | Yes |
 | `systems/` | Architecture docs | No (gitignored) |
 | `plans/` | Task breakdowns | No (gitignored) |
 | `progress/` | Session memory | No (gitignored) |
-| `designs/` | Design source (empty) | Partial |
+
+## How to work here
+
+- One todo, one commit. See plan files for commit message format.
+- Change the plan first if the plan is wrong. Add `**Note (session N):**`.
+- Update the changelog with reasoning, not just file lists.
+- Run `npx tsc --noEmit` after each change.
 
 ## Open items, in priority order
 
-1. No design files yet — screens are described in prose only
-2. Bundle identifier is `com.anonymous.sessionreset` — needs real one before App Store
-3. AdMob app IDs need real values before native build
-4. Founder name for onboarding note not finalized
+1. AdMob re-add when Expo SDK supports Kotlin 2.3+
+2. RevenueCat IAP activation when ready to monetize
+3. Rewarded Ad Modal (Screen 10) — not yet implemented
+4. Banner Ad on dashboard (free tier) — not yet implemented
+5. Settings: Power Features section placeholder preserved
+6. Tab Bar navigation (spec says tabs, currently drawer)
+7. Quick-Log should use `@gorhom/bottom-sheet` for proper gesture handling
 
 ## The test
 

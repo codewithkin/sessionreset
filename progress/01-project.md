@@ -16,10 +16,11 @@ Developers who use Claude (Anthropic) and/or Codex (OpenAI) for coding and regul
 
 1. **Timer tracking** — Log limit hits for Claude and Codex with accurate 5-hour countdowns
 2. **Pre-reset alerts** — 15-minute heads-up notification before your window clears
-3. **Onboarding** — 7-screen personalized first-launch experience
-4. **Settings** — Sound profiles, data export, restore purchases
-5. **Monetization** — Free tier with ads (AdMob) + $1.99 lifetime Pro (remove ads)
-6. **Rewarded ads** — Watch 15s video for 24h temporary Pro access
+3. **Onboarding** — 6-screen personalized first-launch experience
+4. **Settings** — Notifications section, data export, restore purchases, contact
+5. **Dark mode** — Full light/dark theme support across all screens
+6. **10 languages** — en, es, hi, ar, pt, ru, ja, de, fr, ko
+7. **Monetization** — Currently everyone gets Pro (IAP disabled, purchase code preserved)
 
 ## What it is NOT
 
@@ -33,10 +34,18 @@ Developers who use Claude (Anthropic) and/or Codex (OpenAI) for coding and regul
 - Expo 57 + expo-router
 - Uniwind (Tailwind for React Native)
 - HeroUI Native
-- react-native-mmkv (storage)
+- react-native-mmkv (encrypted storage)
 - expo-notifications (local)
-- react-native-google-mobile-ads (AdMob)
-- react-native-iap (purchases)
+- react-native-reanimated (animations)
+- react-native-purchases + react-native-purchases-ui (RevenueCat, disabled)
+- i18next + expo-localization (10 languages)
+- @expo/vector-icons (Ionicons)
+
+## Monetization status
+
+- **AdMob**: Removed (Kotlin 2.3 incompatible with Expo SDK 57). Will re-add when Expo supports it.
+- **RevenueCat IAP**: Installed, wired, but disabled. `DEFAULT_SETTINGS.isPro = true` — everyone gets Pro.
+- **Purchase code preserved**: `lib/purchases.ts` has full RevenueCat integration ready to activate.
 
 ## Non-negotiables
 
