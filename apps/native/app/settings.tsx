@@ -140,7 +140,12 @@ export default function SettingsScreen() {
           </View>
         ) : (
           <Pressable
-            onPress={() => router.push("/(onboarding)/paywall")}
+            onPress={() =>
+              Alert.alert(
+                "Coming soon",
+                "Purchases aren't live yet — everyone gets Pro for free while we finish setting this up."
+              )
+            }
             style={{
               marginHorizontal: spacing[20],
               backgroundColor: isDark ? components.upgradeCard.dark.bg : components.upgradeCard.light.bg,

@@ -11,6 +11,7 @@
     },
     "quiz": {
       "question1": "Which AI assistants do you rely on daily?",
+      "pickAllThatApply": "Pick all that apply",
       "question2": "How often do rate limits interrupt your coding?",
       "options": {
         "claude": "Claude 3.5 Sonnet",
@@ -21,15 +22,21 @@
         "medium": "3–5 times/week",
         "high": "Every single day"
       },
+      "frequency": {
+        "low": { "main": "1–2", "sub": "a week" },
+        "medium": { "main": "3–5", "sub": "a week" },
+        "high": { "main": "Every", "sub": "single day" }
+      },
       "cta": "Continue →"
     },
     "founderNote": {
-      "title": "A note from the founder",
-      "body": "Hey! I built SessionReset because hitting a 5-hour limit in the middle of a refactor drove me crazy. No accounts, no cloud databases tracking your data—just pure utility to keep you in the zone.",
+      "body": "Hey! I built SessionReset because hitting a 5-hour limit in the middle of a refactor drove me crazy. No accounts, no cloud databases tracking your data—just pure utility to keep you in the zone. Hope it saves your flow state!",
+      "signature": "The SessionReset Team",
       "cta": "Sounds Good →"
     },
     "paywall": {
       "socialProof": "Joined by 2,000+ developers from GitHub, Vercel & Stripe.",
+      "headline": "Everything on. One purchase, for life.",
       "features": {
         "alerts": "Instant 15-Minute Pre-Reset Alerts",
         "widgets": "Home Screen & Lock Screen Widgets",
@@ -40,19 +47,26 @@
         "customTimers": "Track Any AI Service with Custom Timers"
       },
       "price": "$1.99",
-      "period": "Lifetime Pro • Launch Discount",
+      "period": "Lifetime Pro • One purchase, no subscription",
       "originalPrice": "$4.99",
+      "lifetimeBadge": "LIFETIME",
       "cta": "Unlock Lifetime Pro",
-      "skip": "Continue with Free Version"
+      "isPro": "You're Pro ✓",
+      "skip": "Continue with Free Version",
+      "continueLabel": "Continue",
+      "comingSoonTitle": "Coming soon",
+      "comingSoonBody": "Purchases aren't live yet — everyone gets Pro for free while we finish setting this up."
     },
     "notifications": {
-      "previewTitle": "SessionReset • 15m ago",
-      "previewHeadline": "⚡ Claude Reset in 15 Minutes",
+      "previewApp": "SESSIONRESET",
+      "previewTime": "now",
+      "previewHeadline": "Claude Reset in 15 Minutes",
       "previewBody": "Finish your current task—your 5-hour context window is about to clear.",
       "headline": "Never miss your reset window",
       "body": "We only send local alarms for your active timers. Zero marketing push spam.",
       "cta": "Enable Notifications",
-      "enabled": "Notifications Enabled ✓"
+      "enabled": "Notifications Enabled ✓",
+      "footer": "Local alarms only • nothing leaves the device"
     },
     "starter": {
       "headline": "Let's log your first reset",

@@ -22,6 +22,11 @@ export interface UsageLog {
   resetAt: number;
 }
 
+export interface QuizAnswers {
+  services: string[];
+  frequency: string | null;
+}
+
 export const DEFAULT_SETTINGS: Settings = {
   isPro: true,
   proExpiresAt: null,
