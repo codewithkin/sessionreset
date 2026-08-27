@@ -30,11 +30,9 @@ export default function StarterScreen() {
   };
 
   const handleBlocked = async () => {
-    const timer = createTimer("claude", Date.now(), true);
-    storage.timers.add(timer);
-    await scheduleTimerNotifications(timer);
     storage.onboarding.markComplete();
     router.replace("/(drawer)");
+    setTimeout(() => router.push("/quick-log"), 300);
   };
 
   return (
