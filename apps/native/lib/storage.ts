@@ -1,17 +1,20 @@
 import { createMMKV } from 'react-native-mmkv';
-import { Timer, Settings, UsageLog, DEFAULT_SETTINGS } from './types';
+import { Timer, Settings, UsageLog, QuizAnswers, DEFAULT_SETTINGS } from './types';
 
 // Encrypted at rest on both iOS (NSFileProtection) and Android (MMKV AES)
-const mmkv = createMMKV({
+// Exported so reactive hooks (e.g. useMMKVBoolean) can subscribe to the same
+// storage the rest of the app reads/writes through.
+export const mmkv = createMMKV({
   id: 'sessionreset-storage',
   encryptionKey: 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2',
 });
 
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
   timers: 'timers.active',
   settings: 'settings',
   usageLog: 'usage_log',
   onboardingComplete: 'onboarding_complete',
+  quizAnswers: 'onboarding_quiz_answers',
 } as const;
 
 function getJson<T>(key: string, fallback: T): T {
@@ -77,5 +80,7 @@ export const storage = {
   onboarding: {
     isComplete: (): boolean => mmkv.getBoolean(STORAGE_KEYS.onboardingComplete) ?? false,
     markComplete: (): void => mmkv.set(STORAGE_KEYS.onboardingComplete, true),
+    getQuizAnswers: (): QuizAnswers | null => getJson<QuizAnswers | null>(STORAGE_KEYS.quizAnswers, null),
+    setQuizAnswers: (answers: QuizAnswers): void => setJson(STORAGE_KEYS.quizAnswers, answers),
   },
 };
