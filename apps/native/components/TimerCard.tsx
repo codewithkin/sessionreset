@@ -1,6 +1,7 @@
-import { View, Text, Pressable, Platform } from "react-native";
+import { View, Text, Pressable } from "react-native";
+import { useTranslation } from "react-i18next";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, radii, components } from "@/lib/tokens";
+import { colors, radii, components, fontFamily } from "@/lib/tokens";
 import { Timer } from "@/lib/types";
 import { useCountdown } from "@/hooks/useCountdown";
 import { getResetTimeString } from "@/lib/timer-engine";
@@ -11,17 +12,13 @@ interface TimerCardProps {
   onRemove: (id: string) => void;
 }
 
-const BRAND_NAMES = {
-  claude: "Claude 3.5 Sonnet",
-  codex: "Codex",
-} as const;
-
 export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
   const { timeString, progress, isWarning, isUrgent } = useCountdown(timer);
+  const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
 
-  const brandName = BRAND_NAMES[timer.platform];
+  const brandName = t(`dashboard.timer.${timer.platform}`);
 
   const progressColor = isWarning ? c.progressWarning : c.progressFill;
   const timeColor = isUrgent
@@ -57,9 +54,8 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
       >
         <Text
           style={{
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[700],
             fontSize: components.timerCard.titleFont.size,
-            fontWeight: "700",
             color: c.textPrimary,
           }}
         >
@@ -76,13 +72,12 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
           >
             <Text
               style={{
-                fontFamily: "JetBrains Mono",
+                fontFamily: fontFamily.mono[700],
                 fontSize: components.timerCard.alertBadgeFont.size,
-                fontWeight: "700",
                 color: timer.preResetAlert ? c.textOnAccent : c.textMuted,
               }}
             >
-              {timer.preResetAlert ? "🔔 15m" : "🔔 15m Off"}
+              {timer.preResetAlert ? t("dashboard.timer.alertOn") : t("dashboard.timer.alertOff")}
             </Text>
           </View>
         </Pressable>
@@ -91,11 +86,12 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
       {/* Countdown */}
       <Text
         style={{
-          fontFamily: "JetBrains Mono",
+          fontFamily: fontFamily.mono[700],
           fontSize: components.timerCard.countdownFont.size,
-          fontWeight: "700",
           letterSpacing: components.timerCard.countdownLetterSpacing,
-          lineHeight: 1,
+          // Design is `28px/1`; in RN lineHeight is pixels, not a ratio, so
+          // this must be the font size — `1` collapsed the line box to 1px.
+          lineHeight: components.timerCard.countdownFont.size,
           color: timeColor,
           marginBottom: 12,
         }}
@@ -126,13 +122,12 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
       {/* Reset time */}
       <Text
         style={{
-          fontFamily: "Manrope",
+          fontFamily: fontFamily.manrope[500],
           fontSize: 12,
-          fontWeight: "500",
           color: c.textMuted,
         }}
       >
-        Resets at {getResetTimeString(timer)}
+        {t("dashboard.timer.resetsAt", { time: getResetTimeString(timer) })}
       </Text>
     </Pressable>
   );
