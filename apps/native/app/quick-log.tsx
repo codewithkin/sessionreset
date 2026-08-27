@@ -2,27 +2,24 @@ import { useState } from "react";
 import { View, Text, Pressable, Alert } from "react-native";
 import Animated, { FadeIn, SlideInDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { useTimers } from "@/contexts/TimerContext";
 import { Platform } from "@/lib/types";
 import { showInterstitial, canShowInterstitial } from "@/lib/ads";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, shadows, layout, springs } from "@/lib/tokens";
+import { colors, components, fontSizes, spacing, radii, shadows, layout, springs, fontFamily } from "@/lib/tokens";
 import { PressableScale } from "@/components/PressableScale";
 
-const SERVICES: { key: Platform; label: string; color: string }[] = [
-  { key: "claude", label: "Claude", color: colors.light.claude },
-  { key: "codex", label: "Codex", color: colors.light.codex },
+const SERVICES: { key: Platform; color: string }[] = [
+  { key: "claude", color: colors.light.claude },
+  { key: "codex", color: colors.light.codex },
 ];
 
-const OFFSETS = [
-  { label: "Just Now", minutes: 0 },
-  { label: "5m ago", minutes: 5 },
-  { label: "15m ago", minutes: 15 },
-  { label: "30m ago", minutes: 30 },
-];
+const OFFSET_MINUTES = [0, 5, 15, 30] as const;
 
 export default function QuickLogScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
   const { addTimer, timers } = useTimers();
@@ -33,8 +30,9 @@ export default function QuickLogScreen() {
   const handleStart = async () => {
     if (!selectedService) return;
 
+    // Named `timer`, not `t` — `t` is the translation function in this scope.
     const existing = timers.find(
-      (t) => t.platform === selectedService && t.active
+      (timer) => timer.platform === selectedService && timer.active
     );
 
     const doStart = async () => {
@@ -48,11 +46,11 @@ export default function QuickLogScreen() {
 
     if (existing) {
       Alert.alert(
-        "Replace existing timer?",
-        `Replace existing ${selectedService === "claude" ? "Claude" : "Codex"} timer? This will cancel the current countdown.`,
+        t("quickLog.title"),
+        t("quickLog.replaceWarning", { platform: t(`quickLog.${selectedService}`) }),
         [
-          { text: "Cancel", style: "cancel" },
-          { text: "Replace", style: "destructive", onPress: doStart },
+          { text: t("quickLog.cancel"), style: "cancel" },
+          { text: t("quickLog.confirm"), style: "destructive", onPress: doStart },
         ]
       );
       return;
@@ -99,28 +97,26 @@ export default function QuickLogScreen() {
 
         <Text
           style={{
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[800],
             fontSize: fontSizes.h5,
-            fontWeight: "800",
             letterSpacing: -0.3,
             color: c.textPrimary,
             marginBottom: spacing[20],
           }}
         >
-          Log Limit Hit
+          {t("quickLog.title")}
         </Text>
 
         {/* Service selector */}
         <Text
           style={{
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[700],
             fontSize: fontSizes.micro,
-            fontWeight: "700",
             color: c.textTertiary,
             marginBottom: spacing[10],
           }}
         >
-          Which service?
+          {t("quickLog.serviceLabel")}
         </Text>
         <View style={{ flexDirection: "row", gap: spacing[10], marginBottom: spacing[22] }}>
           {SERVICES.map((s) => {
@@ -152,13 +148,12 @@ export default function QuickLogScreen() {
                 />
                 <Text
                   style={{
-                    fontFamily: "Manrope",
+                    fontFamily: fontFamily.manrope[700],
                     fontSize: fontSizes.body,
-                    fontWeight: "700",
                     color: active ? c.textOnAccent : c.textPrimary,
                   }}
                 >
-                  {s.label}
+                  {t(`quickLog.${s.key}`)}
                 </Text>
               </PressableScale>
             );
@@ -168,22 +163,21 @@ export default function QuickLogScreen() {
         {/* Time offset */}
         <Text
           style={{
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[700],
             fontSize: fontSizes.micro,
-            fontWeight: "700",
             color: c.textTertiary,
             marginBottom: spacing[10],
           }}
         >
-          When did you hit the limit?
+          {t("quickLog.timeLabel")}
         </Text>
         <View style={{ flexDirection: "row", gap: spacing[8], marginBottom: spacing[22] }}>
-          {OFFSETS.map((o) => {
-            const active = selectedOffset === o.minutes;
+          {OFFSET_MINUTES.map((minutes) => {
+            const active = selectedOffset === minutes;
             return (
               <PressableScale
-                key={o.minutes}
-                onPress={() => setSelectedOffset(o.minutes)}
+                key={minutes}
+                onPress={() => setSelectedOffset(minutes)}
                 style={{
                   flex: 1,
                   borderWidth: 1.5,
@@ -196,13 +190,12 @@ export default function QuickLogScreen() {
               >
                 <Text
                   style={{
-                    fontFamily: "JetBrains Mono",
+                    fontFamily: fontFamily.mono[700],
                     fontSize: fontSizes.micro,
-                    fontWeight: "700",
                     color: active ? (isDark ? components.offsetPill.dark.activeText : components.offsetPill.light.activeText) : c.textSecondary,
                   }}
                 >
-                  {o.label}
+                  {minutes === 0 ? t("quickLog.justNow") : t("quickLog.minutesAgo", { minutes })}
                 </Text>
               </PressableScale>
             );
@@ -224,13 +217,12 @@ export default function QuickLogScreen() {
         >
           <Text
             style={{
-              fontFamily: "Manrope",
+              fontFamily: fontFamily.manrope[600],
               fontSize: fontSizes.caption,
-              fontWeight: "600",
               color: c.textPrimary,
             }}
           >
-            Remind me 15 minutes before reset
+            {t("quickLog.alertLabel")}
           </Text>
           <View
             style={{
@@ -276,15 +268,14 @@ export default function QuickLogScreen() {
         >
           <Text
             style={{
-              fontFamily: "Manrope",
+              fontFamily: fontFamily.manrope[700],
               fontSize: fontSizes.body,
-              fontWeight: "700",
               color: selectedService
                 ? (isDark ? components.primaryButton.dark.text : components.primaryButton.light.text)
                 : c.textDisabled,
             }}
           >
-            Start 5-Hour Timer
+            {t("quickLog.cta")}
           </Text>
         </PressableScale>
       </Animated.View>
