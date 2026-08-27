@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, Alert } from "react-native";
+import { View, Text, ScrollView, Pressable, Alert, RefreshControl } from "react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,12 +6,20 @@ import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, radii } from "@/lib/tokens";
 import { useTimers } from "@/contexts/TimerContext";
 import { TimerCard } from "@/components/TimerCard";
+import { useState, useCallback } from "react";
 
 export default function DashboardScreen() {
-  const { timers, toggleAlert, removeTimer } = useTimers();
+  const { timers, toggleAlert, removeTimer, refreshTimers } = useTimers();
   const router = useRouter();
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    refreshTimers();
+    setTimeout(() => setRefreshing(false), 500);
+  }, [refreshTimers]);
 
   const today = new Date();
   const dateStr = today.toLocaleDateString("en-US", {
@@ -84,6 +92,14 @@ export default function DashboardScreen() {
           gap: 12,
         }}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={c.textMuted}
+            colors={[c.accent]}
+          />
+        }
       >
         {timers.length === 0 ? (
           <Animated.View
