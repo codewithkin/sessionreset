@@ -3,6 +3,11 @@
     "name": "SessionReset"
   },
   "onboarding": {
+    "language": {
+      "headline": "Elige tu idioma",
+      "subtext": "Puedes cambiarlo más tarde en Ajustes.",
+      "cta": "Continuar →"
+    },
     "outcomeHook": {
       "headline": "Nunca pierdas tu estado de flujo por límites inesperados de IA.",
       "subtitle": "Alarmas de reinicio de 5 horas para Claude, Codex y herramientas de IA.",

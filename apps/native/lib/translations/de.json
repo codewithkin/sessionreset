@@ -3,6 +3,11 @@
     "name": "SessionReset"
   },
   "onboarding": {
+    "language": {
+      "headline": "Sprache auswählen",
+      "subtext": "Du kannst dies später in den Einstellungen ändern.",
+      "cta": "Weiter →"
+    },
     "outcomeHook": {
       "headline": "Verlieren Sie nie Ihren Flow-Zustand wegen unerwarteter KI-Limits.",
       "subtitle": "Sofortige 5-Stunden-Rolling-Reset-Alarme für Claude, Codex und KI-CLI-Tools.",

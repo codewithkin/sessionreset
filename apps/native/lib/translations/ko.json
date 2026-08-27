@@ -3,6 +3,11 @@
     "name": "SessionReset"
   },
   "onboarding": {
+    "language": {
+      "headline": "언어 선택",
+      "subtext": "나중에 설정에서 변경할 수 있습니다.",
+      "cta": "계속 →"
+    },
     "outcomeHook": {
       "headline": "예상치 못한 AI 제한으로 흐름 상태를 잃지 마세요.",
       "subtitle": "Claude, Codex 및 AI CLI 도구를 위한 즉각적인 5시간 롤링 리셋 알람.",

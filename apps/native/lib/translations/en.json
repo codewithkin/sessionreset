@@ -3,6 +3,11 @@
     "name": "SessionReset"
   },
   "onboarding": {
+    "language": {
+      "headline": "Choose your language",
+      "subtext": "You can change this later in Settings.",
+      "cta": "Continue →"
+    },
     "outcomeHook": {
       "headline": "Never lose your flow state to unexpected AI limits.",
       "subtitle": "Instant 5-hour rolling reset alarms for Claude, Codex, and AI CLI tools.",
@@ -27,9 +32,18 @@
         "high": "Every single day"
       },
       "frequency": {
-        "low": { "main": "1–2", "sub": "times a week" },
-        "medium": { "main": "3–5", "sub": "times a week" },
-        "high": { "main": "Every", "sub": "single day" }
+        "low": {
+          "main": "1–2",
+          "sub": "times a week"
+        },
+        "medium": {
+          "main": "3–5",
+          "sub": "times a week"
+        },
+        "high": {
+          "main": "Every",
+          "sub": "single day"
+        }
       },
       "cta": "Continue →"
     },

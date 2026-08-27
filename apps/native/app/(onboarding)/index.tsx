@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, Pressable, Alert } from "react-native";
+import { View, Text, Pressable, Alert, ScrollView } from "react-native";
 import Animated, {
   FadeIn,
   FadeInDown,
@@ -22,6 +22,7 @@ import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, layout, springs, fontFamily } from "@/lib/tokens";
 import { PressableScale } from "@/components/PressableScale";
 import { storage } from "@/lib/storage";
+import { SUPPORTED_LANGUAGES, setAppLanguage, getAppLanguage, LanguageCode } from "@/lib/i18n";
 import { createTimer } from "@/lib/timer-engine";
 import {
   scheduleTimerNotifications,
@@ -47,10 +48,43 @@ function serviceDotColor(service: string, c: ThemeColors, isDark: boolean): stri
   return isDark ? c.textDisabled : c.textMuted;
 }
 
-// 6 screens shown as one mounted route, switched via local state so there is
+// 7 screens shown as one mounted route, switched via local state so there is
 // no router push/pop between them — only a single replace() when onboarding
 // finishes (see systems/06-onboarding.md, updated per session-4 note).
-const STEP = { HOOK: 0, QUIZ: 1, FOUNDER: 2, PAYWALL: 3, NOTIFICATIONS: 4, STARTER: 5 } as const;
+const STEP = {
+  LANGUAGE: 0,
+  HOOK: 1,
+  QUIZ: 2,
+  FOUNDER: 3,
+  PAYWALL: 4,
+  NOTIFICATIONS: 5,
+  STARTER: 6,
+} as const;
+
+/**
+ * Which progress dot each step lights. The hook is deliberately absent: the
+ * design keeps that screen clean, with no dots at all. That leaves six dots
+ * for the six steps that do show them.
+ */
+const TOTAL_DOTS = 6;
+const DOT_INDEX: Record<number, number> = {
+  [STEP.LANGUAGE]: 0,
+  [STEP.QUIZ]: 1,
+  [STEP.FOUNDER]: 2,
+  [STEP.PAYWALL]: 3,
+  [STEP.NOTIFICATIONS]: 4,
+  [STEP.STARTER]: 5,
+};
+
+/** Ten shipped locales, chunked into the same 2-column grid the quiz uses. */
+const LANGUAGE_ROWS = SUPPORTED_LANGUAGES.reduce<(typeof SUPPORTED_LANGUAGES)[number][][]>(
+  (rows, lang, i) => {
+    if (i % 2 === 0) rows.push([lang]);
+    else rows[rows.length - 1].push(lang);
+    return rows;
+  },
+  []
+);
 
 export default function OnboardingScreen() {
   const router = useRouter();
@@ -58,7 +92,8 @@ export default function OnboardingScreen() {
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
 
-  const [step, setStep] = useState<number>(STEP.HOOK);
+  const [step, setStep] = useState<number>(STEP.LANGUAGE);
+  const [language, setLanguage] = useState<LanguageCode>(() => getAppLanguage());
   const [services, setServices] = useState<string[]>([]);
   const [frequency, setFrequency] = useState<string | null>(null);
   const [notifStatus, setNotifStatus] = useState<NotificationPermissionStatus>("undetermined");
@@ -84,6 +119,13 @@ export default function OnboardingScreen() {
     // Stack.Protected guard picks this up and swaps to (drawer) on its own —
     // no router call needed here (see app/_layout.tsx).
     storage.onboarding.markComplete();
+  };
+
+  const handleSelectLanguage = (code: LanguageCode) => {
+    setLanguage(code);
+    // Applies immediately — every useTranslation consumer re-renders, so the
+    // rest of this screen switches under the user's finger.
+    void setAppLanguage(code);
   };
 
   const handleQuizContinue = () => {
@@ -130,6 +172,16 @@ export default function OnboardingScreen() {
         exiting={SlideOutLeft.duration(320).easing(Easing.in(Easing.cubic))}
         style={{ flex: 1 }}
       >
+        {step === STEP.LANGUAGE && (
+          <LanguageStep
+            c={c}
+            isDark={isDark}
+            t={t}
+            selected={language}
+            onSelect={handleSelectLanguage}
+            onNext={() => setStep(STEP.HOOK)}
+          />
+        )}
         {step === STEP.HOOK && <HookStep c={c} isDark={isDark} t={t} onNext={() => setStep(STEP.QUIZ)} />}
         {step === STEP.QUIZ && (
           <QuizStep
@@ -182,7 +234,7 @@ function ProgressDots({ activeIndex, allComplete, c }: { activeIndex: number; al
       entering={FadeIn.duration(250)}
       style={{ flexDirection: "row", justifyContent: "center", gap: spacing[6], flexShrink: 0 }}
     >
-      {[0, 1, 2, 3, 4].map((i) => (
+      {Array.from({ length: TOTAL_DOTS }, (_, i) => i).map((i) => (
         <View
           key={i}
           style={{
@@ -235,6 +287,154 @@ function PrimaryButton({
         {label}
       </Text>
     </PressableScale>
+  );
+}
+
+// ─── Screen 00 — Language ────────────────────────────────────────────────────
+
+/**
+ * Not in the design files. Built from the existing system — it reuses the quiz
+ * card's shape, borders and checkmark so it reads as part of the same flow.
+ *
+ * Selecting applies the language immediately rather than on Continue, so the
+ * heading, subtext and button below the grid visibly switch as you tap. That
+ * is the confirmation that the choice took effect.
+ */
+function LanguageStep({
+  c,
+  isDark,
+  t,
+  selected,
+  onSelect,
+  onNext,
+}: {
+  c: ThemeColors;
+  isDark: boolean;
+  t: TFn;
+  selected: LanguageCode;
+  onSelect: (code: LanguageCode) => void;
+  onNext: () => void;
+}) {
+  return (
+    <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16] }}>
+      <ProgressDots activeIndex={DOT_INDEX[STEP.LANGUAGE]} c={c} />
+
+      <Animated.View entering={FadeInDown.duration(400).delay(100)} style={{ marginTop: spacing[40] }}>
+        <Text
+          style={{
+            fontFamily: fontFamily.manrope[800],
+            fontSize: fontSizes.h4,
+            lineHeight: 27.3,
+            letterSpacing: -0.4,
+            color: c.textPrimary,
+          }}
+        >
+          {t("onboarding.language.headline")}
+        </Text>
+        <Text
+          style={{
+            fontFamily: fontFamily.manrope[500],
+            fontSize: fontSizes.micro,
+            color: c.textMuted,
+            marginTop: spacing[6],
+          }}
+        >
+          {t("onboarding.language.subtext")}
+        </Text>
+      </Animated.View>
+
+      <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ flex: 1, marginTop: spacing[18] }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ gap: spacing[10], paddingBottom: spacing[16] }}>
+          {LANGUAGE_ROWS.map((row, rowIndex) => (
+            <View key={rowIndex} style={{ flexDirection: "row", gap: spacing[10] }}>
+              {row.map((lang) => {
+                const active = selected === lang.code;
+                return (
+                  <PressableScale
+                    key={lang.code}
+                    onPress={() => onSelect(lang.code)}
+                    style={{
+                      flex: 1,
+                      borderWidth: 2,
+                      borderColor: active
+                        ? isDark
+                          ? components.quizCard.dark.activeBorder
+                          : components.quizCard.light.activeBorder
+                        : isDark
+                          ? components.quizCard.dark.inactiveBorder
+                          : components.quizCard.light.inactiveBorder,
+                      backgroundColor: active
+                        ? isDark
+                          ? components.quizCard.dark.activeBg
+                          : components.quizCard.light.activeBg
+                        : "transparent",
+                      borderRadius: components.quizCard.radius,
+                      padding: components.quizCard.padding,
+                      gap: spacing[8],
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.mono[700],
+                          fontSize: fontSizes.tiny,
+                          letterSpacing: 1.2,
+                          color: active ? c.accent : c.textMuted,
+                        }}
+                      >
+                        {lang.code.toUpperCase()}
+                      </Text>
+                      {active ? (
+                        <Animated.View
+                          entering={ZoomIn.springify()
+                            .damping(springs.pop.damping)
+                            .stiffness(springs.pop.stiffness)
+                            .mass(springs.pop.mass)}
+                          style={{
+                            width: components.quizCard.checkboxSize,
+                            height: components.quizCard.checkboxSize,
+                            borderRadius: 50,
+                            backgroundColor: c.accent,
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Ionicons name="checkmark" size={12} color={c.textOnAccent} />
+                        </Animated.View>
+                      ) : (
+                        <View
+                          style={{
+                            width: components.quizCard.checkboxSize,
+                            height: components.quizCard.checkboxSize,
+                            borderRadius: 50,
+                            borderWidth: 2,
+                            borderColor: c.borderStrong,
+                          }}
+                        />
+                      )}
+                    </View>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        fontFamily: fontFamily.manrope[700],
+                        fontSize: fontSizes.bodySm,
+                        color: active ? c.textPrimary : c.textSecondary,
+                      }}
+                    >
+                      {lang.nativeName}
+                    </Text>
+                  </PressableScale>
+                );
+              })}
+            </View>
+          ))}
+        </ScrollView>
+      </Animated.View>
+
+      <Animated.View entering={FadeIn.duration(400).delay(300)} style={{ marginBottom: spacing[16] }}>
+        <PrimaryButton label={t("onboarding.language.cta")} onPress={onNext} c={c} />
+      </Animated.View>
+    </View>
   );
 }
 
@@ -406,7 +606,7 @@ function QuizStep({
 
   return (
     <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16], justifyContent: "space-between" }}>
-      <ProgressDots activeIndex={STEP.QUIZ} c={c} />
+      <ProgressDots activeIndex={DOT_INDEX[STEP.QUIZ]} c={c} />
 
       <View style={{ marginTop: spacing[40] }}>
         <Animated.View entering={FadeInDown.duration(400).delay(100)}>
@@ -603,7 +803,7 @@ function QuizStep({
 function FounderStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t: TFn; onNext: () => void }) {
   return (
     <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16], justifyContent: "space-between" }}>
-      <ProgressDots activeIndex={STEP.FOUNDER} c={c} />
+      <ProgressDots activeIndex={DOT_INDEX[STEP.FOUNDER]} c={c} />
 
       <View style={{ gap: spacing[28], justifyContent: "center" }}>
         <Animated.View
@@ -681,7 +881,7 @@ function PaywallStep({
 
   return (
     <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16], justifyContent: "space-between" }}>
-      <ProgressDots activeIndex={STEP.PAYWALL} c={c} />
+      <ProgressDots activeIndex={DOT_INDEX[STEP.PAYWALL]} c={c} />
 
       <View style={{ marginTop: spacing[22] }}>
         <Animated.Text
@@ -852,7 +1052,7 @@ function NotificationsStep({
 }) {
   return (
     <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16], justifyContent: "space-between" }}>
-      <ProgressDots activeIndex={STEP.NOTIFICATIONS} c={c} />
+      <ProgressDots activeIndex={DOT_INDEX[STEP.NOTIFICATIONS]} c={c} />
 
       <View style={{ marginTop: spacing[56] }}>
         <Animated.View
@@ -979,7 +1179,7 @@ function StarterStep({
 }) {
   return (
     <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16], justifyContent: "space-between" }}>
-      <ProgressDots activeIndex={STEP.STARTER} allComplete c={c} />
+      <ProgressDots activeIndex={DOT_INDEX[STEP.STARTER]} allComplete c={c} />
 
       <View style={{ justifyContent: "center" }}>
         <Animated.View

@@ -3,6 +3,11 @@
     "name": "SessionReset"
   },
   "onboarding": {
+    "language": {
+      "headline": "言語を選択",
+      "subtext": "後から設定で変更できます。",
+      "cta": "続ける →"
+    },
     "outcomeHook": {
       "headline": "予期しないAI制限にフローステートを奪われないでください。",
       "subtitle": "Claude、Codex、AI CLIツールのための5時間ローリングリセットアラーム。",

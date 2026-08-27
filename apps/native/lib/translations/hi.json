@@ -3,6 +3,11 @@
     "name": "SessionReset"
   },
   "onboarding": {
+    "language": {
+      "headline": "अपनी भाषा चुनें",
+      "subtext": "आप इसे बाद में सेटिंग्स में बदल सकते हैं।",
+      "cta": "जारी रखें →"
+    },
     "outcomeHook": {
       "headline": "अपनी फ़्लो स्टेट को अप्रत्याशित AI सीमाओं से कभी न खोएं।",
       "subtitle": "Claude, Codex और AI CLI टूल के लिए तुरंत 5-घंटे के रोलिंग रीसेट अलार्म।",
