@@ -10,15 +10,17 @@ import {
 } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { storage } from "@/lib/storage";
 import { restorePurchases } from "@/lib/purchases";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing } from "@/lib/tokens";
+import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing, fontFamily } from "@/lib/tokens";
 import { PressableScale } from "@/components/PressableScale";
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
   const [settings, setSettings] = useState(() => storage.settings.get());
@@ -39,7 +41,7 @@ export default function SettingsScreen() {
     } else {
       const { Clipboard } = require("react-native");
       Clipboard.setString(data);
-      Alert.alert("Exported", "Data copied to clipboard.");
+      Alert.alert(t("settings.alerts.exported"), t("settings.alerts.exportedBody"));
     }
   };
 
@@ -51,12 +53,12 @@ export default function SettingsScreen() {
       if (success) {
         const updated = storage.settings.get();
         setSettings(updated);
-        Alert.alert("Restored", "Your Pro purchase has been restored.");
+        Alert.alert(t("settings.alerts.restored"), t("settings.alerts.restoredBody"));
       } else {
-        Alert.alert("No purchases found", "No previous Pro purchase was found.");
+        Alert.alert(t("settings.alerts.noPurchases"), t("settings.alerts.noPurchasesBody"));
       }
     } catch {
-      Alert.alert("Error", "Could not restore purchases.");
+      Alert.alert(t("settings.alerts.error"), t("settings.alerts.restoreError"));
     } finally {
       setRestoring(false);
     }
@@ -90,13 +92,12 @@ export default function SettingsScreen() {
         </PressableScale>
         <Text
           style={{
-            fontFamily: "Manrope",
+            fontFamily: fontFamily.manrope[800],
             fontSize: fontSizes.h5,
-            fontWeight: "800",
             color: c.textPrimary,
           }}
         >
-          Settings
+          {t("settings.title")}
         </Text>
         <View style={{ width: 32 }} />
       </View>
@@ -118,32 +119,30 @@ export default function SettingsScreen() {
           >
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[700],
                 fontSize: fontSizes.body,
-                fontWeight: "700",
                 color: c.success,
               }}
             >
-              You're Pro
+              {t("settings.pro.active")}
             </Text>
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[500],
                 fontSize: fontSizes.micro,
-                fontWeight: "500",
                 color: c.textTertiary,
                 marginTop: spacing[4],
               }}
             >
-              All features unlocked, ads removed.
+              {t("settings.pro.activeSubtext")}
             </Text>
           </View>
         ) : (
           <Pressable
             onPress={() =>
               Alert.alert(
-                "Coming soon",
-                "Purchases aren't live yet — everyone gets Pro for free while we finish setting this up."
+                t("onboarding.paywall.comingSoonTitle"),
+                t("onboarding.paywall.comingSoonBody")
               )
             }
             style={{
@@ -158,35 +157,32 @@ export default function SettingsScreen() {
           >
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[700],
                 fontSize: fontSizes.body,
-                fontWeight: "700",
                 color: isDark ? components.upgradeCard.dark.border : components.upgradeCard.light.border,
               }}
             >
-              Unlock Pro
+              {t("settings.pro.upgrade")}
             </Text>
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[500],
                 fontSize: fontSizes.micro,
-                fontWeight: "500",
                 color: c.textTertiary,
                 marginTop: spacing[4],
               }}
             >
-              Remove Ads & Unlock Widgets — $1.99
+              {t("settings.pro.upgradeSubtext")}
             </Text>
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: fontFamily.manrope[500],
                 fontSize: fontSizes.xs,
-                fontWeight: "500",
                 color: c.textMuted,
                 marginTop: spacing[2],
               }}
             >
-              Lifetime Access • Launch Price
+              {t("settings.pro.upgradePeriod")}
             </Text>
           </Pressable>
         )}
@@ -196,16 +192,15 @@ export default function SettingsScreen() {
         <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ marginBottom: spacing[24] }}>
           <Text
             style={{
-              fontFamily: "JetBrains Mono",
+              fontFamily: fontFamily.mono[700],
               fontSize: fontSizes.xs,
-              fontWeight: "700",
               letterSpacing: letterSpacing.wideMd,
               color: c.textMuted,
               paddingHorizontal: spacing[20],
               marginBottom: spacing[10],
             }}
           >
-            NOTIFICATIONS
+            {t("settings.sections.notifications")}
           </Text>
           <View
             style={{
@@ -230,25 +225,23 @@ export default function SettingsScreen() {
                 <Ionicons name="notifications-outline" size={18} color={c.textTertiary} />
                 <Text
                   style={{
-                    fontFamily: "Manrope",
+                    fontFamily: fontFamily.manrope[600],
                     fontSize: components.settingsRow.titleFont.size,
-                    fontWeight: components.settingsRow.titleFont.weight as any,
                     color: c.textPrimary,
                   }}
                 >
-                  Notification Sound
+                  {t("settings.notifications.sound")}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[6] }}>
                 <Text
                   style={{
-                    fontFamily: "Manrope",
+                    fontFamily: fontFamily.manrope[500],
                     fontSize: components.settingsRow.valueFont.size,
-                    fontWeight: components.settingsRow.valueFont.weight as any,
                     color: isDark ? components.settingsRow.dark.value : components.settingsRow.light.value,
                   }}
                 >
-                  Default
+                  {t("settings.soundDefault")}
                 </Text>
                 <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
               </View>
@@ -267,13 +260,12 @@ export default function SettingsScreen() {
                 <Ionicons name="time-outline" size={18} color={c.textTertiary} />
                 <Text
                   style={{
-                    fontFamily: "Manrope",
+                    fontFamily: fontFamily.manrope[600],
                     fontSize: components.settingsRow.titleFont.size,
-                    fontWeight: components.settingsRow.titleFont.weight as any,
                     color: c.textPrimary,
                   }}
                 >
-                  Pre-Reset Alert Default
+                  {t("settings.notifications.preResetAlert")}
                 </Text>
               </View>
               <View
@@ -307,16 +299,15 @@ export default function SettingsScreen() {
         <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginBottom: spacing[24] }}>
           <Text
             style={{
-              fontFamily: "JetBrains Mono",
+              fontFamily: fontFamily.mono[700],
               fontSize: fontSizes.xs,
-              fontWeight: "700",
               letterSpacing: letterSpacing.wideMd,
               color: c.textMuted,
               paddingHorizontal: spacing[20],
               marginBottom: spacing[10],
             }}
           >
-            DATA
+            {t("settings.sections.data")}
           </Text>
           <View
             style={{
@@ -342,13 +333,12 @@ export default function SettingsScreen() {
                 <Ionicons name="download-outline" size={18} color={c.textTertiary} />
                 <Text
                   style={{
-                    fontFamily: "Manrope",
+                    fontFamily: fontFamily.manrope[600],
                     fontSize: components.settingsRow.titleFont.size,
-                    fontWeight: components.settingsRow.titleFont.weight as any,
                     color: c.textPrimary,
                   }}
                 >
-                  Export Timer History
+                  {t("settings.data.export")}
                 </Text>
               </View>
               <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
@@ -367,13 +357,12 @@ export default function SettingsScreen() {
                 <Ionicons name="refresh-outline" size={18} color={c.textTertiary} />
                 <Text
                   style={{
-                    fontFamily: "Manrope",
+                    fontFamily: fontFamily.manrope[600],
                     fontSize: components.settingsRow.titleFont.size,
-                    fontWeight: components.settingsRow.titleFont.weight as any,
                     color: restoring ? c.textMuted : c.textPrimary,
                   }}
                 >
-                  {restoring ? "Restoring..." : "Restore Purchases"}
+                  {restoring ? t("settings.restoring") : t("settings.data.restore")}
                 </Text>
               </View>
               <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
@@ -385,16 +374,15 @@ export default function SettingsScreen() {
         <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: spacing[24] }}>
           <Text
             style={{
-              fontFamily: "JetBrains Mono",
+              fontFamily: fontFamily.mono[700],
               fontSize: fontSizes.xs,
-              fontWeight: "700",
               letterSpacing: letterSpacing.wideMd,
               color: c.textMuted,
               paddingHorizontal: spacing[20],
               marginBottom: spacing[10],
             }}
           >
-            ABOUT
+            {t("settings.sections.about")}
           </Text>
           <View
             style={{
@@ -414,13 +402,12 @@ export default function SettingsScreen() {
             >
               <Text
                 style={{
-                  fontFamily: "JetBrains Mono",
+                  fontFamily: fontFamily.mono[500],
                   fontSize: fontSizes.xs,
-                  fontWeight: "500",
                   color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron,
                 }}
               >
-                SessionReset v1.0.0
+                {t("settings.about.version", { version: "1.0.0" })}
               </Text>
             </View>
             <Pressable
@@ -437,13 +424,12 @@ export default function SettingsScreen() {
                 <Ionicons name="mail-outline" size={18} color={c.textTertiary} />
                 <Text
                   style={{
-                    fontFamily: "Manrope",
+                    fontFamily: fontFamily.manrope[600],
                     fontSize: components.settingsRow.titleFont.size,
-                    fontWeight: components.settingsRow.titleFont.weight as any,
                     color: c.textPrimary,
                   }}
                 >
-                  Contact / Feedback
+                  {t("settings.about.contact")}
                 </Text>
               </View>
               <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
