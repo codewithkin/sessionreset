@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, Pressable } from "react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   requestNotificationPermission,
+  getNotificationPermissionStatus,
   NotificationPermissionStatus,
 } from "@/lib/notifications";
 import { useAppTheme } from "@/contexts/app-theme-context";
@@ -17,6 +18,14 @@ export default function NotificationsScreen() {
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
   const [status, setStatus] = useState<NotificationPermissionStatus>("undetermined");
+
+  useEffect(() => {
+    getNotificationPermissionStatus().then((s) => {
+      if (s === "granted") {
+        setTimeout(() => router.push("/(onboarding)/starter"), 1000);
+      }
+    });
+  }, []);
 
   const handleEnable = async () => {
     const result = await requestNotificationPermission();
