@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, Pressable, Alert } from "react-native";
+import Animated, { FadeIn, SlideInDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTimers } from "@/contexts/TimerContext";
 import { Platform } from "@/lib/types";
@@ -69,7 +70,8 @@ export default function QuickLogScreen() {
     >
       <Pressable style={{ flex: 1 }} onPress={() => router.back()} />
 
-      <View
+      <Animated.View
+        entering={SlideInDown.springify().damping(0.8)}
         style={{
           backgroundColor: c.bg,
           borderTopLeftRadius: components.bottomSheet.radius,
@@ -281,7 +283,7 @@ export default function QuickLogScreen() {
             Start 5-Hour Timer
           </Text>
         </Pressable>
-      </View>
+      </Animated.View>
     </View>
   );
 }
