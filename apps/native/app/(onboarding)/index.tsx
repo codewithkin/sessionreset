@@ -679,22 +679,35 @@ function PaywallStep({
     <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16], justifyContent: "space-between" }}>
       <ProgressDots activeIndex={STEP.PAYWALL} c={c} />
 
-      <View style={{ gap: spacing[24], marginTop: spacing[22] }}>
+      <View style={{ marginTop: spacing[22] }}>
         <Animated.Text
           entering={FadeInDown.duration(400).delay(100)}
-          style={{ fontFamily: "Manrope", fontSize: fontSizes.micro, fontWeight: "500", color: c.textMuted, textAlign: "center" }}
+          style={{
+            fontFamily: fontFamily.manrope[500],
+            fontSize: fontSizes.micro,
+            lineHeight: 19.5,
+            color: c.textMuted,
+            textAlign: "center",
+          }}
         >
           {t("onboarding.paywall.socialProof")}
         </Animated.Text>
 
         <Animated.Text
           entering={FadeInDown.duration(400).delay(150)}
-          style={{ fontFamily: "Manrope", fontSize: fontSizes.h2, fontWeight: "800", letterSpacing: -0.8, color: c.textPrimary, textAlign: "center" }}
+          style={{
+            marginTop: spacing[34],
+            fontFamily: fontFamily.manrope[800],
+            fontSize: fontSizes.h2,
+            lineHeight: 32.5,
+            letterSpacing: -0.8,
+            color: c.textPrimary,
+          }}
         >
           {t("onboarding.paywall.headline")}
         </Animated.Text>
 
-        <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ gap: components.checklistItem.gap }}>
+        <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ marginTop: spacing[26], gap: spacing[18] }}>
           {FEATURES.map((f) => (
             <View key={f} style={{ flexDirection: "row", alignItems: "flex-start", gap: components.checklistItem.gap }}>
               <View
@@ -706,24 +719,20 @@ function PaywallStep({
                   justifyContent: "center",
                   alignItems: "center",
                   flexShrink: 0,
+                  // Nudge onto the first line's optical centre (label is 16px/1.45).
+                  marginTop: 2,
                 }}
               >
-                <Text
-                  style={{
-                    fontFamily: components.checklistItem.font.family,
-                    fontSize: components.checklistItem.font.size,
-                    fontWeight: components.checklistItem.font.weight,
-                    color: isDark ? components.checklistItem.dark.circleText : components.checklistItem.light.circleText,
-                  }}
-                >
-                  ✓
-                </Text>
+                <Ionicons
+                  name="checkmark"
+                  size={13}
+                  color={isDark ? components.checklistItem.dark.circleText : components.checklistItem.light.circleText}
+                />
               </View>
               <Text
                 style={{
-                  fontFamily: components.checklistItem.labelFont.family,
+                  fontFamily: fontFamily.manrope[500],
                   fontSize: components.checklistItem.labelFont.size,
-                  fontWeight: components.checklistItem.labelFont.weight,
                   lineHeight: 23.2,
                   color: c.textPrimary,
                   flex: 1,
@@ -738,6 +747,7 @@ function PaywallStep({
         <Animated.View
           entering={FadeInDown.duration(400).delay(300)}
           style={{
+            marginTop: spacing[32],
             backgroundColor: isDark ? components.priceCard.dark.bg : components.priceCard.light.bg,
             borderLeftWidth: components.priceCard.leftBorderWidth,
             borderLeftColor: isDark ? components.priceCard.dark.border : components.priceCard.light.border,
@@ -746,15 +756,17 @@ function PaywallStep({
             flexDirection: "row",
             alignItems: "flex-end",
             justifyContent: "space-between",
+            gap: spacing[12],
           }}
         >
-          <View style={{ gap: spacing[6] }}>
-            <View style={{ flexDirection: "row", alignItems: "baseline", gap: spacing[10] }}>
+          {/* flex/minWidth let the price column absorb long localised strings
+              instead of pushing the LIFETIME badge past the card edge. */}
+          <View style={{ flex: 1, minWidth: 0, gap: spacing[6] }}>
+            <View style={{ flexDirection: "row", alignItems: "baseline", gap: spacing[10], flexWrap: "wrap" }}>
               <Text
                 style={{
-                  fontFamily: components.priceCard.priceFont.family,
+                  fontFamily: fontFamily.mono[700],
                   fontSize: components.priceCard.priceFont.size,
-                  fontWeight: components.priceCard.priceFont.weight,
                   letterSpacing: components.priceCard.priceLetterSpacing,
                   color: c.textPrimary,
                 }}
@@ -763,9 +775,8 @@ function PaywallStep({
               </Text>
               <Text
                 style={{
-                  fontFamily: components.priceCard.strikethroughFont.family,
+                  fontFamily: fontFamily.mono[500],
                   fontSize: components.priceCard.strikethroughFont.size,
-                  fontWeight: components.priceCard.strikethroughFont.weight,
                   color: c.textMuted,
                   textDecorationLine: "line-through",
                 }}
@@ -773,11 +784,20 @@ function PaywallStep({
                 {t("onboarding.paywall.originalPrice")}
               </Text>
             </View>
-            <Text style={{ fontFamily: "Manrope", fontSize: fontSizes.captionSm, fontWeight: "500", color: c.textTertiary }}>
+            <Text style={{ fontFamily: fontFamily.manrope[500], fontSize: fontSizes.captionSm, color: c.textTertiary }}>
               {t("onboarding.paywall.period")}
             </Text>
           </View>
-          <Text style={{ fontFamily: "JetBrains Mono", fontSize: fontSizes.tiny, fontWeight: "700", letterSpacing: 1.2, color: c.accent }}>
+          <Text
+            numberOfLines={1}
+            style={{
+              flexShrink: 0,
+              fontFamily: fontFamily.mono[700],
+              fontSize: 10,
+              letterSpacing: 1.2,
+              color: c.accent,
+            }}
+          >
             {t("onboarding.paywall.lifetimeBadge")}
           </Text>
         </Animated.View>
