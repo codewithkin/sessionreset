@@ -1,31 +1,40 @@
 import { Platform } from "react-native";
 import { storage } from "./storage";
 
-// AdMob unit IDs — replace with real IDs before production
+// AdMob config — requires native build to function
+// Test IDs are used here; replace with production IDs before release
 const AD_UNITS = {
   banner: Platform.select({
-    ios: "ca-app-pub-xxxxx/banner",
-    android: "ca-app-pub-xxxxx/banner",
-  }),
+    ios: "ca-app-pub-3940256099942544/2934735716",
+    android: "ca-app-pub-3940256099942544/6300978111",
+  })!,
   interstitial: Platform.select({
-    ios: "ca-app-pub-xxxxx/interstitial",
-    android: "ca-app-pub-xxxxx/interstitial",
-  }),
+    ios: "ca-app-pub-3940256099942544/4411468910",
+    android: "ca-app-pub-3940256099942544/1033173712",
+  })!,
   rewarded: Platform.select({
-    ios: "ca-app-pub-xxxxx/rewarded",
-    android: "ca-app-pub-xxxxx/rewarded",
-  }),
+    ios: "ca-app-pub-3940256099942544/1712485313",
+    android: "ca-app-pub-3940256099942544/7880719434",
+  })!,
 };
 
 let interstitialShownThisSession = false;
 
 export async function initializeAds(): Promise<void> {
-  // RNGMA initialization — requires native build
-  // mobileAds().initialize()
+  try {
+    const { mobileAds } = require("react-native-google-mobile-ads");
+    await mobileAds().initialize();
+  } catch {
+    // AdMob not available in Expo Go / dev
+  }
 }
 
 export function shouldShowBanner(): boolean {
   return !storage.settings.get().isPro;
+}
+
+export async function loadInterstitial(): Promise<void> {
+  // Requires native build — stub for Expo Go
 }
 
 export function canShowInterstitial(): boolean {
@@ -34,15 +43,34 @@ export function canShowInterstitial(): boolean {
   return true;
 }
 
-export function markInterstitialShown(): void {
-  interstitialShownThisSession = true;
+export async function showInterstitial(): Promise<void> {
+  if (!canShowInterstitial()) return;
+  try {
+    const { AdMobInterstitial } = require("react-native-google-mobile-ads");
+    await AdMobInterstitial.setAdUnitID(AD_UNITS.interstitial);
+    await AdMobInterstitial.requestAdAsync();
+    await AdMobInterstitial.showAdAsync();
+    interstitialShownThisSession = true;
+  } catch {
+    // Not available in Expo Go
+  }
 }
 
 export async function showRewardedAd(): Promise<boolean> {
-  // RNIAP rewarded ad — requires native build
-  // On completion:
-  // const settings = storage.settings.get();
-  // storage.settings.set({ ...settings, isPro: true, proExpiresAt: Date.now() + 24*60*60*1000 });
-  // return true;
-  return false;
+  try {
+    const { AdMobRewarded } = require("react-native-google-mobile-ads");
+    await AdMobRewarded.setAdUnitID(AD_UNITS.rewarded);
+    await AdMobRewarded.requestAdAsync();
+    await AdMobRewarded.showAdAsync();
+    // If we get here, ad was shown
+    const settings = storage.settings.get();
+    storage.settings.set({
+      ...settings,
+      isPro: true,
+      proExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
+    });
+    return true;
+  } catch {
+    return false;
+  }
 }

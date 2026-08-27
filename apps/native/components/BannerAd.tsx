@@ -1,12 +1,18 @@
 import { View, Text } from "react-native";
+import { useThemeColor } from "heroui-native";
+import { shouldShowBanner } from "@/lib/ads";
 
 export function BannerAd() {
+  const bg = useThemeColor("background");
+
+  if (!shouldShowBanner()) return null;
+
   return (
     <View
       style={{
         height: 58,
         borderRadius: 10,
-        backgroundColor: "#F0F1F3",
+        backgroundColor: bg === "#000000" ? "#111111" : "#F0F1F3",
         justifyContent: "center",
         alignItems: "center",
         marginHorizontal: 20,
@@ -16,7 +22,7 @@ export function BannerAd() {
         style={{
           fontFamily: "JetBrains Mono",
           fontSize: 11,
-          color: "#6C7076",
+          color: bg === "#000000" ? "#8A8A8A" : "#6C7076",
         }}
       >
         BANNER AD

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { View, Text, Pressable, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { useTimers } from "@/contexts/TimerContext";
-import { storage } from "@/lib/storage";
 import { Platform } from "@/lib/types";
+import { showInterstitial, canShowInterstitial } from "@/lib/ads";
 
 const SERVICES: { key: Platform; label: string; color: string }[] = [
   { key: "claude", label: "Claude", color: "#CC785C" },
@@ -25,31 +25,32 @@ export default function QuickLogScreen() {
   const [preResetAlert, setPreResetAlert] = useState(true);
 
   const handleStart = async () => {
-    // Check for existing active timer for this platform
     const existing = timers.find(
       (t) => t.platform === selectedService && t.active
     );
+
+    const doStart = async () => {
+      await addTimer(selectedService, preResetAlert);
+      router.back();
+      // Show interstitial after logging (free tier, once per session)
+      if (canShowInterstitial()) {
+        setTimeout(() => showInterstitial(), 500);
+      }
+    };
+
     if (existing) {
       Alert.alert(
         "Replace existing timer?",
         `Replace existing ${selectedService === "claude" ? "Claude" : "Codex"} timer? This will cancel the current countdown.`,
         [
           { text: "Cancel", style: "cancel" },
-          {
-            text: "Replace",
-            style: "destructive",
-            onPress: async () => {
-              await addTimer(selectedService, preResetAlert);
-              router.back();
-            },
-          },
+          { text: "Replace", style: "destructive", onPress: doStart },
         ]
       );
       return;
     }
 
-    await addTimer(selectedService, preResetAlert);
-    router.back();
+    await doStart();
   };
 
   return (

@@ -1,4 +1,5 @@
 import { View, Text, Pressable } from "react-native";
+import { useThemeColor } from "heroui-native";
 import { Timer } from "@/lib/types";
 import { useCountdown } from "@/hooks/useCountdown";
 import { getResetTimeString } from "@/lib/timer-engine";
@@ -10,8 +11,8 @@ interface TimerCardProps {
 }
 
 const BRAND_COLORS = {
-  claude: { light: "#CC785C", dark: "#CC785C" },
-  codex: { light: "#10A37F", dark: "#10A37F" },
+  claude: "#CC785C",
+  codex: "#10A37F",
 } as const;
 
 const BRAND_NAMES = {
@@ -22,7 +23,10 @@ const BRAND_NAMES = {
 export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
   const { timeString, progress, isWarning, isUrgent } = useCountdown(timer);
 
-  const brandColor = BRAND_COLORS[timer.platform].light;
+  const bg = useThemeColor("background");
+  const fg = useThemeColor("foreground");
+
+  const brandColor = BRAND_COLORS[timer.platform];
   const brandName = BRAND_NAMES[timer.platform];
 
   const progressColor = isWarning ? "#F59E0B" : "#3B82F6";
@@ -30,13 +34,13 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
     ? "#EF4444"
     : isWarning
       ? "#D97706"
-      : "#17181A";
+      : fg;
 
   return (
     <Pressable
       onLongPress={() => onRemove(timer.id)}
       style={{
-        backgroundColor: "#F5F6F7",
+        backgroundColor: bg === "#000000" ? "#1A1A1A" : "#F5F6F7",
         borderRadius: 18,
         padding: 18,
       }}
@@ -55,7 +59,7 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
             fontFamily: "Manrope",
             fontSize: 15,
             fontWeight: "700",
-            color: "#17181A",
+            color: fg,
           }}
         >
           {brandName}
@@ -63,7 +67,7 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
         <Pressable onPress={() => onToggleAlert(timer.id)}>
           <View
             style={{
-              backgroundColor: timer.preResetAlert ? "#3B82F6" : "#E6E7EA",
+              backgroundColor: timer.preResetAlert ? "#3B82F6" : bg === "#000000" ? "#2A2A2A" : "#E6E7EA",
               borderRadius: 999,
               paddingHorizontal: 10,
               paddingVertical: 5,
@@ -103,7 +107,7 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
         style={{
           height: 4,
           borderRadius: 2,
-          backgroundColor: "#E1E3E6",
+          backgroundColor: bg === "#000000" ? "#2A2A2A" : "#E1E3E6",
           overflow: "hidden",
           marginBottom: 14,
         }}

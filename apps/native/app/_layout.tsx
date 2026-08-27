@@ -1,4 +1,5 @@
 import "@/global.css";
+import { useEffect } from "react";
 import { Stack } from "expo-router";
 import { HeroUINativeProvider } from "heroui-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -9,6 +10,9 @@ import { AppThemeProvider } from "@/contexts/app-theme-context";
 import { TimerProvider } from "@/contexts/TimerContext";
 import i18n from "@/lib/i18n";
 import { storage } from "@/lib/storage";
+import { initializeAds, loadInterstitial } from "@/lib/ads";
+import { initializePurchases } from "@/lib/purchases";
+import { reconcileMissedNotifications } from "@/lib/notifications";
 
 export const unstable_settings = {
   initialRouteName: storage.onboarding.isComplete()
@@ -46,6 +50,13 @@ function StackLayout() {
 }
 
 export default function Layout() {
+  useEffect(() => {
+    // Initialize services on app launch
+    initializeAds().then(() => loadInterstitial());
+    initializePurchases();
+    reconcileMissedNotifications();
+  }, []);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardProvider>

@@ -11,6 +11,8 @@ import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { storage } from "@/lib/storage";
 import { NotificationSound } from "@/lib/types";
+import { restorePurchases } from "@/lib/purchases";
+import { showRewardedAd } from "@/lib/ads";
 
 const SOUNDS: { key: NotificationSound; label: string }[] = [
   { key: "chime", label: "Chime" },
@@ -21,6 +23,8 @@ const SOUNDS: { key: NotificationSound; label: string }[] = [
 export default function SettingsScreen() {
   const router = useRouter();
   const [settings, setSettings] = useState(() => storage.settings.get());
+  const [restoring, setRestoring] = useState(false);
+  const [watchingAd, setWatchingAd] = useState(false);
 
   const updateSetting = <K extends keyof typeof settings>(
     key: K,
@@ -34,25 +38,57 @@ export default function SettingsScreen() {
   const handleExport = async () => {
     const timers = storage.timers.get();
     const logs = storage.usageLog.get();
-    const data = JSON.stringify({ timers, usageLog: logs, exportedAt: new Date().toISOString() }, null, 2);
+    const data = JSON.stringify(
+      { timers, usageLog: logs, exportedAt: new Date().toISOString() },
+      null,
+      2
+    );
 
     if (RNPlatform.OS === "ios") {
-      // iOS share sheet
       const { Share } = require("react-native");
       await Share.share({ message: data, title: "SessionReset Data Export" });
     } else {
-      Alert.alert("Export", "Data exported to clipboard.", [
-        { text: "OK" },
-      ]);
+      // Android: copy to clipboard
+      const { Clipboard } = require("react-native");
+      Clipboard.setString(data);
+      Alert.alert("Exported", "Data copied to clipboard.");
     }
   };
 
-  const handleRestore = () => {
-    Alert.alert(
-      "Restore Purchases",
-      "Checking for previous purchases...",
-      [{ text: "OK" }]
-    );
+  const handleRestore = async () => {
+    if (restoring) return;
+    setRestoring(true);
+    try {
+      const success = await restorePurchases();
+      if (success) {
+        const updated = storage.settings.get();
+        setSettings(updated);
+        Alert.alert("Restored", "Your Pro purchase has been restored.");
+      } else {
+        Alert.alert("No purchases found", "No previous Pro purchase was found.");
+      }
+    } catch {
+      Alert.alert("Error", "Could not restore purchases.");
+    } finally {
+      setRestoring(false);
+    }
+  };
+
+  const handleWatchAd = async () => {
+    if (watchingAd) return;
+    setWatchingAd(true);
+    try {
+      const success = await showRewardedAd();
+      if (success) {
+        const updated = storage.settings.get();
+        setSettings(updated);
+        Alert.alert("Pro unlocked for 24 hours!");
+      }
+    } catch {
+      // Ad failed to load
+    } finally {
+      setWatchingAd(false);
+    }
   };
 
   return (
@@ -260,11 +296,13 @@ export default function SettingsScreen() {
               POWER FEATURES
             </Text>
             <View style={{ marginHorizontal: 20 }}>
-              <View
+              <Pressable
+                onPress={handleWatchAd}
                 style={{
                   backgroundColor: "#F5F6F7",
                   borderRadius: 14,
                   padding: 16,
+                  opacity: watchingAd ? 0.6 : 1,
                 }}
               >
                 <Text
@@ -275,7 +313,7 @@ export default function SettingsScreen() {
                     color: "#17181A",
                   }}
                 >
-                  Watch Ad for 24h Pro Access
+                  {watchingAd ? "Loading ad..." : "Watch Ad for 24h Pro Access"}
                 </Text>
                 <Text
                   style={{
@@ -288,7 +326,7 @@ export default function SettingsScreen() {
                 >
                   Watch a 15s video to unlock all features
                 </Text>
-              </View>
+              </Pressable>
             </View>
           </View>
         )}
@@ -355,10 +393,10 @@ export default function SettingsScreen() {
                   fontFamily: "Manrope",
                   fontSize: 15,
                   fontWeight: "600",
-                  color: "#17181A",
+                  color: restoring ? "#9DA1A7" : "#17181A",
                 }}
               >
-                Restore Purchases
+                {restoring ? "Restoring..." : "Restore Purchases"}
               </Text>
               <Text style={{ color: "#C9CBCF", fontSize: 14 }}>›</Text>
             </Pressable>

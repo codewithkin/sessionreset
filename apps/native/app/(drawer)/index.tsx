@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Text, ScrollView, Pressable, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { useTimers } from "@/contexts/TimerContext";
@@ -68,7 +67,7 @@ export default function DashboardScreen() {
         contentContainerStyle={{
           paddingHorizontal: 20,
           paddingTop: 18,
-          paddingBottom: 120,
+          paddingBottom: timers.length > 0 ? 120 : 40,
           gap: 14,
         }}
         showsVerticalScrollIndicator={false}
@@ -114,18 +113,16 @@ export default function DashboardScreen() {
             />
           ))
         )}
-
-        {/* Banner ad placeholder (for non-Pro) */}
-        {storage.settings.get().isPro === false && timers.length > 0 && (
-          <BannerAd />
-        )}
       </ScrollView>
+
+      {/* Banner ad (free tier only) */}
+      {timers.length > 0 && <BannerAd />}
 
       {/* FAB */}
       <View
         style={{
           position: "absolute",
-          bottom: 32,
+          bottom: timers.length > 0 ? 80 : 32,
           alignSelf: "center",
         }}
       >

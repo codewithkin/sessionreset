@@ -109,7 +109,7 @@ export default function HistoryScreen() {
                       color: "#6C7076",
                     }}
                   >
-                    {new Date(t.resetAt ?? t.resetTime).toLocaleTimeString([], {
+                    {new Date(t.resetTime).toLocaleTimeString([], {
                       hour: "numeric",
                       minute: "2-digit",
                     })}

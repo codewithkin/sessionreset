@@ -137,7 +137,4 @@ export async function reconcileMissedNotifications(): Promise<number> {
   return firedCount;
 }
 
-// Helper: Cancel all notifications
-export async function cancelAllNotifications(): Promise<void> {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-}
+

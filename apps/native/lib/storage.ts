@@ -10,8 +10,6 @@ const STORAGE_KEYS = {
   onboardingComplete: 'onboarding_complete',
 } as const;
 
-const FIVE_HOURS_MS = 5 * 60 * 60 * 1000;
-
 function getJson<T>(key: string, fallback: T): T {
   const value = mmkv.getString(key);
   if (value === undefined) return fallback;

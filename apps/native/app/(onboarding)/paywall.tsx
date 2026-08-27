@@ -1,13 +1,47 @@
-import { View, Text, Pressable } from "react-native";
+import { useState, useEffect } from "react";
+import { View, Text, Pressable, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  purchaseLifetimePro,
+  getOfferings,
+  initializePurchases,
+} from "@/lib/purchases";
 
 const FEATURES = ["alerts", "widgets", "sounds"] as const;
 
 export default function PaywallScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const [purchasing, setPurchasing] = useState(false);
+  const [price, setPrice] = useState("$1.99");
+
+  useEffect(() => {
+    initializePurchases().then(async () => {
+      const pkg = await getOfferings();
+      if (pkg?.product.priceString) {
+        setPrice(pkg.product.priceString);
+      }
+    });
+  }, []);
+
+  const handlePurchase = async () => {
+    if (purchasing) return;
+    setPurchasing(true);
+    try {
+      const success = await purchaseLifetimePro();
+      if (success) {
+        router.replace("/(drawer)");
+      } else {
+        Alert.alert("Purchase cancelled", "You were not charged.");
+      }
+    } catch {
+      Alert.alert("Purchase failed", "Please try again later.");
+    } finally {
+      setPurchasing(false);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -127,7 +161,7 @@ export default function PaywallScreen() {
                   color: "#17181A",
                 }}
               >
-                {t("onboarding.paywall.price")}
+                {price}
               </Text>
               <Text
                 style={{
@@ -178,18 +212,19 @@ export default function PaywallScreen() {
 
         {/* CTAs */}
         <View style={{ gap: 18, marginBottom: 12 }}>
-          <View
+          <Pressable
+            onPress={handlePurchase}
             style={{
               height: 56,
               borderRadius: 16,
-              backgroundColor: "#3B82F6",
+              backgroundColor: purchasing ? "#9DA1A7" : "#3B82F6",
               justifyContent: "center",
               alignItems: "center",
               shadowColor: "#3B82F6",
               shadowOffset: { width: 0, height: 6 },
-              shadowOpacity: 0.32,
+              shadowOpacity: purchasing ? 0 : 0.32,
               shadowRadius: 18,
-              elevation: 8,
+              elevation: purchasing ? 0 : 8,
             }}
           >
             <Text
@@ -199,11 +234,10 @@ export default function PaywallScreen() {
                 fontWeight: "700",
                 color: "#FFFFFF",
               }}
-              onPress={() => router.push("/(onboarding)/notifications")}
             >
-              {t("onboarding.paywall.cta")}
+              {purchasing ? "Processing..." : t("onboarding.paywall.cta")}
             </Text>
-          </View>
+          </Pressable>
           <Pressable onPress={() => router.push("/(onboarding)/notifications")}>
             <Text
               style={{
