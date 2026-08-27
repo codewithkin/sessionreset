@@ -13,6 +13,7 @@ import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { storage } from "@/lib/storage";
+import { SUPPORTED_LANGUAGES, setAppLanguage, getAppLanguage, LanguageCode } from "@/lib/i18n";
 import { restorePurchases } from "@/lib/purchases";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing, fontFamily } from "@/lib/tokens";
@@ -25,6 +26,15 @@ export default function SettingsScreen() {
   const c = isDark ? colors.dark : colors.light;
   const [settings, setSettings] = useState(() => storage.settings.get());
   const [restoring, setRestoring] = useState(false);
+  const [languageOpen, setLanguageOpen] = useState(false);
+  const [language, setLanguage] = useState<LanguageCode>(() => getAppLanguage());
+
+  const handleSelectLanguage = (code: LanguageCode) => {
+    setLanguage(code);
+    setLanguageOpen(false);
+    // Applies app-wide immediately; every useTranslation consumer re-renders.
+    void setAppLanguage(code);
+  };
 
   const handleExport = async () => {
     const timers = storage.timers.get();
@@ -289,6 +299,114 @@ export default function SettingsScreen() {
                 />
               </View>
             </Pressable>
+          </View>
+        </Animated.View>
+
+        {/* LANGUAGE section — the onboarding language step promises this exists */}
+        <Animated.View entering={FadeInDown.duration(400).delay(250)} style={{ marginBottom: spacing[24] }}>
+          <Text
+            style={{
+              fontFamily: fontFamily.mono[700],
+              fontSize: fontSizes.xs,
+              letterSpacing: letterSpacing.wideMd,
+              color: c.textMuted,
+              paddingHorizontal: spacing[20],
+              marginBottom: spacing[10],
+            }}
+          >
+            {t("settings.sections.language")}
+          </Text>
+          <View
+            style={{
+              marginHorizontal: spacing[20],
+              backgroundColor: c.surface,
+              borderRadius: radii.badge,
+              overflow: "hidden",
+            }}
+          >
+            <Pressable
+              onPress={() => setLanguageOpen((open) => !open)}
+              style={{
+                paddingVertical: components.settingsRow.padding.vertical,
+                paddingHorizontal: 18,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
+                <Ionicons name="language-outline" size={18} color={c.textTertiary} />
+                <Text
+                  style={{
+                    fontFamily: fontFamily.manrope[600],
+                    fontSize: components.settingsRow.titleFont.size,
+                    color: c.textPrimary,
+                  }}
+                >
+                  {t("settings.languageRow")}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[6] }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.manrope[500],
+                    fontSize: components.settingsRow.valueFont.size,
+                    color: isDark ? components.settingsRow.dark.value : components.settingsRow.light.value,
+                  }}
+                >
+                  {SUPPORTED_LANGUAGES.find((l) => l.code === language)?.nativeName}
+                </Text>
+                <Ionicons
+                  name={languageOpen ? "chevron-up" : "chevron-down"}
+                  size={14}
+                  color={isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron}
+                />
+              </View>
+            </Pressable>
+
+            {languageOpen &&
+              SUPPORTED_LANGUAGES.map((lang) => {
+                const active = lang.code === language;
+                return (
+                  <Pressable
+                    key={lang.code}
+                    onPress={() => handleSelectLanguage(lang.code)}
+                    style={{
+                      paddingVertical: spacing[12],
+                      paddingHorizontal: 18,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      borderTopWidth: 1,
+                      borderTopColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.mono[700],
+                          fontSize: fontSizes.tiny,
+                          letterSpacing: 1.2,
+                          width: 24,
+                          color: active ? c.accent : c.textMuted,
+                        }}
+                      >
+                        {lang.code.toUpperCase()}
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.manrope[active ? 700 : 500],
+                          fontSize: components.settingsRow.valueFont.size,
+                          color: active ? c.textPrimary : c.textSecondary,
+                        }}
+                      >
+                        {lang.nativeName}
+                      </Text>
+                    </View>
+                    {active && <Ionicons name="checkmark" size={16} color={c.accent} />}
+                  </Pressable>
+                );
+              })}
           </View>
         </Animated.View>
 
