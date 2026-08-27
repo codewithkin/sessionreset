@@ -178,5 +178,10 @@
     "subtitle": "리셋 전 알림",
     "active": "활성 알림",
     "empty": "활성 알림이 없습니다. 타이머에서 켜면 여기에 표시됩니다."
+  },
+  "drawer": {
+    "dashboard": "대시보드",
+    "history": "기록",
+    "alerts": "알림"
   }
 }

@@ -1,14 +1,16 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { Drawer } from "expo-router/drawer";
+import { useTranslation } from "react-i18next";
 import React, { useCallback } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors } from "@/lib/tokens";
+import { colors, fontFamily } from "@/lib/tokens";
 
 function DrawerLayout() {
+  const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
 
@@ -42,13 +44,12 @@ function DrawerLayout() {
           drawerLabel: ({ color, focused }) => (
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: focused ? fontFamily.manrope[700] : fontFamily.manrope[500],
                 fontSize: 15,
-                fontWeight: focused ? "700" : "500",
                 color: focused ? c.textPrimary : c.textTertiary,
               }}
             >
-              Dashboard
+              {t("drawer.dashboard")}
             </Text>
           ),
           drawerIcon: ({ size, focused }) => (
@@ -67,13 +68,12 @@ function DrawerLayout() {
           drawerLabel: ({ color, focused }) => (
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: focused ? fontFamily.manrope[700] : fontFamily.manrope[500],
                 fontSize: 15,
-                fontWeight: focused ? "700" : "500",
                 color: focused ? c.textPrimary : c.textTertiary,
               }}
             >
-              History
+              {t("drawer.history")}
             </Text>
           ),
           drawerIcon: ({ size, focused }) => (
@@ -92,13 +92,12 @@ function DrawerLayout() {
           drawerLabel: ({ color, focused }) => (
             <Text
               style={{
-                fontFamily: "Manrope",
+                fontFamily: focused ? fontFamily.manrope[700] : fontFamily.manrope[500],
                 fontSize: 15,
-                fontWeight: focused ? "700" : "500",
                 color: focused ? c.textPrimary : c.textTertiary,
               }}
             >
-              Alerts
+              {t("drawer.alerts")}
             </Text>
           ),
           drawerIcon: ({ size, focused }) => (

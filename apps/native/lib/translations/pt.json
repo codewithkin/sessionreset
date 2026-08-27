@@ -178,5 +178,10 @@
     "subtitle": "Alertas pré-reinício",
     "active": "ALERTAS ATIVOS",
     "empty": "Sem alertas ativos. Ative-os nos seus temporizadores para os ver aqui."
+  },
+  "drawer": {
+    "dashboard": "Painel",
+    "history": "Histórico",
+    "alerts": "Alertas"
   }
 }

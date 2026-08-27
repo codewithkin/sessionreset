@@ -209,5 +209,10 @@
     "subtitle": "Pre-Reset Alerts",
     "active": "ACTIVE ALERTS",
     "empty": "No active alerts. Enable alerts on your timers to see them here."
+  },
+  "drawer": {
+    "dashboard": "Dashboard",
+    "history": "History",
+    "alerts": "Alerts"
   }
 }

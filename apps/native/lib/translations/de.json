@@ -178,5 +178,10 @@
     "subtitle": "Hinweise vor dem Reset",
     "active": "AKTIVE HINWEISE",
     "empty": "Keine aktiven Hinweise. Aktiviere sie an deinen Timern, um sie hier zu sehen."
+  },
+  "drawer": {
+    "dashboard": "Übersicht",
+    "history": "Verlauf",
+    "alerts": "Hinweise"
   }
 }

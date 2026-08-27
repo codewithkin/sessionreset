@@ -178,5 +178,10 @@
     "subtitle": "Alertes avant réinitialisation",
     "active": "ALERTES ACTIVES",
     "empty": "Aucune alerte active. Activez-les sur vos minuteurs pour les voir ici."
+  },
+  "drawer": {
+    "dashboard": "Tableau de bord",
+    "history": "Historique",
+    "alerts": "Alertes"
   }
 }
