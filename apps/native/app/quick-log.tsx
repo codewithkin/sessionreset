@@ -24,11 +24,13 @@ export default function QuickLogScreen() {
   const { isDark } = useAppTheme();
   const c = isDark ? colors.dark : colors.light;
   const { addTimer, timers } = useTimers();
-  const [selectedService, setSelectedService] = useState<Platform>("claude");
+  const [selectedService, setSelectedService] = useState<Platform | null>(null);
   const [selectedOffset, setSelectedOffset] = useState(0);
   const [preResetAlert, setPreResetAlert] = useState(true);
 
   const handleStart = async () => {
+    if (!selectedService) return;
+
     const existing = timers.find(
       (t) => t.platform === selectedService && t.active
     );
@@ -131,6 +133,7 @@ export default function QuickLogScreen() {
                   flexDirection: "row",
                   alignItems: "center",
                   gap: spacing[12],
+                  opacity: selectedService && !active ? 0.5 : 1,
                 }}
               >
                 <View
@@ -248,17 +251,21 @@ export default function QuickLogScreen() {
         {/* CTA */}
         <Pressable
           onPress={handleStart}
+          disabled={!selectedService}
           style={{
             height: components.primaryButton.height,
             borderRadius: components.primaryButton.radius,
-            backgroundColor: isDark ? components.primaryButton.dark.bg : components.primaryButton.light.bg,
+            backgroundColor: selectedService
+              ? (isDark ? components.primaryButton.dark.bg : components.primaryButton.light.bg)
+              : c.border,
             justifyContent: "center",
             alignItems: "center",
-            shadowColor: c.accent,
+            shadowColor: selectedService ? c.accent : "transparent",
             shadowOffset: { width: 0, height: 6 },
-            shadowOpacity: 0.32,
+            shadowOpacity: selectedService ? 0.32 : 0,
             shadowRadius: 18,
-            elevation: 8,
+            elevation: selectedService ? 8 : 0,
+            opacity: selectedService ? 1 : 0.5,
           }}
         >
           <Text
@@ -266,7 +273,9 @@ export default function QuickLogScreen() {
               fontFamily: "Manrope",
               fontSize: fontSizes.body,
               fontWeight: "700",
-              color: isDark ? components.primaryButton.dark.text : components.primaryButton.light.text,
+              color: selectedService
+                ? (isDark ? components.primaryButton.dark.text : components.primaryButton.light.text)
+                : c.textDisabled,
             }}
           >
             Start 5-Hour Timer
