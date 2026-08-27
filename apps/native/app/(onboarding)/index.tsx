@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, layout } from "@/lib/tokens";
+import { colors, components, fontSizes, spacing, radii, layout, springs, fontFamily } from "@/lib/tokens";
 import { PressableScale } from "@/components/PressableScale";
 import { storage } from "@/lib/storage";
 import { createTimer } from "@/lib/timer-engine";
@@ -456,7 +456,10 @@ function QuizStep({
                   {active ? (
                     <Animated.View
                       key={`check-${s}`}
-                      entering={ZoomIn.springify().damping(0.8)}
+                      entering={ZoomIn.springify()
+                        .damping(springs.pop.damping)
+                        .stiffness(springs.pop.stiffness)
+                        .mass(springs.pop.mass)}
                       style={{
                         width: components.quizCard.checkboxSize,
                         height: components.quizCard.checkboxSize,
