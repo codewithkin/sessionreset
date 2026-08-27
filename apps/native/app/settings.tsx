@@ -12,7 +12,6 @@ import * as Haptics from "expo-haptics";
 import { storage } from "@/lib/storage";
 import { NotificationSound } from "@/lib/types";
 import { restorePurchases } from "@/lib/purchases";
-import { showRewardedAd } from "@/lib/ads";
 
 const SOUNDS: { key: NotificationSound; label: string }[] = [
   { key: "chime", label: "Chime" },
@@ -24,7 +23,6 @@ export default function SettingsScreen() {
   const router = useRouter();
   const [settings, setSettings] = useState(() => storage.settings.get());
   const [restoring, setRestoring] = useState(false);
-  const [watchingAd, setWatchingAd] = useState(false);
 
   const updateSetting = <K extends keyof typeof settings>(
     key: K,
@@ -71,23 +69,6 @@ export default function SettingsScreen() {
       Alert.alert("Error", "Could not restore purchases.");
     } finally {
       setRestoring(false);
-    }
-  };
-
-  const handleWatchAd = async () => {
-    if (watchingAd) return;
-    setWatchingAd(true);
-    try {
-      const success = await showRewardedAd();
-      if (success) {
-        const updated = storage.settings.get();
-        setSettings(updated);
-        Alert.alert("Pro unlocked for 24 hours!");
-      }
-    } catch {
-      // Ad failed to load
-    } finally {
-      setWatchingAd(false);
     }
   };
 
@@ -279,57 +260,8 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        {/* POWER FEATURES section */}
-        {!settings.isPro && (
-          <View style={{ marginBottom: 24 }}>
-            <Text
-              style={{
-                fontFamily: "JetBrains Mono",
-                fontSize: 11,
-                fontWeight: "700",
-                letterSpacing: 1.4,
-                color: "#9DA1A7",
-                paddingHorizontal: 20,
-                marginBottom: 10,
-              }}
-            >
-              POWER FEATURES
-            </Text>
-            <View style={{ marginHorizontal: 20 }}>
-              <Pressable
-                onPress={handleWatchAd}
-                style={{
-                  backgroundColor: "#F5F6F7",
-                  borderRadius: 14,
-                  padding: 16,
-                  opacity: watchingAd ? 0.6 : 1,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: "Manrope",
-                    fontSize: 15,
-                    fontWeight: "600",
-                    color: "#17181A",
-                  }}
-                >
-                  {watchingAd ? "Loading ad..." : "Watch Ad for 24h Pro Access"}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: "Manrope",
-                    fontSize: 12,
-                    fontWeight: "500",
-                    color: "#6C7076",
-                    marginTop: 4,
-                  }}
-                >
-                  Watch a 15s video to unlock all features
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-        )}
+        {/* POWER FEATURES section — disabled for now */}
+        {/* Will re-enable when ads/IAP go live */}
 
         {/* DATA section */}
         <View style={{ marginBottom: 24 }}>

@@ -30,7 +30,7 @@ export async function initializeAds(): Promise<void> {
 }
 
 export function shouldShowBanner(): boolean {
-  return !storage.settings.get().isPro;
+  return false; // Ads disabled — everyone gets Pro
 }
 
 export async function loadInterstitial(): Promise<void> {

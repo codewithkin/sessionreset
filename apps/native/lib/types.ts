@@ -26,7 +26,7 @@ export interface UsageLog {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  isPro: false,
+  isPro: true,
   proExpiresAt: null,
   notificationSound: 'chime',
   preResetAlertEnabled: true,
