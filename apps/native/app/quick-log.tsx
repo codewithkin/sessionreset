@@ -6,7 +6,7 @@ import { useTimers } from "@/contexts/TimerContext";
 import { Platform } from "@/lib/types";
 import { showInterstitial, canShowInterstitial } from "@/lib/ads";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, shadows, layout } from "@/lib/tokens";
+import { colors, components, fontSizes, spacing, radii, shadows, layout, springs } from "@/lib/tokens";
 import { PressableScale } from "@/components/PressableScale";
 
 const SERVICES: { key: Platform; label: string; color: string }[] = [
@@ -72,7 +72,10 @@ export default function QuickLogScreen() {
       <Pressable style={{ flex: 1 }} onPress={() => router.back()} />
 
       <Animated.View
-        entering={SlideInDown.springify().damping(0.8)}
+        entering={SlideInDown.springify()
+          .damping(springs.sheet.damping)
+          .stiffness(springs.sheet.stiffness)
+          .mass(springs.sheet.mass)}
         style={{
           backgroundColor: c.bg,
           borderTopLeftRadius: components.bottomSheet.radius,
