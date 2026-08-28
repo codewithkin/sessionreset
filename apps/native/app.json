@@ -56,9 +56,15 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "c64cf273-f24d-4876-b157-b00fd5f609e4"
+        "projectId": "a319d5aa-ba0d-4c48-ab35-b04282506edd"
       }
     },
-    "owner": "johnprime"
+    "owner": "setraholdings",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a319d5aa-ba0d-4c48-ab35-b04282506edd"
+    }
   }
 }
