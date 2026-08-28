@@ -22,8 +22,8 @@
       "question1": "毎日どのAIアシスタントに依存していますか？",
       "question2": "レート制限はどの頻度でコーディングを妨げますか？",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "週1–2回",
@@ -107,7 +107,7 @@
       "resetsAt": "{{time}}にリセット",
       "alertOn": "15分",
       "alertOff": "オフ",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "残り"
     },

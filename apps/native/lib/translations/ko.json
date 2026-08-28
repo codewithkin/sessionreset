@@ -22,8 +22,8 @@
       "question1": "매일 어떤 AI 어시스턴트에 의존하나요?",
       "question2": "사용량 제한이 코딩을 방해하는 빈도는?",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "주 1–2회",
@@ -107,7 +107,7 @@
       "resetsAt": "{{time}}에 리셋",
       "alertOn": "15분",
       "alertOff": "끔",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "남음"
     },

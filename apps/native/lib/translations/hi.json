@@ -22,8 +22,8 @@
       "question1": "आप रोज़ाना किन AI सहायकों पर निर्भर हैं?",
       "question2": "रेट लिमिट आपकी कोडिंग को कितनी बार बाधित करती है?",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "1–2 बार/सप्ताह",
@@ -107,7 +107,7 @@
       "resetsAt": "{{time}} पर रीसेट",
       "alertOn": "15m",
       "alertOff": "बंद",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "बचा"
     },

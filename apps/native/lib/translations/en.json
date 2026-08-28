@@ -23,8 +23,8 @@
       "pickAllThatApply": "Pick all that apply",
       "question2": "How often do rate limits interrupt your coding?",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "1–2 times/week",
@@ -107,7 +107,7 @@
       "resetsAt": "Resets at {{time}}",
       "alertOn": "15m",
       "alertOff": "OFF",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "left"
     },

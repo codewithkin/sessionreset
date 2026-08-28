@@ -22,8 +22,8 @@
       "question1": "Quels assistants IA utilisez-vous quotidiennement ?",
       "question2": "À quelle fréquence les limites interrompent-elles votre codage ?",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "1–2 fois/semaine",
@@ -107,7 +107,7 @@
       "resetsAt": "Réinitialisation à {{time}}",
       "alertOn": "15 min",
       "alertOff": "OFF",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "restant"
     },

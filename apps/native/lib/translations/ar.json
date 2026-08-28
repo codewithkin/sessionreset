@@ -22,8 +22,8 @@
       "question1": "أي مساعدات ذكاء اصطناعي تعتمد عليها يومياً؟",
       "question2": "كم مرة تقطع حدود الاستخدام برمجتك؟",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "1–2 مرة/أسبوع",
@@ -107,7 +107,7 @@
       "resetsAt": "يُعاد التعيين الساعة {{time}}",
       "alertOn": "15 د",
       "alertOff": "إيقاف",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "متبقٍ"
     },

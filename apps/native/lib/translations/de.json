@@ -22,8 +22,8 @@
       "question1": "Welche KI-Assistenten nutzen Sie täglich?",
       "question2": "Wie oft unterbrechen Ratenlimits Ihr Programmieren?",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "1–2 mal/Woche",
@@ -107,7 +107,7 @@
       "resetsAt": "Reset um {{time}}",
       "alertOn": "15 Min",
       "alertOff": "AUS",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "übrig"
     },

@@ -22,8 +22,8 @@
       "question1": "Какими ИИ-ассистентами вы пользуетесь ежедневно?",
       "question2": "Как часто лимиты использования прерывают ваш код?",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "1–2 раза/неделю",
@@ -107,7 +107,7 @@
       "resetsAt": "Сброс в {{time}}",
       "alertOn": "15 мин",
       "alertOff": "ВЫКЛ",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "осталось"
     },

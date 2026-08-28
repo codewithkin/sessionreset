@@ -22,8 +22,8 @@
       "question1": "¿Qué asistentes de IA usas a diario?",
       "question2": "¿Con qué frecuencia los límites de uso interrumpen tu código?",
       "options": {
-        "claude": "Claude 3.5 Sonnet",
-        "codex": "OpenAI Codex / ChatGPT",
+        "claude": "Claude Sonnet 5",
+        "codex": "OpenAI Codex / GPT-5",
         "claudeCode": "Claude Code CLI",
         "cursor": "Cursor / Copilot",
         "low": "1–2 veces/semana",
@@ -107,7 +107,7 @@
       "resetsAt": "Se reinicia a las {{time}}",
       "alertOn": "15m",
       "alertOff": "NO",
-      "claude": "Claude 3.5 Sonnet",
+      "claude": "Claude Sonnet 5",
       "codex": "Codex",
       "left": "restante"
     },
