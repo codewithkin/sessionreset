@@ -32,7 +32,7 @@ import { reconcileMissedNotifications } from "@/lib/notifications";
 // lands). Failing is non-fatal — see onLayoutRootView.
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-// (onboarding)/index.tsx and (drawer)/index.tsx both resolve to the same URL
+// (onboarding)/index.tsx and (tabs)/index.tsx both resolve to the same URL
 // ("/" — route groups don't appear in the path), so they can't both be
 // mounted at once: expo-router has no reliable way to pick between two
 // screens claiming the same path, and `initialRouteName` doesn't resolve
@@ -49,7 +49,7 @@ function StackLayout() {
         <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
       </Stack.Protected>
       <Stack.Protected guard={!!onboardingComplete}>
-        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack.Protected>
       <Stack.Screen
         name="quick-log"

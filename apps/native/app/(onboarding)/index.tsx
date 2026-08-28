@@ -116,7 +116,7 @@ export default function OnboardingScreen() {
 
   const finishOnboarding = () => {
     // Flips the reactive onboarding_complete flag; the root layout's
-    // Stack.Protected guard picks this up and swaps to (drawer) on its own —
+    // Stack.Protected guard picks this up and swaps to (tabs) on its own —
     // no router call needed here (see app/_layout.tsx).
     storage.onboarding.markComplete();
   };
