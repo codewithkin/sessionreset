@@ -4,6 +4,40 @@ Newest first.
 
 ---
 
+## Session 6
+
+**Model name updates, app-ads.txt for AdMob verification.**
+
+### Model names (commit `47a49c7`)
+- Updated AI model names across all 10 locale files:
+  - "Claude 3.5 Sonnet" → "Claude Sonnet 5"
+  - "OpenAI Codex / ChatGPT" → "OpenAI Codex / GPT-5"
+- 30 replacements total (quiz options, dashboard labels, preview notifications)
+
+### AdMob setup (commit `d5ce935`)
+- Added `apps/web/public/app-ads.txt` with AdMob publisher ID `pub-6071419245494198`
+- Deployed to `sessionreset.gamesforstrangers.lol/app-ads.txt`
+- Verified crawlable via web fetch
+- AdMob app verification pending (awaiting "Check for updates" confirmation)
+
+### AdMob re-integration plan (pending)
+- **Package**: `react-native-google-mobile-ads@^16.3.4` (same version as Word Hug project)
+- **Ad units to create** (see plan below once user provides AdMob IDs):
+  - Banner ad (Dashboard bottom, free tier only)
+  - Interstitial ad (after Quick-Log submit, 1 per session)
+  - Rewarded ad (Settings "Watch Ad for 24h Pro Access")
+- **Changes needed**:
+  - Reinstall package
+  - Update `app.json` with AdMob plugin
+  - Replace `lib/ads.ts` no-op stub with real implementation
+  - Wire BannerAd component to real AdMob banner
+  - Wire interstitial in Quick-Log flow
+  - Wire rewarded ad in Settings + RewardedAdModal
+  - Remove `DEFAULT_SETTINGS.isPro = true` (let IAP control it)
+  - EAS build required (native code change)
+
+---
+
 ## Session 5
 
 **Every non-onboarding screen built from the design file, plus RTL.**

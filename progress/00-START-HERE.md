@@ -70,17 +70,14 @@ Every screen you build, you build from its design file. Design specs are in `des
 
 ## Open items, in priority order
 
-1. AdMob re-add when Expo SDK supports Kotlin 2.3+
-2. RevenueCat IAP activation when ready to monetize
-3. Banner Ad on dashboard (free tier) — design shows one; `components/BannerAd.tsx`
-   is a placeholder that nothing renders, pending AdMob
-4. Rewarded Ad Modal is built (screen 10) but its video is a placeholder —
-   wire to a real rewarded unit when AdMob returns
-5. Nothing has been run on a device this session; all verification is
-   `expo prebuild` plus a Babel parse check
+1. **AdMob re-integration** — `app-ads.txt` deployed and verified. Awaiting AdMob confirmation. Then install `react-native-google-mobile-ads@^16.3.4` (same as Word Hug), create ad units, wire to app. Requires EAS build.
+2. **RevenueCat IAP activation** — `react-native-purchases@^10.8.0` installed, code ready. Remove `DEFAULT_SETTINGS.isPro = true` when ready to monetize.
+3. **Banner Ad** — `components/BannerAd.tsx` placeholder exists; wire to real AdMob banner unit.
+4. **Rewarded Ad Modal** — Screen 10 built; wire to real rewarded unit when AdMob returns.
+5. **Interstitial Ad** — After Quick-Log submit, 1 per session; wire to real interstitial unit.
 
-Resolved in session 5: tab bar navigation, `@gorhom/bottom-sheet` for
-Quick-Log, Settings Power Features section, Rewarded Ad Modal screen.
+Resolved in session 5: tab bar navigation, `@gorhom/bottom-sheet` for Quick-Log, Settings Power Features section, Rewarded Ad Modal screen.
+Resolved in session 6: app-ads.txt deployed, model names updated.
 
 ## The test
 
