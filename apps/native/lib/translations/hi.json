@@ -105,8 +105,8 @@
     },
     "timer": {
       "resetsAt": "{{time}} पर रीसेट",
-      "alertOn": "🔔 15m",
-      "alertOff": "🔔 15m बंद",
+      "alertOn": "15m",
+      "alertOff": "बंद",
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex",
       "left": "बचा"

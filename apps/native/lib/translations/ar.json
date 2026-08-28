@@ -105,8 +105,8 @@
     },
     "timer": {
       "resetsAt": "يُعاد التعيين الساعة {{time}}",
-      "alertOn": "🔔 15 د",
-      "alertOff": "🔔 15 د مغلق",
+      "alertOn": "15 د",
+      "alertOff": "إيقاف",
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex",
       "left": "متبقٍ"

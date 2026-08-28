@@ -105,8 +105,8 @@
     },
     "timer": {
       "resetsAt": "Reset um {{time}}",
-      "alertOn": "🔔 15 Min",
-      "alertOff": "🔔 15 Min Aus",
+      "alertOn": "15 Min",
+      "alertOff": "AUS",
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex",
       "left": "übrig"

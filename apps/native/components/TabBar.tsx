@@ -109,6 +109,10 @@ export function TabBar({ state, navigation }: BottomTabBarProps) {
             alignItems: "center",
             justifyContent: "center",
             transform: [{ translateY: layout.fab.offset }],
+            // The row centres its children, so bottom margin reserves space
+            // beneath the button and lifts it a little further clear of the
+            // bar — the raised look reads better with room under it.
+            marginBottom: spacing[10],
             boxShadow: elevations[isDark ? "dark" : "light"].fab,
           }}
         >

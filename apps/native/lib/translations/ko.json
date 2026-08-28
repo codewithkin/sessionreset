@@ -105,8 +105,8 @@
     },
     "timer": {
       "resetsAt": "{{time}}에 리셋",
-      "alertOn": "🔔 15분",
-      "alertOff": "🔔 15분 끔",
+      "alertOn": "15분",
+      "alertOff": "끔",
       "claude": "Claude 3.5 Sonnet",
       "codex": "Codex",
       "left": "남음"
