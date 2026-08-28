@@ -46,6 +46,7 @@ export default function AlertsScreen() {
 
       <ScrollView
         contentContainerStyle={{
+          flexGrow: 1,
           paddingHorizontal: layout.dashboard.hPadding,
           paddingTop: spacing[8],
           paddingBottom: spacing[24],
@@ -55,7 +56,7 @@ export default function AlertsScreen() {
         {armed.length === 0 ? (
           <Animated.View
             entering={FadeInDown.duration(400).delay(150)}
-            style={{ alignItems: "center", paddingTop: spacing[56], gap: spacing[12] }}
+            style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: spacing[12] }}
           >
             <Ionicons name="notifications-off-outline" size={40} color={c.textMuted} />
             <Text
