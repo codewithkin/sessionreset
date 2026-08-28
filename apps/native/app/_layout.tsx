@@ -26,6 +26,7 @@ import { TimerProvider } from "@/contexts/TimerContext";
 import i18n from "@/lib/i18n";
 import { mmkv, STORAGE_KEYS } from "@/lib/storage";
 import { reconcileMissedNotifications } from "@/lib/notifications";
+import { initializeAds } from "@/lib/ads";
 
 // Hold the native splash until the design fonts are ready, so the first frame
 // is never the system-font fallback (which then visibly reflows once Manrope
@@ -92,7 +93,7 @@ export default function Layout() {
 
   useEffect(() => {
     // Initialize services on app launch
-    // Ads + purchases disabled for now — everyone gets Pro
+    void initializeAds();
     reconcileMissedNotifications();
   }, []);
 

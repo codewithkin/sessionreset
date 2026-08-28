@@ -18,6 +18,7 @@ import { getAppLanguage } from "@/lib/i18n";
 import { formatClockTime } from "@/lib/timeline";
 import { FIVE_HOURS_MS, FIFTEEN_MINUTES_MS } from "@/lib/timer-engine";
 import { PressableScale } from "@/components/PressableScale";
+import { showInterstitial } from "@/lib/ads";
 
 const SERVICES: { key: Platform; color: string }[] = [
   { key: "claude", color: colors.light.claude },
@@ -57,6 +58,8 @@ export default function QuickLogScreen() {
       // The window opened when they hit the limit, not when they logged it.
       await addTimer(selectedService, preResetAlert, Date.now() - selectedOffset * 60_000);
       dismiss();
+      // Free-tier interstitial, at most once per app session.
+      void showInterstitial();
     };
 
     if (existing) {

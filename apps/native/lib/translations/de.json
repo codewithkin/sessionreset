@@ -197,7 +197,9 @@
     "body": "Sieh ein 30-Sekunden-Video und nutze alle Pro-Funktionen für 10 Stunden.",
     "cta": "Kurzes Video ansehen",
     "dismiss": "Nein danke",
-    "unavailable": "Belohnungsvideos sind noch nicht verfügbar – Pro ist zum Start für alle kostenlos."
+    "loading": "Wird geladen...",
+    "success": "Pro für 10 Stunden freigeschaltet. Viel Spaß!",
+    "unavailable": "Die Anzeige konnte gerade nicht geladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut."
   },
   "notifications_alerts": {
     "resetTitle": "{{platform}}-Fenster zurückgesetzt! 🚀",

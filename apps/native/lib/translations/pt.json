@@ -197,7 +197,9 @@
     "body": "Veja um vídeo de 30 segundos para usar todas as funções Pro durante 10 horas.",
     "cta": "Ver vídeo curto",
     "dismiss": "Não, obrigado",
-    "unavailable": "O vídeo com recompensa ainda não está disponível — o Pro é grátis para todos no lançamento."
+    "loading": "Carregando...",
+    "success": "Pro desbloqueado por 10 horas. Aproveite!",
+    "unavailable": "O anúncio não pôde ser carregado agora. Verifique sua conexão e tente novamente."
   },
   "notifications_alerts": {
     "resetTitle": "Janela {{platform}} redefinida! 🚀",

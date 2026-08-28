@@ -197,7 +197,9 @@
     "body": "Watch a 30-second video to use all Pro features for the next 10 hours.",
     "cta": "Watch Short Video",
     "dismiss": "No Thanks",
-    "unavailable": "Rewarded video is not available yet — Pro is free for everyone during launch."
+    "loading": "Loading...",
+    "success": "Pro unlocked for 10 hours. Enjoy!",
+    "unavailable": "The ad couldn't load right now. Check your connection and try again."
   },
   "notifications_alerts": {
     "resetTitle": "{{platform}} Window Reset! 🚀",

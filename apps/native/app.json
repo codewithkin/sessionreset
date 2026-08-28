@@ -36,6 +36,13 @@
     "plugins": [
       "expo-router",
       [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-6071419245494198~5833454134",
+          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
@@ -57,6 +64,12 @@
       "router": {},
       "eas": {
         "projectId": "a319d5aa-ba0d-4c48-ab35-b04282506edd"
+      },
+      "ads": {
+        "enabled": true,
+        "bannerUnitId": "ca-app-pub-6071419245494198/7943295502",
+        "interstitialUnitId": "ca-app-pub-6071419245494198/9103449451",
+        "rewardedUnitId": "ca-app-pub-6071419245494198/4839831469"
       }
     },
     "owner": "setraholdings",

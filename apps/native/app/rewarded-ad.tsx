@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
@@ -7,14 +8,15 @@ import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, elevations, fontFamily, fontSizes, spacing, springs } from "@/lib/tokens";
 import { useDirection } from "@/lib/rtl";
 import { PressableScale } from "@/components/PressableScale";
+import { FALLBACK_REWARD_HOURS, grantProForHours, showRewardedAd, RewardResult } from "@/lib/ads";
 
 /**
  * Design screen 10 — centred dialog over Settings offering a 10-hour Pro
  * unlock in exchange for a rewarded video.
  *
- * The video itself is a placeholder: AdMob was removed in session 2 (Kotlin
- * 2.3 vs Expo SDK 57's 2.1.20) and ads are explicitly out of scope, so the
- * CTA explains that rather than pretending to play something.
+ * Wired to a real AdMob rewarded unit (session 7): watching to the end grants
+ * 10 hours of Pro via storage; anything less dismisses with the quiet
+ * "unavailable" line rather than an error.
  */
 export default function RewardedAdScreen() {
   const router = useRouter();
@@ -22,6 +24,26 @@ export default function RewardedAdScreen() {
   const { isDark } = useAppTheme();
   const { writingDirection } = useDirection();
   const c = isDark ? colors.dark : colors.light;
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<"none" | "unavailable" | "success">("none");
+
+  const handleWatch = async () => {
+    if (loading) return;
+    setLoading(true);
+    setMessage("none");
+    const result: RewardResult = await showRewardedAd();
+    setLoading(false);
+
+    if (result === "earned") {
+      grantProForHours(FALLBACK_REWARD_HOURS);
+      setMessage("success");
+    } else if (result === "dismissed") {
+      setMessage("none"); // closed early — say nothing
+    } else {
+      setMessage("unavailable");
+    }
+  };
 
   return (
     <Animated.View
@@ -105,7 +127,8 @@ export default function RewardedAdScreen() {
         </Text>
 
         <PressableScale
-          onPress={() => router.back()}
+          onPress={handleWatch}
+          disabled={loading}
           accessibilityRole="button"
           style={{
             marginTop: spacing[24],
@@ -118,7 +141,7 @@ export default function RewardedAdScreen() {
           }}
         >
           <Text style={{ fontFamily: fontFamily.manrope[700], fontSize: fontSizes.bodySm, color: c.textOnAccent }}>
-            {t("rewardedAd.cta")}
+            {loading ? t("rewardedAd.loading") : t("rewardedAd.cta")}
           </Text>
         </PressableScale>
 
@@ -128,18 +151,20 @@ export default function RewardedAdScreen() {
           </Text>
         </Pressable>
 
-        <Text
-          style={{
-            marginTop: spacing[14],
-            textAlign: "center",
-            fontFamily: fontFamily.manrope[500],
-            fontSize: fontSizes.tiny,
-            color: c.textMuted,
-            writingDirection,
-          }}
-        >
-          {t("rewardedAd.unavailable")}
-        </Text>
+        {message !== "none" && (
+          <Text
+            style={{
+              marginTop: spacing[14],
+              textAlign: "center",
+              fontFamily: fontFamily.manrope[500],
+              fontSize: fontSizes.tiny,
+              color: c.textMuted,
+              writingDirection,
+            }}
+          >
+            {message === "success" ? t("rewardedAd.success") : t("rewardedAd.unavailable")}
+          </Text>
+        )}
       </Animated.View>
     </Animated.View>
   );

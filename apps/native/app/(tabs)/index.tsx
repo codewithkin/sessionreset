@@ -11,6 +11,7 @@ import { getAppLanguage } from "@/lib/i18n";
 import { useTimers } from "@/contexts/TimerContext";
 import { buildTimeline, formatClockTime, TimelineEntry } from "@/lib/timeline";
 import { TimerCard } from "@/components/TimerCard";
+import { BannerAd } from "@/components/BannerAd";
 import {
   TimelineRow,
   TimelineNowRow,
@@ -195,6 +196,8 @@ export default function TodayScreen() {
             </TimelineRow>
           </Animated.View>
         )}
+
+        <BannerAd />
       </ScrollView>
     </View>
   );

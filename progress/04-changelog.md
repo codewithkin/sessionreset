@@ -4,6 +4,56 @@ Newest first.
 
 ---
 
+## Session 7
+
+**AdMob re-integrated with real ad units — live freemium monetization.**
+
+Package `react-native-google-mobile-ads@16.3.4` (exact match with the Word Hug
+project, which builds cleanly on the same Expo SDK 57 — this disproves the
+session-2 "requires Kotlin 2.3.0" assumption; that concern applied to a newer
+lib version, not this one).
+
+### Ad units (created in AdMob by user)
+| Slot | ID |
+|------|----|
+| App ID | `ca-app-pub-6071419245494198~5833454134` |
+| Banner (Dashboard) | `ca-app-pub-6071419245494198/7943295502` |
+| Interstitial (Quick-Log, 1/session) | `ca-app-pub-6071419245494198/9103449451` |
+| Rewarded (10h Pro) | `ca-app-pub-6071419245494198/4839831469` |
+
+### Model decision — live freemium
+- `DEFAULT_SETTINGS.isPro` flipped `true` → `false`. Free users see the
+  dashboard banner + one interstitial per app session after logging a limit.
+- Rewarded ad in Settings grants 10 hours of Pro via `proExpiresAt` (re-adds
+  to any existing window). IAP stays inactive.
+- `isProActive()` (lib/purchases) gates all ad surfaces.
+
+### Code
+- `app.json`: added `react-native-google-mobile-ads` config plugin with
+  `androidAppId` + `extra.ads` (banner/interstitial/rewarded unit IDs,
+  `enabled: true`). Verified the plugin injects the AdMob APPLICATION_ID
+  meta-data into the generated `AndroidManifest.xml`.
+- `lib/ads.ts`: rewrote the no-op stub into a real defensive module (dynamic
+  import + `MobileAds().initialize()`, interstitial 1/session guard,
+  rewarded `EARNED_REWARD`-gated promise, `grantProForHours()`).
+- `BannerAd.tsx`: renders a real `INLINE_ADAPTIVE_BANNER` when `shouldShowBanner()`
+  (non-Pro, native only).
+- Dashboard renders `<BannerAd />` at the bottom of the timeline scroll.
+- `quick-log.tsx`: fires `showInterstitial()` (fire-and-forget) after starting
+  a timer.
+- `rewarded-ad.tsx`: CTA now plays the rewarded ad, grants 10h Pro on
+  `'earned'`, shows a quiet `unavailable`/`success` line (screen 10).
+- `_layout.tsx`: calls `initializeAds()` on launch.
+- Translations: added `rewardedAd.loading` + `rewardedAd.success`, corrected
+  `rewardedAd.unavailable` (removed "free for everyone during launch") across
+  all 10 locales.
+- `tsc --noEmit` clean; `expo prebuild --platform android --clean` succeeds.
+
+**Requires a native rebuild** (new native module) — EAS Android development
+build queued.
+
+---
+
 ## Session 6
 
 **Model name updates, app-ads.txt for AdMob verification.**

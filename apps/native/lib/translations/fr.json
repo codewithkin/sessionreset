@@ -197,7 +197,9 @@
     "body": "Regardez une vidéo de 30 secondes pour utiliser toutes les fonctions Pro pendant 10 heures.",
     "cta": "Voir la vidéo",
     "dismiss": "Non merci",
-    "unavailable": "La vidéo récompensée n’est pas encore disponible — Pro est gratuit pour tous au lancement."
+    "loading": "Chargement...",
+    "success": "Pro débloqué pour 10 heures. Profitez-en !",
+    "unavailable": "L'annonce n'a pas pu se charger. Vérifiez votre connexion et réessayez."
   },
   "notifications_alerts": {
     "resetTitle": "Fenêtre {{platform}} réinitialisée ! 🚀",

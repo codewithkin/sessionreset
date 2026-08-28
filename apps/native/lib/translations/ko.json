@@ -197,7 +197,9 @@
     "body": "30초 영상을 보면 앞으로 10시간 동안 모든 Pro 기능을 사용할 수 있습니다.",
     "cta": "짧은 영상 보기",
     "dismiss": "괜찮아요",
-    "unavailable": "리워드 영상은 아직 제공되지 않습니다 — 출시 기간에는 Pro가 모두에게 무료입니다."
+    "loading": "불러오는 중...",
+    "success": "10시간 동안 Pro가 해제되었습니다. 즐기세요!",
+    "unavailable": "지금 광고를 불러올 수 없습니다. 연결을 확인하고 다시 시도하세요."
   },
   "notifications_alerts": {
     "resetTitle": "{{platform}} 윈도우 리셋! 🚀",

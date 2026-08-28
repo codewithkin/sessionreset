@@ -28,7 +28,7 @@ export interface QuizAnswers {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  isPro: true,
+  isPro: false,
   proExpiresAt: null,
   preResetAlertEnabled: true,
 };
