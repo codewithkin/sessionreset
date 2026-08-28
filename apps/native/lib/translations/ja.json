@@ -229,5 +229,18 @@
     "dashboard": "ダッシュボード",
     "history": "履歴",
     "alerts": "アラート"
+  },
+  "timerDetail": {
+    "logged": "記録",
+    "resets": "リセット",
+    "alert": "通知",
+    "elapsed": "経過",
+    "noAlert": "オフ",
+    "stop": "このタイマーを停止",
+    "stopTitle": "タイマーを停止しますか？",
+    "stopBody": "カウントダウンを消去し、通知も取り消します。",
+    "stopConfirm": "停止",
+    "done": "ウィンドウが再開",
+    "doneSub": "作業を再開できます。"
   }
 }

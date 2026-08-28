@@ -229,5 +229,18 @@
     "dashboard": "Panel",
     "history": "Historial",
     "alerts": "Alertas"
+  },
+  "timerDetail": {
+    "logged": "REGISTRADO",
+    "resets": "SE REINICIA",
+    "alert": "AVISO",
+    "elapsed": "TRANSCURRIDO",
+    "noAlert": "No",
+    "stop": "Detener este temporizador",
+    "stopTitle": "¿Detener temporizador?",
+    "stopBody": "Esto borra la cuenta atrás y cancela sus alarmas.",
+    "stopConfirm": "Detener",
+    "done": "Ventana reabierta",
+    "doneSub": "Ya puedes continuar."
   }
 }

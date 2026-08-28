@@ -62,6 +62,10 @@ function StackLayout() {
         }}
       />
       <Stack.Screen
+        name="timer/[id]"
+        options={{ headerShown: false, animation: "slide_from_bottom" }}
+      />
+      <Stack.Screen
         name="rewarded-ad"
         options={{
           headerShown: false,

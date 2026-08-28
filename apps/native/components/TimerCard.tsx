@@ -1,6 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "expo-router";
 
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontFamily, fontSizes, spacing } from "@/lib/tokens";
@@ -23,6 +24,7 @@ interface TimerCardProps {
 export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
   const { timeString, progress, isWarning, isUrgent } = useCountdown(timer);
   const { t } = useTranslation();
+  const router = useRouter();
   const { isDark } = useAppTheme();
   const { row, textAlign, writingDirection } = useDirection();
   const c = isDark ? colors.dark : colors.light;
@@ -37,7 +39,9 @@ export function TimerCard({ timer, onToggleAlert, onRemove }: TimerCardProps) {
 
   return (
     <Pressable
+      onPress={() => router.push(`/timer/${timer.id}`)}
       onLongPress={() => onRemove(timer.id)}
+      accessibilityRole="button"
       accessibilityLabel={t(`dashboard.timer.${timer.platform}`)}
       style={{
         backgroundColor: isDark ? components.timerCard.dark.bg : components.timerCard.light.bg,

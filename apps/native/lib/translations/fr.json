@@ -229,5 +229,18 @@
     "dashboard": "Tableau de bord",
     "history": "Historique",
     "alerts": "Alertes"
+  },
+  "timerDetail": {
+    "logged": "ENREGISTRÉ",
+    "resets": "RÉINIT.",
+    "alert": "ALERTE",
+    "elapsed": "ÉCOULÉ",
+    "noAlert": "Off",
+    "stop": "Arrêter ce minuteur",
+    "stopTitle": "Arrêter le minuteur ?",
+    "stopBody": "Cela efface le compte à rebours et annule ses alarmes.",
+    "stopConfirm": "Arrêter",
+    "done": "Fenêtre rouverte",
+    "doneSub": "Vous pouvez repartir."
   }
 }

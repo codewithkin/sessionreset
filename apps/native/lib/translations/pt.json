@@ -229,5 +229,18 @@
     "dashboard": "Painel",
     "history": "Histórico",
     "alerts": "Alertas"
+  },
+  "timerDetail": {
+    "logged": "REGISTADO",
+    "resets": "REINICIA",
+    "alert": "ALERTA",
+    "elapsed": "DECORRIDO",
+    "noAlert": "Off",
+    "stop": "Parar este temporizador",
+    "stopTitle": "Parar temporizador?",
+    "stopBody": "Isto limpa a contagem e cancela os seus alarmes.",
+    "stopConfirm": "Parar",
+    "done": "Janela reaberta",
+    "doneSub": "Já podes continuar."
   }
 }

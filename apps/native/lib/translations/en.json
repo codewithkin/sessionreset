@@ -229,5 +229,18 @@
     "dashboard": "Dashboard",
     "history": "History",
     "alerts": "Alerts"
+  },
+  "timerDetail": {
+    "logged": "LOGGED",
+    "resets": "RESETS",
+    "alert": "ALERT",
+    "elapsed": "ELAPSED",
+    "noAlert": "Off",
+    "stop": "Stop this timer",
+    "stopTitle": "Stop timer?",
+    "stopBody": "This clears the countdown and cancels its alarms.",
+    "stopConfirm": "Stop",
+    "done": "Window reopened",
+    "doneSub": "You are clear to go."
   }
 }

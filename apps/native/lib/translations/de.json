@@ -229,5 +229,18 @@
     "dashboard": "Übersicht",
     "history": "Verlauf",
     "alerts": "Hinweise"
+  },
+  "timerDetail": {
+    "logged": "ERFASST",
+    "resets": "RESET",
+    "alert": "HINWEIS",
+    "elapsed": "VERGANGEN",
+    "noAlert": "Aus",
+    "stop": "Timer beenden",
+    "stopTitle": "Timer beenden?",
+    "stopBody": "Das löscht den Countdown und bricht seine Alarme ab.",
+    "stopConfirm": "Beenden",
+    "done": "Fenster wieder offen",
+    "doneSub": "Du kannst weitermachen."
   }
 }
