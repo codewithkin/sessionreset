@@ -63,9 +63,8 @@
         "dualAlerts": "Alertes instantanées 15 min (Claude + Codex)",
         "customTimers": "Suivre n'importe quel service IA avec des minuteries personnalisées"
       },
-      "price": "1,99 €",
+      "price": "9,99 $US",
       "period": "Pro à vie • Prix de lancement",
-      "originalPrice": "4,99 €",
       "cta": "Débloquer Pro à vie",
       "skip": "Continuer avec la version gratuite",
       "headline": "Tout activé. Un achat, à vie.",
@@ -75,8 +74,9 @@
       "proPeriod": "Pro à vie • Actif sur cet appareil",
       "proBadge": "ACTIF",
       "proCta": "Continuer →",
-      "comingSoonTitle": "Bientôt disponible",
-      "comingSoonBody": "Les achats ne sont pas encore actifs — Pro est gratuit pour tous le temps que nous finalisions."
+      "purchasing": "Traitement...",
+      "purchaseFailedTitle": "Achat non terminé",
+      "purchaseFailedBody": "Nous n'avons pas pu terminer l'achat. Réessayez."
     },
     "notifications": {
       "previewHeadline": "⚡ Claude réinitialise dans 15 minutes",
@@ -189,7 +189,10 @@
       "noPurchases": "Aucun achat trouvé",
       "noPurchasesBody": "Aucun achat Pro antérieur n'a été trouvé.",
       "error": "Erreur",
-      "restoreError": "Impossible de restaurer les achats."
+      "restoreError": "Impossible de restaurer les achats.",
+      "purchased": "Bienvenue dans Pro !",
+      "purchasedBody": "Tout est prêt. Pro est maintenant actif sur cet appareil.",
+      "purchaseFailed": "Achat non terminé. Réessayez."
     }
   },
   "rewardedAd": {

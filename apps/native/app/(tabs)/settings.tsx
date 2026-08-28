@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { storage } from "@/lib/storage";
 import { SUPPORTED_LANGUAGES, setAppLanguage, getAppLanguage, LanguageCode } from "@/lib/i18n";
-import { restorePurchases } from "@/lib/purchases";
+import { restorePurchases, purchaseLifetimePro } from "@/lib/purchases";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import {
   colors,
@@ -45,6 +45,7 @@ export default function SettingsScreen() {
 
   const [settings, setSettings] = useState(() => storage.settings.get());
   const [restoring, setRestoring] = useState(false);
+  const [purchasing, setPurchasing] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
   const [language, setLanguage] = useState<LanguageCode>(() => getAppLanguage());
 
@@ -96,6 +97,24 @@ export default function SettingsScreen() {
       Alert.alert(t("settings.alerts.error"), t("settings.alerts.restoreError"));
     } finally {
       setRestoring(false);
+    }
+  };
+
+  const handleUpgrade = async () => {
+    if (purchasing) return;
+    setPurchasing(true);
+    try {
+      const success = await purchaseLifetimePro();
+      if (success) {
+        setSettings(storage.settings.get());
+        Alert.alert(t("settings.alerts.purchased"), t("settings.alerts.purchasedBody"));
+      } else {
+        Alert.alert(t("settings.alerts.error"), t("settings.alerts.purchaseFailed"));
+      }
+    } catch {
+      Alert.alert(t("settings.alerts.error"), t("settings.alerts.purchaseFailed"));
+    } finally {
+      setPurchasing(false);
     }
   };
 
@@ -269,15 +288,8 @@ export default function SettingsScreen() {
         {/* Pro status / upgrade */}
         <Animated.View entering={FadeInDown.duration(400).delay(80)}>
           <Pressable
-            onPress={
-              settings.isPro
-                ? undefined
-                : () =>
-                    Alert.alert(
-                      t("onboarding.paywall.comingSoonTitle"),
-                      t("onboarding.paywall.comingSoonBody")
-                    )
-            }
+            onPress={settings.isPro ? undefined : handleUpgrade}
+            disabled={purchasing || settings.isPro}
             style={{
               marginTop: spacing[18],
               backgroundColor: isDark ? components.upgradeCard.dark.bg : components.upgradeCard.light.bg,

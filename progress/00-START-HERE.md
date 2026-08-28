@@ -70,14 +70,15 @@ Every screen you build, you build from its design file. Design specs are in `des
 
 ## Open items, in priority order
 
-1. **EAS Android development build** — new native module (`react-native-google-mobile-ads`) requires a rebuild. Queued after commit.
-2. **Verify ads live on device** — banner on free-tier Dashboard, interstitial after Quick-Log (1/session), rewarded in Settings granting 10h Pro.
-3. **RevenueCat IAP activation** — `react-native-purchases@^10.8.0` installed; still inactive. Rewarded ad is currently the only Pro path.
-4. **Interstitial cadence tuning** — currently 1 per app session; revisit if too aggressive/light.
-5. **AdMob unit performance** — monitor `ca-app-pub-6071419245494198/*` fill rates post-launch.
+1. **Run the single EAS Android development build** — includes both the AdMob (`react-native-google-mobile-ads@16.3.4`) and RevenueCat (`react-native-purchases@10.8.0`) native modules. Fix any build errors until green.
+2. **Verify on device** — banner on free-tier Dashboard, interstitial after Quick-Log (1/session), rewarded ad → 10h Pro, IAP $9.99 lifetime Pro (entitlement `session_reset_pro`), restore.
+3. **iOS RevenueCat API key** — still a placeholder (`appl_YOUR_REVENUECAT_API_KEY`); add a real one if/when shipping iOS.
+4. **Subsequent product decisions** — interstitial cadence (1/session), whether Pro users keep the rewarded-ad row (extends a lifetime grant unnecessarily).
+5. **AdMob / RevenueCat unit performance** — monitor fill rates + purchase events post-launch.
 
 Resolved in session 6: app-ads.txt deployed & verified, model names updated.
 Resolved in session 7: AdMob re-integrated with real units, live freemium model.
+Resolved in session 8: RevenueCat live IAP wired ($9.99 lifetime Pro, entitlement `session_reset_pro`), launch offer removed.
 
 ## The test
 

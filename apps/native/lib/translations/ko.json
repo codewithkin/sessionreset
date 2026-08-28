@@ -63,9 +63,8 @@
         "dualAlerts": "15분 전 알림 (Claude + Codex)",
         "customTimers": "사용자 정의 타이머로 모든 AI 서비스 추적"
       },
-      "price": "₩2,900",
+      "price": "₩13,000",
       "period": "평생 Pro • 런칭 할인",
-      "originalPrice": "₩5,900",
       "cta": "Pro 잠금 해제",
       "skip": "무료 버전으로 계속",
       "headline": "전부 켜짐. 한 번 구매로 평생.",
@@ -75,8 +74,9 @@
       "proPeriod": "평생 Pro • 이 기기에서 활성",
       "proBadge": "활성",
       "proCta": "계속 →",
-      "comingSoonTitle": "출시 예정",
-      "comingSoonBody": "구매는 아직 제공되지 않습니다 — 준비가 끝날 때까지 모두 Pro를 무료로 사용합니다."
+      "purchasing": "처리 중...",
+      "purchaseFailedTitle": "구매가 완료되지 않음",
+      "purchaseFailedBody": "구매를 완료하지 못했습니다. 다시 시도하세요."
     },
     "notifications": {
       "previewHeadline": "⚡ Claude 15분 후 리셋",
@@ -189,7 +189,10 @@
       "noPurchases": "구매를 찾을 수 없음",
       "noPurchasesBody": "이전 Pro 구매를 찾을 수 없습니다.",
       "error": "오류",
-      "restoreError": "구매를 복원할 수 없습니다."
+      "restoreError": "구매를 복원할 수 없습니다.",
+      "purchased": "Pro에 오신 것을 환영합니다!",
+      "purchasedBody": "모든 준비가 끝났습니다. 이제 이 기기에서 Pro가 활성화되었습니다.",
+      "purchaseFailed": "구매가 완료되지 않았습니다. 다시 시도하세요."
     }
   },
   "rewardedAd": {

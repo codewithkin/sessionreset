@@ -63,9 +63,8 @@
         "dualAlerts": "Sofortige 15-Minuten-Vorwarnung (Claude + Codex)",
         "customTimers": "Jeden KI-Dienst mit benutzerdefinierten Timern verfolgen"
       },
-      "price": "$1.99",
+      "price": "9,99 €",
       "period": "Lebenslanger Pro • Startpreis",
-      "originalPrice": "$4.99",
       "cta": "Pro freischalten",
       "skip": "Mit kostenloser Version fortfahren",
       "headline": "Alles an. Einmal kaufen, für immer.",
@@ -75,8 +74,9 @@
       "proPeriod": "Lifetime Pro • Auf diesem Gerät aktiv",
       "proBadge": "AKTIV",
       "proCta": "Weiter →",
-      "comingSoonTitle": "Demnächst",
-      "comingSoonBody": "Käufe sind noch nicht aktiv – alle bekommen Pro kostenlos, bis wir fertig eingerichtet haben."
+      "purchasing": "Wird verarbeitet...",
+      "purchaseFailedTitle": "Kauf nicht abgeschlossen",
+      "purchaseFailedBody": "Der Kauf konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
     },
     "notifications": {
       "previewHeadline": "⚡ Claude Reset in 15 Minuten",
@@ -189,7 +189,10 @@
       "noPurchases": "Keine Käufe gefunden",
       "noPurchasesBody": "Es wurde kein früherer Pro-Kauf gefunden.",
       "error": "Fehler",
-      "restoreError": "Käufe konnten nicht wiederhergestellt werden."
+      "restoreError": "Käufe konnten nicht wiederhergestellt werden.",
+      "purchased": "Willkommen bei Pro!",
+      "purchasedBody": "Alles erledigt. Pro ist jetzt auf diesem Gerät aktiv.",
+      "purchaseFailed": "Kauf nicht abgeschlossen. Bitte versuchen Sie es erneut."
     }
   },
   "rewardedAd": {

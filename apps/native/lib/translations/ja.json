@@ -63,9 +63,8 @@
         "dualAlerts": "15分前アラート（Claude + Codex）",
         "customTimers": "カスタムタイマーで任意のAIサービスを追跡"
       },
-      "price": "¥290",
+      "price": "¥1,350",
       "period": "ライフタイムPro • ランチ割引",
-      "originalPrice": "¥590",
       "cta": "Proをロック解除",
       "skip": "無料版で続ける",
       "headline": "すべて解放。一度の購入で永続。",
@@ -75,8 +74,9 @@
       "proPeriod": "永続 Pro • この端末で有効",
       "proBadge": "有効",
       "proCta": "続ける →",
-      "comingSoonTitle": "近日公開",
-      "comingSoonBody": "購入はまだ有効ではありません。準備が整うまで、Pro は全員無料です。"
+      "purchasing": "処理中...",
+      "purchaseFailedTitle": "購入が完了しませんでした",
+      "purchaseFailedBody": "購入を完了できませんでした。もう一度お試しください。"
     },
     "notifications": {
       "previewHeadline": "⚡ Claude 15分でリセット",
@@ -189,7 +189,10 @@
       "noPurchases": "購入が見つかりません",
       "noPurchasesBody": "以前の Pro の購入は見つかりませんでした。",
       "error": "エラー",
-      "restoreError": "購入を復元できませんでした。"
+      "restoreError": "購入を復元できませんでした。",
+      "purchased": "Proへようこそ！",
+      "purchasedBody": "設定が完了しました。このデバイスでProが有効になりました。",
+      "purchaseFailed": "購入が完了しませんでした。もう一度お試しください。"
     }
   },
   "rewardedAd": {

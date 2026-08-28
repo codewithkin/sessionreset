@@ -63,9 +63,8 @@
         "dualAlerts": "तुरंत 15-मिनट प्री-रीसेट अलर्ट (Claude + Codex)",
         "customTimers": "कस्टम टाइमर के साथ किसी भी AI सेवा को ट्रैक करें"
       },
-      "price": "₹169",
+      "price": "$9.99",
       "period": "लाइफटाइम Pro • लॉन्च डिस्काउंट",
-      "originalPrice": "₹349",
       "cta": "Pro अनलॉक करें",
       "skip": "मुफ़्त संस्करण के साथ जारी रखें",
       "headline": "सब चालू। एक बार खरीदें, हमेशा के लिए।",
@@ -75,8 +74,9 @@
       "proPeriod": "आजीवन Pro • इस डिवाइस पर सक्रिय",
       "proBadge": "सक्रिय",
       "proCta": "जारी रखें →",
-      "comingSoonTitle": "जल्द आ रहा है",
-      "comingSoonBody": "खरीदारी अभी चालू नहीं है — जब तक हम सेटअप पूरा करते हैं, सभी को Pro मुफ़्त मिलता है।"
+      "purchasing": "प्रोसेस हो रहा है...",
+      "purchaseFailedTitle": "खरीदारी पूर्ण नहीं हुई",
+      "purchaseFailedBody": "हम खरीदारी पूरी नहीं कर सके। कृपया फिर से प्रयास करें।"
     },
     "notifications": {
       "previewHeadline": "⚡ Claude 15 मिनट में रीसेट",
@@ -189,7 +189,10 @@
       "noPurchases": "कोई खरीद नहीं मिली",
       "noPurchasesBody": "कोई पिछली Pro खरीद नहीं मिली।",
       "error": "त्रुटि",
-      "restoreError": "खरीद पुनर्स्थापित नहीं हो सकी।"
+      "restoreError": "खरीद पुनर्स्थापित नहीं हो सकी।",
+      "purchased": "Pro में आपका स्वागत है!",
+      "purchasedBody": "सब कुछ तैयार है। अब Pro इस डिवाइस पर सक्रिय है।",
+      "purchaseFailed": "खरीदारी पूर्ण नहीं हुई। फिर से प्रयास करें।"
     }
   },
   "rewardedAd": {

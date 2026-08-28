@@ -63,9 +63,8 @@
         "dualAlerts": "تنبيهات فورية قبل 15 دقيقة (Claude + Codex)",
         "customTimers": "تتبع أي خدمة ذكاء اصطناعي بمؤقتات مخصصة"
       },
-      "price": "$1.99",
+      "price": "٩٫٩٩ دولارًا أمريكيًا",
       "period": "Pro مدى الحياة • سعر الإطلاق",
-      "originalPrice": "$4.99",
       "cta": "فتح Pro مدى الحياة",
       "skip": "المتابعة بالمجاني",
       "headline": "كل شيء مفعّل. شراء واحد، مدى الحياة.",
@@ -75,8 +74,9 @@
       "proPeriod": "Pro مدى الحياة • مفعّل على هذا الجهاز",
       "proBadge": "مفعّل",
       "proCta": "متابعة →",
-      "comingSoonTitle": "قريبًا",
-      "comingSoonBody": "الشراء غير متاح بعد — يحصل الجميع على Pro مجانًا ريثما ننتهي من الإعداد."
+      "purchasing": "جارٍ المعالجة...",
+      "purchaseFailedTitle": "لم تكتمل عملية الشراء",
+      "purchaseFailedBody": "تعذر إكمال عملية الشراء. حاول مرة أخرى."
     },
     "notifications": {
       "previewHeadline": "⚡ إعادة تعيين Claude خلال 15 دقيقة",
@@ -189,7 +189,10 @@
       "noPurchases": "لم يتم العثور على مشتريات",
       "noPurchasesBody": "لم يتم العثور على شراء Pro سابق.",
       "error": "خطأ",
-      "restoreError": "تعذّرت استعادة المشتريات."
+      "restoreError": "تعذّرت استعادة المشتريات.",
+      "purchased": "مرحبًا بك في Pro!",
+      "purchasedBody": "تم التفعيل. النسخة الاحترافية نشطة الآن على هذا الجهاز.",
+      "purchaseFailed": "لم تكتمل عملية الشراء. حاول مرة أخرى."
     }
   },
   "rewardedAd": {

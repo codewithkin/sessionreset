@@ -63,9 +63,8 @@
         "dualAlerts": "Alertas instantáneas de 15 minutos (Claude + Codex)",
         "customTimers": "Rastrea cualquier servicio de IA con temporizadores personalizados"
       },
-      "price": "$1.99",
+      "price": "9,99 US$",
       "period": "Pro de por vida • Precio de lanzamiento",
-      "originalPrice": "$4.99",
       "cta": "Desbloquear Pro de por vida",
       "skip": "Continuar con versión gratuita",
       "headline": "Todo activo. Una compra, de por vida.",
@@ -75,8 +74,9 @@
       "proPeriod": "Pro de por vida • Activo en este dispositivo",
       "proBadge": "ACTIVO",
       "proCta": "Continuar →",
-      "comingSoonTitle": "Muy pronto",
-      "comingSoonBody": "Las compras aún no están activas: todos tienen Pro gratis mientras terminamos de configurarlo."
+      "purchasing": "Procesando...",
+      "purchaseFailedTitle": "Compra no completada",
+      "purchaseFailedBody": "No pudimos completar la compra. Inténtalo de nuevo."
     },
     "notifications": {
       "previewHeadline": "⚡ Claude se reinicia en 15 minutos",
@@ -189,7 +189,10 @@
       "noPurchases": "No se encontraron compras",
       "noPurchasesBody": "No se encontró ninguna compra Pro anterior.",
       "error": "Error",
-      "restoreError": "No se pudieron restaurar las compras."
+      "restoreError": "No se pudieron restaurar las compras.",
+      "purchased": "¡Bienvenido a Pro!",
+      "purchasedBody": "Todo listo. Pro ya está activo en este dispositivo.",
+      "purchaseFailed": "Compra no completada. Inténtalo de nuevo."
     }
   },
   "rewardedAd": {

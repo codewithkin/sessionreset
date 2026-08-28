@@ -31,6 +31,7 @@ import {
   getNotificationPermissionStatus,
   NotificationPermissionStatus,
 } from "@/lib/notifications";
+import { purchaseLifetimePro, getOfferings } from "@/lib/purchases";
 
 type ThemeColors = typeof colors.light | typeof colors.dark;
 type TFn = ReturnType<typeof useTranslation>["t"];
@@ -100,7 +101,24 @@ export default function OnboardingScreen() {
   const [frequency, setFrequency] = useState<string | null>(null);
   const [notifStatus, setNotifStatus] = useState<NotificationPermissionStatus>("undetermined");
   const [startingDemo, setStartingDemo] = useState(false);
-  const [isPro] = useState(() => storage.settings.get().isPro);
+  const [isPro, setIsPro] = useState(() => storage.settings.get().isPro);
+  const [offeringsPrice, setOfferingsPrice] = useState<string | null>(null);
+  const [purchasing, setPurchasing] = useState(false);
+
+  // Surface the real, localized store price on the paywall. RevenueCat's
+  // storeProduct carries the Play Console price (what Google actually charges);
+  // we fall back to the translated "$9.99" only if the offering isn't ready.
+  useEffect(() => {
+    if (step !== STEP.PAYWALL) return;
+    let cancelled = false;
+    getOfferings().then((pkg) => {
+      if (cancelled || !pkg?.product?.priceString) return;
+      setOfferingsPrice(pkg.product.priceString);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [step]);
 
   // Auto-advance if permission was already granted in a previous session.
   useEffect(() => {
@@ -136,14 +154,21 @@ export default function OnboardingScreen() {
     setStep(STEP.PAYWALL);
   };
 
-  const handlePaywallPrimary = () => {
+  const handlePaywallPrimary = async () => {
     if (isPro) {
       setStep(STEP.NOTIFICATIONS);
       return;
     }
-    // Placeholder only — RevenueCat purchase flow is intentionally not wired
-    // up here (out of scope for this pass). See trade-off note.
-    Alert.alert(t("onboarding.paywall.comingSoonTitle"), t("onboarding.paywall.comingSoonBody"));
+    if (purchasing) return;
+    setPurchasing(true);
+    const success = await purchaseLifetimePro();
+    setPurchasing(false);
+    if (success) {
+      setIsPro(true);
+      setStep(STEP.NOTIFICATIONS);
+    } else {
+      Alert.alert(t("onboarding.paywall.purchaseFailedTitle"), t("onboarding.paywall.purchaseFailedBody"));
+    }
   };
 
   const handleEnableNotifications = async () => {
@@ -206,6 +231,8 @@ export default function OnboardingScreen() {
             isDark={isDark}
             t={t}
             isPro={isPro}
+            offeringsPrice={offeringsPrice}
+            purchasing={purchasing}
             onPrimary={handlePaywallPrimary}
             onSkip={() => setStep(STEP.NOTIFICATIONS)}
           />
@@ -882,6 +909,8 @@ function PaywallStep({
   t,
   d,
   isPro,
+  offeringsPrice,
+  purchasing,
   onPrimary,
   onSkip,
 }: {
@@ -890,6 +919,8 @@ function PaywallStep({
   t: TFn;
   d: Direction;
   isPro: boolean;
+  offeringsPrice: string | null;
+  purchasing: boolean;
   onPrimary: () => void;
   onSkip: () => void;
 }) {
@@ -993,17 +1024,7 @@ function PaywallStep({
                   color: c.textPrimary,
                 }}
               >
-                {isPro ? t("onboarding.paywall.proPrice") : t("onboarding.paywall.price")}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fontFamily.mono[500],
-                  fontSize: components.priceCard.strikethroughFont.size,
-                  color: c.textMuted,
-                  textDecorationLine: "line-through",
-                }}
-              >
-                {t("onboarding.paywall.originalPrice")}
+                {isPro ? t("onboarding.paywall.proPrice") : (offeringsPrice ?? t("onboarding.paywall.price"))}
               </Text>
             </View>
             <Text style={{ fontFamily: fontFamily.manrope[500], fontSize: fontSizes.captionSm, color: c.textTertiary }}>
@@ -1025,15 +1046,13 @@ function PaywallStep({
         </Animated.View>
       </View>
 
-      {/* While everyone is Pro (launch), there is nothing to sell and nothing
-          to decline — so the screen shows one plain action instead of a dead
-          "You're Pro" chip above an ambiguous "Continue" link. */}
       <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: spacing[14] }}>
         <PrimaryButton
-          label={isPro ? t("onboarding.paywall.proCta") : t("onboarding.paywall.cta")}
+          label={isPro ? t("onboarding.paywall.proCta") : purchasing ? t("onboarding.paywall.purchasing") : t("onboarding.paywall.cta")}
           onPress={onPrimary}
           c={c}
           isDark={isDark}
+          disabled={purchasing}
         />
         {!isPro && (
           <Pressable onPress={onSkip} style={{ marginTop: spacing[16] }}>

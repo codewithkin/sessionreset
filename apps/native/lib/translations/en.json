@@ -64,9 +64,8 @@
         "dualAlerts": "Instant 15-Minute Pre-Reset Alerts (Claude + Codex)",
         "customTimers": "Track Any AI Service with Custom Timers"
       },
-      "price": "$1.99",
-      "period": "Lifetime Pro • One purchase, no subscription",
-      "originalPrice": "$4.99",
+      "price": "$9.99",
+      "period": "Lifetime Pro  One purchase, no subscription",
       "lifetimeBadge": "LIFETIME",
       "cta": "Unlock Lifetime Pro",
       "skip": "Continue with Free Version",
@@ -75,8 +74,9 @@
       "proPeriod": "Lifetime Pro • Active on this device",
       "proBadge": "ACTIVE",
       "proCta": "Continue →",
-      "comingSoonTitle": "Coming soon",
-      "comingSoonBody": "Purchases aren't live yet — everyone gets Pro for free while we finish setting this up."
+      "purchasing": "Processing...",
+      "purchaseFailedTitle": "Purchase not completed",
+      "purchaseFailedBody": "We couldn't complete the purchase. Please try again."
     },
     "notifications": {
       "previewApp": "SESSIONRESET",
@@ -189,7 +189,10 @@
       "noPurchases": "No purchases found",
       "noPurchasesBody": "No previous Pro purchase was found.",
       "error": "Error",
-      "restoreError": "Could not restore purchases."
+      "restoreError": "Could not restore purchases.",
+      "purchased": "Welcome to Pro!",
+      "purchasedBody": "You're all set. Pro is now active on this device.",
+      "purchaseFailed": "Purchase not completed. Please try again."
     }
   },
   "rewardedAd": {

@@ -4,6 +4,47 @@ Newest first.
 
 ---
 
+## Session 8
+
+**RevenueCat live IAP wired — real $9.99 lifetime Pro purchase; launch offer removed.**
+
+Entitlement `session_reset_pro` (non-consumable, one-time) attached to Play
+product `sessionreset_pro`; default offering package `$rc_lifetime`.
+
+### RevenueCat config
+- `lib/purchases.ts`: real Android API key `goog_ZizeZnPCSCDSjjcjoNySCHViRIW`
+  (iOS key still placeholder), entitlement key → `session_reset_pro` (was
+  `pro`), lazy init so the paywall never races app-launch configuration.
+- `_layout.tsx`: calls `initializePurchases()` alongside `initializeAds()`.
+
+### Paywall (onboarding) — now a real purchase flow
+- CTA `handlePaywallPrimary` calls `purchaseLifetimePro()`; on success flips
+  `isPro` state + advances to notifications; on failure shows a quiet alert.
+- Displays the real, localized store price via `pkg.product.priceString`
+  (RevenueCat), falling back to the translated "$9.99".
+- Removed the launch-offer strikethrough (`originalPrice`) and the "coming
+  soon / everyone gets Pro" placeholder.
+- CTA shows a "Processing..." disabled state while purchasing.
+
+### Settings
+- Pro upgrade card now triggers `purchaseLifetimePro()` instead of the
+  coming-soon alert; success/failure alerts added.
+- Restore already wired.
+
+### Translations (all 10 locales)
+- `paywall.price` → $9.99 (localized); removed `originalPrice`,
+  `comingSoonTitle`, `comingSoonBody`; added `purchasing`,
+  `purchaseFailedTitle`, `purchaseFailedBody`.
+- `settings.alerts`: added `purchased`, `purchasedBody`, `purchaseFailed`.
+- All 10 files kept key-for-key in sync, validated as JSON.
+- `tsc --noEmit` clean; `expo prebuild --platform android --clean` succeeds
+  (AdMob APPLICATION_ID present; RevenueCat auto-linked).
+
+**Single EAS Android development build queued** (AdMob + RevenueCat native
+modules together, per user to avoid wasting builds).
+
+---
+
 ## Session 7
 
 **AdMob re-integrated with real ad units — live freemium monetization.**
