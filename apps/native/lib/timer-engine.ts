@@ -1,11 +1,12 @@
 import { Timer, Platform } from './types';
+import { createId } from './id';
 
 export const FIVE_HOURS_MS = 5 * 60 * 60 * 1000;
 export const FIFTEEN_MINUTES_MS = 15 * 60 * 1000;
 
 export function createTimer(platform: Platform, startTime = Date.now(), preResetAlert = true): Timer {
   return {
-    id: crypto.randomUUID(),
+    id: createId(),
     platform,
     startTime,
     resetTime: startTime + FIVE_HOURS_MS,
