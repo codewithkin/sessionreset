@@ -8,7 +8,7 @@ import type { BottomTabBarProps } from "expo-router/tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontFamily, layout, spacing } from "@/lib/tokens";
+import { colors, components, elevations, fontFamily, layout, spacing } from "@/lib/tokens";
 import { useDirection } from "@/lib/rtl";
 import { PressableScale } from "@/components/PressableScale";
 
@@ -109,11 +109,7 @@ export function TabBar({ state, navigation }: BottomTabBarProps) {
             alignItems: "center",
             justifyContent: "center",
             transform: [{ translateY: layout.fab.offset }],
-            shadowColor: c.accent,
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.36,
-            shadowRadius: 20,
-            elevation: 10,
+            boxShadow: elevations[isDark ? "dark" : "light"].fab,
           }}
         >
           <Ionicons name="add" size={30} color={c.textOnAccent} />

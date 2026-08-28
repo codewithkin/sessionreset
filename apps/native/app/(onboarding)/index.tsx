@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, layout, springs, fontFamily } from "@/lib/tokens";
+import { colors, components, elevations, fontSizes, spacing, radii, layout, springs, fontFamily } from "@/lib/tokens";
 import { PressableScale } from "@/components/PressableScale";
 import { useDirection, type Direction } from "@/lib/rtl";
 import { storage } from "@/lib/storage";
@@ -255,11 +255,13 @@ function PrimaryButton({
   label,
   onPress,
   c,
+  isDark,
   disabled,
 }: {
   label: string;
   onPress: () => void;
   c: ThemeColors;
+  isDark: boolean;
   disabled?: boolean;
 }) {
   return (
@@ -272,11 +274,7 @@ function PrimaryButton({
         backgroundColor: disabled ? c.borderStrong : c.accent,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: c.accent,
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: disabled ? 0 : 0.32,
-        shadowRadius: 18,
-        elevation: disabled ? 0 : 8,
+        boxShadow: disabled ? undefined : elevations[isDark ? "dark" : "light"].accentButton,
       }}
     >
       <Text
@@ -438,7 +436,7 @@ function LanguageStep({
       </Animated.View>
 
       <Animated.View entering={FadeIn.duration(400).delay(300)} style={{ marginBottom: spacing[16] }}>
-        <PrimaryButton label={t("onboarding.language.cta")} onPress={onNext} c={c} />
+        <PrimaryButton label={t("onboarding.language.cta")} onPress={onNext} c={c} isDark={isDark} />
       </Animated.View>
     </View>
   );
@@ -484,7 +482,7 @@ function HookStep({ c, isDark, t, d, onNext }: { c: ThemeColors; isDark: boolean
       </View>
 
       <Animated.View entering={FadeInDown.duration(500).delay(200)} style={{ marginBottom: spacing[12] }}>
-        <PrimaryButton label={t("onboarding.outcomeHook.cta")} onPress={onNext} c={c} />
+        <PrimaryButton label={t("onboarding.outcomeHook.cta")} onPress={onNext} c={c} isDark={isDark} />
         <Text
           style={{
             marginTop: spacing[18],
@@ -806,7 +804,7 @@ function QuizStep({
       </View>
 
       <Animated.View entering={FadeIn.duration(400).delay(500)} style={{ marginBottom: spacing[16] }}>
-        <PrimaryButton label={t("onboarding.quiz.cta")} onPress={onContinue} c={c} disabled={!canContinue} />
+        <PrimaryButton label={t("onboarding.quiz.cta")} onPress={onContinue} c={c} isDark={isDark} disabled={!canContinue} />
       </Animated.View>
     </View>
   );
@@ -870,7 +868,7 @@ function FounderStep({ c, isDark, t, d, onNext }: { c: ThemeColors; isDark: bool
       </View>
 
       <Animated.View entering={FadeInDown.duration(500).delay(300)} style={{ marginBottom: spacing[20] }}>
-        <PrimaryButton label={t("onboarding.founderNote.cta")} onPress={onNext} c={c} />
+        <PrimaryButton label={t("onboarding.founderNote.cta")} onPress={onNext} c={c} isDark={isDark} />
       </Animated.View>
     </View>
   );
@@ -1035,6 +1033,7 @@ function PaywallStep({
           label={isPro ? t("onboarding.paywall.proCta") : t("onboarding.paywall.cta")}
           onPress={onPrimary}
           c={c}
+          isDark={isDark}
         />
         {!isPro && (
           <Pressable onPress={onSkip} style={{ marginTop: spacing[16] }}>
@@ -1083,11 +1082,7 @@ function NotificationsStep({
             backgroundColor: isDark ? components.notificationCard.dark.bg : components.notificationCard.light.bg,
             borderRadius: components.notificationCard.radius,
             padding: components.notificationCard.padding,
-            shadowColor: isDark ? "#000000" : "#14161A",
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: isDark ? 0.5 : 0.1,
-            shadowRadius: 24,
-            elevation: 4,
+            boxShadow: elevations[isDark ? "dark" : "light"].notification,
           }}
         >
           <View style={{ flexDirection: d.row, gap: spacing[12] }}>
@@ -1169,6 +1164,7 @@ function NotificationsStep({
           label={status === "granted" ? t("onboarding.notifications.enabled") : t("onboarding.notifications.cta")}
           onPress={onEnable}
           c={c}
+          isDark={isDark}
         />
         <Text
           style={{
@@ -1267,7 +1263,7 @@ function StarterStep({
       </View>
 
       <Animated.View entering={FadeInDown.duration(400).delay(360)} style={{ gap: spacing[12], marginBottom: spacing[20] }}>
-        <PrimaryButton label={t("onboarding.starter.blocked")} onPress={onBlocked} c={c} />
+        <PrimaryButton label={t("onboarding.starter.blocked")} onPress={onBlocked} c={c} isDark={isDark} />
         <PressableScale
           onPress={onDemo}
           disabled={busy}

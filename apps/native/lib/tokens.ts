@@ -273,6 +273,36 @@ export const radii = {
 
 // ─── Shadows ─────────────────────────────────────────────────────────────────
 
+/**
+ * Shadows as `boxShadow` strings, per theme.
+ *
+ * React Native's `shadowColor`/`shadowOffset`/`shadowOpacity`/`shadowRadius`
+ * are iOS-only; on Android the sole knob is `elevation`, which draws a flat
+ * neutral shade and cannot be tinted. The design's depth is almost entirely
+ * *coloured* — accent glows under the primary buttons and the FAB — so on
+ * Android those simply did not appear.
+ *
+ * `boxShadow` (React Native 0.76+, Android requires the New Architecture,
+ * which this app enables) renders a real coloured shadow on both platforms,
+ * so it replaces both sets of props. Lengths need explicit units.
+ */
+export const elevations = {
+  light: {
+    card: '0px 1px 4px rgba(0,0,0,0.06)',
+    accentButton: '0px 6px 18px rgba(59,130,246,0.32)',
+    fab: '0px 8px 20px rgba(59,130,246,0.36)',
+    notification: '0px 8px 24px rgba(20,22,26,0.10)',
+    dialog: '0px 8px 32px rgba(0,0,0,0.20)',
+  },
+  dark: {
+    card: '0px 1px 4px rgba(0,0,0,0.40)',
+    accentButton: '0px 6px 18px rgba(96,165,250,0.32)',
+    fab: '0px 8px 20px rgba(96,165,250,0.36)',
+    notification: '0px 8px 24px rgba(0,0,0,0.50)',
+    dialog: '0px 8px 32px rgba(0,0,0,0.60)',
+  },
+} as const;
+
 export const shadows = {
   light: {
     card: '0 1px 4px rgba(0,0,0,0.06)',

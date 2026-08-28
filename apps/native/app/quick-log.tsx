@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useTimers } from "@/contexts/TimerContext";
 import { Platform } from "@/lib/types";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontFamily, fontSizes, layout, radii, spacing, springs } from "@/lib/tokens";
+import { colors, components, elevations, fontFamily, fontSizes, layout, radii, spacing, springs } from "@/lib/tokens";
 import { useDirection } from "@/lib/rtl";
 import { getAppLanguage } from "@/lib/i18n";
 import { formatClockTime } from "@/lib/timeline";
@@ -309,11 +309,7 @@ export default function QuickLogScreen() {
               backgroundColor: selectedService ? c.accent : c.border,
               alignItems: "center",
               justifyContent: "center",
-              shadowColor: c.accent,
-              shadowOffset: { width: 0, height: 6 },
-              shadowOpacity: selectedService ? 0.32 : 0,
-              shadowRadius: 18,
-              elevation: selectedService ? 8 : 0,
+              boxShadow: selectedService ? elevations[isDark ? "dark" : "light"].accentButton : undefined,
             }}
           >
             <Text

@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontFamily, fontSizes, spacing, springs } from "@/lib/tokens";
+import { colors, components, elevations, fontFamily, fontSizes, spacing, springs } from "@/lib/tokens";
 import { useDirection } from "@/lib/rtl";
 import { PressableScale } from "@/components/PressableScale";
 
@@ -50,11 +50,7 @@ export default function RewardedAdScreen() {
           borderRadius: components.dialog.radius,
           padding: components.dialog.padding,
           alignItems: "center",
-          shadowColor: "#000000",
-          shadowOffset: { width: 0, height: 8 },
-          shadowOpacity: isDark ? 0.6 : 0.2,
-          shadowRadius: 32,
-          elevation: 12,
+          boxShadow: elevations[isDark ? "dark" : "light"].dialog,
         }}
       >
         <View
