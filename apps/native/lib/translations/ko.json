@@ -12,7 +12,11 @@
       "headline": "예상치 못한 AI 제한으로 흐름 상태를 잃지 마세요.",
       "subtitle": "Claude, Codex 및 AI CLI 도구를 위한 즉각적인 5시간 롤링 리셋 알람.",
       "cta": "시작하기 →",
-      "footer": "계정 불필요 • 100% 온디바이스 데이터"
+      "footer": "계정 불필요 • 100% 온디바이스 데이터",
+      "timeline": {
+        "limitHit": "한도 도달",
+        "backToCode": "코드로 복귀"
+      }
     },
     "quiz": {
       "question1": "매일 어떤 AI 어시스턴트에 의존하나요?",
@@ -26,12 +30,27 @@
         "medium": "주 3–5회",
         "high": "매일"
       },
-      "cta": "계속 →"
+      "cta": "계속 →",
+      "pickAllThatApply": "해당하는 항목 모두 선택",
+      "frequency": {
+        "low": {
+          "main": "주 1–2",
+          "sub": "회"
+        },
+        "medium": {
+          "main": "주 3–5",
+          "sub": "회"
+        },
+        "high": {
+          "main": "매일",
+          "sub": "발생"
+        }
+      }
     },
     "founderNote": {
-      "title": "창립자 메시지",
       "body": "안녕하세요! 리팩터링 중간에 5시간 제한에 도달하는 것이 너무 답답해서 SessionReset을 만들었습니다. 계정도 없고, 데이터를 추적하는 클라우드 데이터베이스도 없이—당신을 존에 유지하기 위한 순수한 도구입니다.",
-      "cta": "좋네요 →"
+      "cta": "좋네요 →",
+      "signature": "SessionReset 팀"
     },
     "paywall": {
       "socialProof": "GitHub, Vercel, Stripe의 2,000명 이상의 개발자가 참여.",
@@ -48,22 +67,34 @@
       "period": "평생 Pro • 런칭 할인",
       "originalPrice": "₩5,900",
       "cta": "Pro 잠금 해제",
-      "skip": "무료 버전으로 계속"
+      "skip": "무료 버전으로 계속",
+      "headline": "전부 켜짐. 한 번 구매로 평생.",
+      "lifetimeBadge": "평생",
+      "proHeadline": "전부 켜짐. 결제할 것 없음.",
+      "proPrice": "포함됨",
+      "proPeriod": "평생 Pro • 이 기기에서 활성",
+      "proBadge": "활성",
+      "proCta": "계속 →",
+      "comingSoonTitle": "출시 예정",
+      "comingSoonBody": "구매는 아직 제공되지 않습니다 — 준비가 끝날 때까지 모두 Pro를 무료로 사용합니다."
     },
     "notifications": {
-      "previewTitle": "SessionReset • 15분 전",
       "previewHeadline": "⚡ Claude 15분 후 리셋",
       "previewBody": "현재 작업을 완료하세요—5시간 컨텍스트 윈도우가 곧 초기화됩니다.",
       "headline": "리셋 윈도우를 놓치지 마세요",
       "body": "활성 타이머에만 로컬 알람을 보냅니다. 스팸 제로.",
       "cta": "알림 활성화",
-      "enabled": "알림 활성화됨 ✓"
+      "enabled": "알림 활성화됨 ✓",
+      "previewApp": "SESSIONRESET",
+      "previewTime": "지금",
+      "footer": "로컬 알림만 • 기기를 벗어나지 않습니다"
     },
     "starter": {
       "headline": "첫 리셋을 기록하세요",
       "subtext": "첫 5시간 윈도우 추적을 시작하려면 아래를 탭하세요.",
       "blocked": "지금 차단됨",
-      "demo": "데모 타이머 시작"
+      "demo": "데모 타이머 시작",
+      "windowRail": "지금 → 5시간 창 시작"
     }
   },
   "dashboard": {

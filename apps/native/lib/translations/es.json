@@ -12,7 +12,11 @@
       "headline": "Nunca pierdas tu estado de flujo por límites inesperados de IA.",
       "subtitle": "Alarmas de reinicio de 5 horas para Claude, Codex y herramientas de IA.",
       "cta": "Comenzar →",
-      "footer": "Sin cuenta requerida • 100% Datos locales"
+      "footer": "Sin cuenta requerida • 100% Datos locales",
+      "timeline": {
+        "limitHit": "Límite alcanzado",
+        "backToCode": "Vuelve al código"
+      }
     },
     "quiz": {
       "question1": "¿Qué asistentes de IA usas a diario?",
@@ -26,12 +30,27 @@
         "medium": "3–5 veces/semana",
         "high": "Todos los días"
       },
-      "cta": "Continuar →"
+      "cta": "Continuar →",
+      "pickAllThatApply": "Elige todas las que apliquen",
+      "frequency": {
+        "low": {
+          "main": "1–2",
+          "sub": "veces por semana"
+        },
+        "medium": {
+          "main": "3–5",
+          "sub": "veces por semana"
+        },
+        "high": {
+          "main": "Cada",
+          "sub": "día"
+        }
+      }
     },
     "founderNote": {
-      "title": "Una nota del fundador",
       "body": "¡Hola! Construí SessionReset porque alcanzar un límite de 5 horas en medio de una refactorización me volvía loco. Sin cuentas, sin bases de datos en la nube rastreando tus datos—solo utilidad pura para mantenerte en la zona.",
-      "cta": "Suena bien →"
+      "cta": "Suena bien →",
+      "signature": "El equipo de SessionReset"
     },
     "paywall": {
       "socialProof": "Unidos por 2,000+ desarrolladores de GitHub, Vercel y Stripe.",
@@ -48,22 +67,34 @@
       "period": "Pro de por vida • Precio de lanzamiento",
       "originalPrice": "$4.99",
       "cta": "Desbloquear Pro de por vida",
-      "skip": "Continuar con versión gratuita"
+      "skip": "Continuar con versión gratuita",
+      "headline": "Todo activo. Una compra, de por vida.",
+      "lifetimeBadge": "DE POR VIDA",
+      "proHeadline": "Todo activo. Nada que pagar.",
+      "proPrice": "Incluido",
+      "proPeriod": "Pro de por vida • Activo en este dispositivo",
+      "proBadge": "ACTIVO",
+      "proCta": "Continuar →",
+      "comingSoonTitle": "Muy pronto",
+      "comingSoonBody": "Las compras aún no están activas: todos tienen Pro gratis mientras terminamos de configurarlo."
     },
     "notifications": {
-      "previewTitle": "SessionReset • hace 15m",
       "previewHeadline": "⚡ Claude se reinicia en 15 minutos",
       "previewBody": "Termina tu tarea actual—tu ventana de contexto de 5 horas está por borrarse.",
       "headline": "Nunca pierdas tu ventana de reinicio",
       "body": "Solo enviamos alarmas locales para tus temporizadores activos. Sin spam.",
       "cta": "Habilitar notificaciones",
-      "enabled": "Notificaciones habilitadas ✓"
+      "enabled": "Notificaciones habilitadas ✓",
+      "previewApp": "SESSIONRESET",
+      "previewTime": "ahora",
+      "footer": "Solo alarmas locales • nada sale del dispositivo"
     },
     "starter": {
       "headline": "Registra tu primer reinicio",
       "subtext": "Toca abajo para comenzar a rastrear tu primera ventana de 5 horas.",
       "blocked": "Estoy bloqueado ahora",
-      "demo": "Iniciar temporizador de prueba"
+      "demo": "Iniciar temporizador de prueba",
+      "windowRail": "AHORA → SE ABRE VENTANA DE 5 H"
     }
   },
   "dashboard": {

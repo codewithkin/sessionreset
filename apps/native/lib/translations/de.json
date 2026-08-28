@@ -12,7 +12,11 @@
       "headline": "Verlieren Sie nie Ihren Flow-Zustand wegen unerwarteter KI-Limits.",
       "subtitle": "Sofortige 5-Stunden-Rolling-Reset-Alarme für Claude, Codex und KI-CLI-Tools.",
       "cta": "Loslegen →",
-      "footer": "Kein Konto erforderlich • 100% Gerätedaten"
+      "footer": "Kein Konto erforderlich • 100% Gerätedaten",
+      "timeline": {
+        "limitHit": "Limit erreicht",
+        "backToCode": "Zurück zum Code"
+      }
     },
     "quiz": {
       "question1": "Welche KI-Assistenten nutzen Sie täglich?",
@@ -26,12 +30,27 @@
         "medium": "3–5 mal/Woche",
         "high": "Jeden Tag"
       },
-      "cta": "Weiter →"
+      "cta": "Weiter →",
+      "pickAllThatApply": "Alles Zutreffende auswählen",
+      "frequency": {
+        "low": {
+          "main": "1–2",
+          "sub": "mal pro Woche"
+        },
+        "medium": {
+          "main": "3–5",
+          "sub": "mal pro Woche"
+        },
+        "high": {
+          "main": "Jeden",
+          "sub": "Tag"
+        }
+      }
     },
     "founderNote": {
-      "title": "Eine Nachricht vom Gründer",
       "body": "Hallo! Ich habe SessionReset gebaut, weil das Erreichen eines 5-Stunden-Limits mitten in einem Refactoring mich wahnsinnig gemacht hat. Keine Konten, keine Cloud-Datenbanken, die Ihre Daten verfolgen—nur reines Werkzeug, um Sie in der Zone zu halten.",
-      "cta": "Klingt gut →"
+      "cta": "Klingt gut →",
+      "signature": "Das SessionReset-Team"
     },
     "paywall": {
       "socialProof": "Von 2.000+ Entwicklern von GitHub, Vercel und Stripe beigetreten.",
@@ -48,22 +67,34 @@
       "period": "Lebenslanger Pro • Startpreis",
       "originalPrice": "$4.99",
       "cta": "Pro freischalten",
-      "skip": "Mit kostenloser Version fortfahren"
+      "skip": "Mit kostenloser Version fortfahren",
+      "headline": "Alles an. Einmal kaufen, für immer.",
+      "lifetimeBadge": "LEBENSLANG",
+      "proHeadline": "Alles an. Nichts zu zahlen.",
+      "proPrice": "Enthalten",
+      "proPeriod": "Lifetime Pro • Auf diesem Gerät aktiv",
+      "proBadge": "AKTIV",
+      "proCta": "Weiter →",
+      "comingSoonTitle": "Demnächst",
+      "comingSoonBody": "Käufe sind noch nicht aktiv – alle bekommen Pro kostenlos, bis wir fertig eingerichtet haben."
     },
     "notifications": {
-      "previewTitle": "SessionReset • vor 15 Min",
       "previewHeadline": "⚡ Claude Reset in 15 Minuten",
       "previewBody": "Schließen Sie Ihre aktuelle Aufgabe ab— Ihr 5-Stunden-Kontextfenster wird gleich gelöscht.",
       "headline": "Verpassen Sie nie Ihr Reset-Fenster",
       "body": "Wir senden nur lokale Alarme für Ihre aktiven Timer. Kein Spam.",
       "cta": "Benachrichtigungen aktivieren",
-      "enabled": "Benachrichtigungen aktiviert ✓"
+      "enabled": "Benachrichtigungen aktiviert ✓",
+      "previewApp": "SESSIONRESET",
+      "previewTime": "jetzt",
+      "footer": "Nur lokale Alarme • nichts verlässt das Gerät"
     },
     "starter": {
       "headline": "Protokollieren Sie Ihren ersten Reset",
       "subtext": "Tippen Sie unten, um mit der Verfolgung Ihres ersten 5-Stunden-Fensters zu beginnen.",
       "blocked": "Ich bin gerade blockiert",
-      "demo": "Demo-Timer starten"
+      "demo": "Demo-Timer starten",
+      "windowRail": "JETZT → 5-STD-FENSTER ÖFFNET"
     }
   },
   "dashboard": {

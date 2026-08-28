@@ -12,7 +12,11 @@
       "headline": "Nunca perca seu estado de fluxo por limites inesperados de IA.",
       "subtitle": "Alarmes de redefinição de 5 horas para Claude, Codex e ferramentas de IA.",
       "cta": "Começar →",
-      "footer": "Sem conta necessária • 100% Dados locais"
+      "footer": "Sem conta necessária • 100% Dados locais",
+      "timeline": {
+        "limitHit": "Limite atingido",
+        "backToCode": "Voltar ao código"
+      }
     },
     "quiz": {
       "question1": "Quais assistentes de IA você usa diariamente?",
@@ -26,12 +30,27 @@
         "medium": "3–5 vezes/semana",
         "high": "Todos os dias"
       },
-      "cta": "Continuar →"
+      "cta": "Continuar →",
+      "pickAllThatApply": "Escolha todas as que se aplicam",
+      "frequency": {
+        "low": {
+          "main": "1–2",
+          "sub": "vezes por semana"
+        },
+        "medium": {
+          "main": "3–5",
+          "sub": "vezes por semana"
+        },
+        "high": {
+          "main": "Todos",
+          "sub": "os dias"
+        }
+      }
     },
     "founderNote": {
-      "title": "Uma nota do fundador",
       "body": "Olá! Criei o SessionReset porque atingir um limite de 5 horas no meio de uma refatoração me deixava louco. Sem contas, sem bancos de dados na nuvem rastreando seus dados—apenas utilidade pura para manter você na zona.",
-      "cta": "Parece bom →"
+      "cta": "Parece bom →",
+      "signature": "A equipa SessionReset"
     },
     "paywall": {
       "socialProof": "Unidos por 2.000+ desenvolvedores do GitHub, Vercel e Stripe.",
@@ -48,22 +67,34 @@
       "period": "Pro vitalício • Preço de lançamento",
       "originalPrice": "$4.99",
       "cta": "Desbloquear Pro vitalício",
-      "skip": "Continuar com versão gratuita"
+      "skip": "Continuar com versão gratuita",
+      "headline": "Tudo ligado. Uma compra, para sempre.",
+      "lifetimeBadge": "VITALÍCIO",
+      "proHeadline": "Tudo ligado. Nada a pagar.",
+      "proPrice": "Incluído",
+      "proPeriod": "Pro vitalício • Ativo neste dispositivo",
+      "proBadge": "ATIVO",
+      "proCta": "Continuar →",
+      "comingSoonTitle": "Em breve",
+      "comingSoonBody": "As compras ainda não estão ativas — todos têm Pro grátis enquanto terminamos a configuração."
     },
     "notifications": {
-      "previewTitle": "SessionReset • 15m atrás",
       "previewHeadline": "⚡ Claude redefine em 15 minutos",
       "previewBody": "Conclua sua tarefa atual—sua janela de contexto de 5 horas está prestes a ser limpa.",
       "headline": "Nunca perca sua janela de redefinição",
       "body": "Enviamos apenas alarmes locais para seus temporizadores ativos. Zero spam.",
       "cta": "Ativar notificações",
-      "enabled": "Notificações ativadas ✓"
+      "enabled": "Notificações ativadas ✓",
+      "previewApp": "SESSIONRESET",
+      "previewTime": "agora",
+      "footer": "Apenas alarmes locais • nada sai do dispositivo"
     },
     "starter": {
       "headline": "Registre sua primeira redefinição",
       "subtext": "Toque abaixo para começar a rastrear sua primeira janela de 5 horas.",
       "blocked": "Estou bloqueado agora",
-      "demo": "Iniciar temporizador de teste"
+      "demo": "Iniciar temporizador de teste",
+      "windowRail": "AGORA → ABRE JANELA DE 5 H"
     }
   },
   "dashboard": {

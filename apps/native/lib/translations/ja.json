@@ -12,7 +12,11 @@
       "headline": "予期しないAI制限にフローステートを奪われないでください。",
       "subtitle": "Claude、Codex、AI CLIツールのための5時間ローリングリセットアラーム。",
       "cta": "始める →",
-      "footer": "アカウント不要 • 100% オンデバイスデータ"
+      "footer": "アカウント不要 • 100% オンデバイスデータ",
+      "timeline": {
+        "limitHit": "上限に到達",
+        "backToCode": "コードに戻る"
+      }
     },
     "quiz": {
       "question1": "毎日どのAIアシスタントに依存していますか？",
@@ -26,12 +30,27 @@
         "medium": "週3–5回",
         "high": "毎日"
       },
-      "cta": "続ける →"
+      "cta": "続ける →",
+      "pickAllThatApply": "当てはまるものをすべて選択",
+      "frequency": {
+        "low": {
+          "main": "週1–2",
+          "sub": "回"
+        },
+        "medium": {
+          "main": "週3–5",
+          "sub": "回"
+        },
+        "high": {
+          "main": "毎日",
+          "sub": "ある"
+        }
+      }
     },
     "founderNote": {
-      "title": "創業者からのメッセージ",
       "body": "こんにちは！リファクタリングの最中に5時間の制限に達することがフラストレーションでSessionResetを作りました。アカウントなし、クラウドデータベースでデータを追跡しない—ただあなたをゾーンに保つための純粋なユーティリティです。",
-      "cta": "いいね →"
+      "cta": "いいね →",
+      "signature": "SessionReset チーム"
     },
     "paywall": {
       "socialProof": "GitHub、Vercel、Stripeの2,000以上の開発者が参加。",
@@ -48,22 +67,34 @@
       "period": "ライフタイムPro • ランチ割引",
       "originalPrice": "¥590",
       "cta": "Proをロック解除",
-      "skip": "無料版で続ける"
+      "skip": "無料版で続ける",
+      "headline": "すべて解放。一度の購入で永続。",
+      "lifetimeBadge": "永続",
+      "proHeadline": "すべて解放。お支払いは不要です。",
+      "proPrice": "込み",
+      "proPeriod": "永続 Pro • この端末で有効",
+      "proBadge": "有効",
+      "proCta": "続ける →",
+      "comingSoonTitle": "近日公開",
+      "comingSoonBody": "購入はまだ有効ではありません。準備が整うまで、Pro は全員無料です。"
     },
     "notifications": {
-      "previewTitle": "SessionReset • 15分前",
       "previewHeadline": "⚡ Claude 15分でリセット",
       "previewBody": "現在のタスクを完了してください—5時間のコンテキストウィンドウがまもなくクリアされます。",
       "headline": "リセットウィンドウを見逃さない",
       "body": "アクティブなタイマーにのみローカルアラームを送信。スパムゼロ。",
       "cta": "通知を有効にする",
-      "enabled": "通知有効 ✓"
+      "enabled": "通知有効 ✓",
+      "previewApp": "SESSIONRESET",
+      "previewTime": "今",
+      "footer": "ローカル通知のみ • 端末の外には出ません"
     },
     "starter": {
       "headline": "最初のリセットを記録",
       "subtext": "最初の5時間ウィンドウの追跡を開始するには下をタップ。",
       "blocked": "今ブロックされている",
-      "demo": "デモタイマーを開始"
+      "demo": "デモタイマーを開始",
+      "windowRail": "今 → 5時間のウィンドウ開始"
     }
   },
   "dashboard": {
