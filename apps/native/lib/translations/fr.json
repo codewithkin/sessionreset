@@ -120,15 +120,17 @@
       "upgradeSubtext": "Supprimer les pubs & débloquer les widgets — 1,99 €",
       "upgradePeriod": "Accès à vie • Prix de lancement",
       "active": "Vous êtes Pro",
-      "activeSubtext": "Toutes les fonctionnalités débloquées, publicités supprimées."
+      "activeSubtext": "Toutes les fonctionnalités débloquées, publicités supprimées.",
+      "upgradeBody": "Un seul achat, à vie. Supprime les pubs, débloque widgets et sons."
     },
     "notifications": {
       "sound": "Son de notification",
-      "preResetAlert": "Alerte par défaut avant réinitialisation"
+      "preResetAlert": "Alerte par défaut avant réinitialisation",
+      "preResetSub": "15 minutes avant"
     },
     "power": {
-      "watchAd": "Regarder une pub pour 24h de Pro",
-      "watchAdSubtext": "Regardez une vidéo de 15s pour débloquer toutes les fonctionnalités"
+      "watchAd": "Regarder une pub pour 10 h de Pro",
+      "watchAdSubtext": "Une vidéo de 30 s débloque tout"
     },
     "data": {
       "export": "Exporter l'historique des minuteurs",
@@ -142,7 +144,8 @@
       "notifications": "NOTIFICATIONS",
       "data": "DONNÉES",
       "about": "À PROPOS",
-      "language": "LANGUE"
+      "language": "LANGUE",
+      "power": "FONCTIONS AVANCÉES"
     },
     "soundDefault": "Par défaut",
     "restoring": "Restauration…",
@@ -159,11 +162,11 @@
     }
   },
   "rewardedAd": {
-    "headline": "Débloquer Pro pendant 24 heures",
-    "body": "Regardez une courte vidéo de 15 secondes pour utiliser toutes les fonctionnalités Pro le jour suivant.",
-    "cta": "Regarder la courte vidéo",
+    "headline": "Débloquez Pro pendant 10 heures",
+    "body": "Regardez une vidéo de 30 secondes pour utiliser toutes les fonctions Pro pendant 10 heures.",
+    "cta": "Voir la vidéo",
     "dismiss": "Non merci",
-    "success": "Pro débloqué pour 24 heures !"
+    "unavailable": "La vidéo récompensée n’est pas encore disponible — Pro est gratuit pour tous au lancement."
   },
   "notifications_alerts": {
     "resetTitle": "Fenêtre {{platform}} réinitialisée ! 🚀",

@@ -120,15 +120,17 @@
       "upgradeSubtext": "Eliminar anuncios y desbloquear widgets — $1.99",
       "upgradePeriod": "Acceso de por vida • Precio de lanzamiento",
       "active": "Eres Pro",
-      "activeSubtext": "Todas las funciones desbloqueadas, anuncios eliminados."
+      "activeSubtext": "Todas las funciones desbloqueadas, anuncios eliminados.",
+      "upgradeBody": "Una compra, tuya para siempre. Quita anuncios y desbloquea widgets y sonidos."
     },
     "notifications": {
       "sound": "Sonido de notificación",
-      "preResetAlert": "Alerta pre-reinicio predeterminada"
+      "preResetAlert": "Alerta pre-reinicio predeterminada",
+      "preResetSub": "15 minutos antes"
     },
     "power": {
-      "watchAd": "Ver anuncio por 24h de Pro",
-      "watchAdSubtext": "Mira un video de 15s para desbloquear todas las funciones"
+      "watchAd": "Ver anuncio por 10 h de Pro",
+      "watchAdSubtext": "Un vídeo de 30 s lo desbloquea todo"
     },
     "data": {
       "export": "Exportar historial de temporizadores",
@@ -142,7 +144,8 @@
       "notifications": "NOTIFICACIONES",
       "data": "DATOS",
       "about": "ACERCA DE",
-      "language": "IDIOMA"
+      "language": "IDIOMA",
+      "power": "FUNCIONES AVANZADAS"
     },
     "soundDefault": "Predeterminado",
     "restoring": "Restaurando…",
@@ -159,11 +162,11 @@
     }
   },
   "rewardedAd": {
-    "headline": "Desbloquear Pro por 24 horas",
-    "body": "Mira un video corto de 15 segundos para usar todas las funciones Pro el próximo día.",
-    "cta": "Ver video corto",
-    "dismiss": "No gracias",
-    "success": "¡Pro desbloqueado por 24 horas!"
+    "headline": "Desbloquea Pro por 10 horas",
+    "body": "Mira un vídeo de 30 segundos para usar todas las funciones Pro durante 10 horas.",
+    "cta": "Ver vídeo corto",
+    "dismiss": "No, gracias",
+    "unavailable": "El vídeo con recompensa aún no está disponible: Pro es gratis para todos durante el lanzamiento."
   },
   "notifications_alerts": {
     "resetTitle": "¡Ventana de {{platform}} reiniciada! 🚀",

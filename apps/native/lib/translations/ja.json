@@ -120,15 +120,17 @@
       "upgradeSubtext": "広告を削除しウィジェットを解除 — $1.99",
       "upgradePeriod": "ライフタイムアクセス • ランチ価格",
       "active": "Proです",
-      "activeSubtext": "全機能ロック解除、広告削除済み。"
+      "activeSubtext": "全機能ロック解除、広告削除済み。",
+      "upgradeBody": "一度の購入で永続。広告を消し、ウィジェットとサウンドを解放します。"
     },
     "notifications": {
       "sound": "通知サウンド",
-      "preResetAlert": "プリリセットアラートのデフォルト"
+      "preResetAlert": "プリリセットアラートのデフォルト",
+      "preResetSub": "15分前"
     },
     "power": {
-      "watchAd": "24時間Proのために広告を見る",
-      "watchAdSubtext": "全機能を解除するために15秒の動画を見る"
+      "watchAd": "広告を見て10時間Pro",
+      "watchAdSubtext": "30秒の動画ですべて解放"
     },
     "data": {
       "export": "タイマー履歴をエクスポート",
@@ -142,7 +144,8 @@
       "notifications": "通知",
       "data": "データ",
       "about": "アプリについて",
-      "language": "言語"
+      "language": "言語",
+      "power": "パワー機能"
     },
     "soundDefault": "デフォルト",
     "restoring": "復元中…",
@@ -159,11 +162,11 @@
     }
   },
   "rewardedAd": {
-    "headline": "24時間Proをロック解除",
-    "body": "翌日にすべてのPro機能を使用するための短い15秒の動画を見てください。",
+    "headline": "Proを10時間解放",
+    "body": "30秒の動画を見ると、今後10時間すべてのPro機能を使えます。",
     "cta": "短い動画を見る",
-    "dismiss": "いいえ、結構です",
-    "success": "Proが24時間ロック解除！"
+    "dismiss": "今はしない",
+    "unavailable": "リワード動画はまだ利用できません。ローンチ期間中はProが全員無料です。"
   },
   "notifications_alerts": {
     "resetTitle": "{{platform}}ウィンドウリセット！ 🚀",

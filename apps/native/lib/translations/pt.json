@@ -120,15 +120,17 @@
       "upgradeSubtext": "Remover anúncios e desbloquear widgets — $1.99",
       "upgradePeriod": "Acesso vitalício • Preço de lançamento",
       "active": "Você é Pro",
-      "activeSubtext": "Todos os recursos desbloqueados, anúncios removidos."
+      "activeSubtext": "Todos os recursos desbloqueados, anúncios removidos.",
+      "upgradeBody": "Uma compra, para sempre. Remove anúncios e desbloqueia widgets e sons."
     },
     "notifications": {
       "sound": "Som de notificação",
-      "preResetAlert": "Alerta pré-redefinição padrão"
+      "preResetAlert": "Alerta pré-redefinição padrão",
+      "preResetSub": "15 minutos antes"
     },
     "power": {
-      "watchAd": "Assistir anúncio por 24h de Pro",
-      "watchAdSubtext": "Assista um vídeo de 15s para desbloquear todos os recursos"
+      "watchAd": "Ver anúncio por 10 h de Pro",
+      "watchAdSubtext": "Um vídeo de 30 s desbloqueia tudo"
     },
     "data": {
       "export": "Exportar histórico de temporizadores",
@@ -142,7 +144,8 @@
       "notifications": "NOTIFICAÇÕES",
       "data": "DADOS",
       "about": "SOBRE",
-      "language": "IDIOMA"
+      "language": "IDIOMA",
+      "power": "FUNÇÕES AVANÇADAS"
     },
     "soundDefault": "Predefinido",
     "restoring": "A restaurar…",
@@ -159,11 +162,11 @@
     }
   },
   "rewardedAd": {
-    "headline": "Desbloquear Pro por 24 horas",
-    "body": "Assista um vídeo curto de 15 segundos para usar todos os recursos Pro no próximo dia.",
-    "cta": "Assistir vídeo curto",
+    "headline": "Desbloqueie o Pro por 10 horas",
+    "body": "Veja um vídeo de 30 segundos para usar todas as funções Pro durante 10 horas.",
+    "cta": "Ver vídeo curto",
     "dismiss": "Não, obrigado",
-    "success": "Pro desbloqueado por 24 horas!"
+    "unavailable": "O vídeo com recompensa ainda não está disponível — o Pro é grátis para todos no lançamento."
   },
   "notifications_alerts": {
     "resetTitle": "Janela {{platform}} redefinida! 🚀",

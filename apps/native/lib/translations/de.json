@@ -120,15 +120,17 @@
       "upgradeSubtext": "Werbung entfernen & Widgets freischalten — $1.99",
       "upgradePeriod": "Lebenslanger Zugang • Startpreis",
       "active": "Sie sind Pro",
-      "activeSubtext": "Alle Funktionen freigeschaltet, Werbung entfernt."
+      "activeSubtext": "Alle Funktionen freigeschaltet, Werbung entfernt.",
+      "upgradeBody": "Einmal kaufen, für immer behalten. Entfernt Werbung, schaltet Widgets und Sounds frei."
     },
     "notifications": {
       "sound": "Benachrichtigungston",
-      "preResetAlert": "Standard-Vorwarnung"
+      "preResetAlert": "Standard-Vorwarnung",
+      "preResetSub": "15 Minuten vorher"
     },
     "power": {
-      "watchAd": "Werbung ansehen für 24h Pro",
-      "watchAdSubtext": "Sehen Sie sich ein 15-Sekunden-Video an, um alle Funktionen freizuschalten"
+      "watchAd": "Video ansehen für 10 Std. Pro",
+      "watchAdSubtext": "30-Sekunden-Video schaltet alles frei"
     },
     "data": {
       "export": "Timer-Verlauf exportieren",
@@ -142,7 +144,8 @@
       "notifications": "BENACHRICHTIGUNGEN",
       "data": "DATEN",
       "about": "ÜBER",
-      "language": "SPRACHE"
+      "language": "SPRACHE",
+      "power": "ERWEITERT"
     },
     "soundDefault": "Standard",
     "restoring": "Wird wiederhergestellt…",
@@ -159,11 +162,11 @@
     }
   },
   "rewardedAd": {
-    "headline": "Pro für 24 Stunden freischalten",
-    "body": "Sehen Sie sich ein kurzes 15-Sekunden-Video an, um alle Pro-Funktionen am nächsten Tag zu nutzen.",
+    "headline": "Pro für 10 Stunden freischalten",
+    "body": "Sieh ein 30-Sekunden-Video und nutze alle Pro-Funktionen für 10 Stunden.",
     "cta": "Kurzes Video ansehen",
     "dismiss": "Nein danke",
-    "success": "Pro für 24 Stunden freigeschaltet!"
+    "unavailable": "Belohnungsvideos sind noch nicht verfügbar – Pro ist zum Start für alle kostenlos."
   },
   "notifications_alerts": {
     "resetTitle": "{{platform}}-Fenster zurückgesetzt! 🚀",

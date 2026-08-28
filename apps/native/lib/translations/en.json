@@ -151,15 +151,17 @@
       "upgradeSubtext": "Remove Ads & Unlock Widgets — $1.99",
       "upgradePeriod": "Lifetime Access • Launch Price",
       "active": "You're Pro",
-      "activeSubtext": "All features unlocked, ads removed."
+      "activeSubtext": "All features unlocked, ads removed.",
+      "upgradeBody": "One purchase, yours for life. Removes ads, unlocks widgets and custom sounds."
     },
     "notifications": {
       "sound": "Notification Sound",
-      "preResetAlert": "Pre-Reset Alert Default"
+      "preResetAlert": "Pre-Reset Alert Default",
+      "preResetSub": "15 minutes before"
     },
     "power": {
-      "watchAd": "Watch Ad for 24h Pro Access",
-      "watchAdSubtext": "Watch a 15s video to unlock all features"
+      "watchAd": "Watch ad for 10h Pro",
+      "watchAdSubtext": "30-second video unlocks everything"
     },
     "data": {
       "export": "Export Timer History",
@@ -173,7 +175,8 @@
       "notifications": "NOTIFICATIONS",
       "data": "DATA",
       "about": "ABOUT",
-      "language": "LANGUAGE"
+      "language": "LANGUAGE",
+      "power": "POWER FEATURES"
     },
     "soundDefault": "Default",
     "restoring": "Restoring…",
@@ -190,11 +193,11 @@
     }
   },
   "rewardedAd": {
-    "headline": "Unlock Pro for 24 Hours",
-    "body": "Watch a short 15-second video to use all Pro features for the next day.",
+    "headline": "Unlock Pro for 10 Hours",
+    "body": "Watch a 30-second video to use all Pro features for the next 10 hours.",
     "cta": "Watch Short Video",
     "dismiss": "No Thanks",
-    "success": "Pro unlocked for 24 hours!"
+    "unavailable": "Rewarded video is not available yet — Pro is free for everyone during launch."
   },
   "notifications_alerts": {
     "resetTitle": "{{platform}} Window Reset! 🚀",

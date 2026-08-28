@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import {
   View,
   Text,
@@ -7,51 +7,68 @@ import {
   Alert,
   Platform as RNPlatform,
   Linking,
+  Share,
 } from "react-native";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, { FadeInDown, ZoomIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { storage } from "@/lib/storage";
 import { SUPPORTED_LANGUAGES, setAppLanguage, getAppLanguage, LanguageCode } from "@/lib/i18n";
 import { restorePurchases } from "@/lib/purchases";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, shadows, letterSpacing, fontFamily } from "@/lib/tokens";
+import {
+  colors,
+  components,
+  fontFamily,
+  fontSizes,
+  layout,
+  letterSpacing,
+  radii,
+  spacing,
+  springs,
+} from "@/lib/tokens";
+import { useDirection } from "@/lib/rtl";
 import { PressableScale } from "@/components/PressableScale";
+
+const APP_VERSION = "1.0.0";
 
 export default function SettingsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const { isDark } = useAppTheme();
+  const { row, textAlign, writingDirection, isRTL } = useDirection();
+  const insets = useSafeAreaInsets();
   const c = isDark ? colors.dark : colors.light;
+
   const [settings, setSettings] = useState(() => storage.settings.get());
   const [restoring, setRestoring] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
   const [language, setLanguage] = useState<LanguageCode>(() => getAppLanguage());
 
+  const divider = isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider;
+  const chevronColor = isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron;
+  const valueColor = isDark ? components.settingsRow.dark.value : components.settingsRow.light.value;
+
   const handleSelectLanguage = (code: LanguageCode) => {
     setLanguage(code);
     setLanguageOpen(false);
-    // Applies app-wide immediately; every useTranslation consumer re-renders.
     void setAppLanguage(code);
   };
 
   const handleExport = async () => {
-    const timers = storage.timers.get();
-    const logs = storage.usageLog.get();
     const data = JSON.stringify(
-      { timers, usageLog: logs, exportedAt: new Date().toISOString() },
+      { timers: storage.timers.get(), usageLog: storage.usageLog.get(), exportedAt: new Date().toISOString() },
       null,
       2
     );
 
     if (RNPlatform.OS === "ios") {
-      const { Share } = require("react-native");
       await Share.share({ message: data, title: "SessionReset Data Export" });
     } else {
-      const { Clipboard } = require("react-native");
-      Clipboard.setString(data);
-      Alert.alert(t("settings.alerts.exported"), t("settings.alerts.exportedBody"));
+      await Share.share({ message: data });
     }
   };
 
@@ -61,8 +78,7 @@ export default function SettingsScreen() {
     try {
       const success = await restorePurchases();
       if (success) {
-        const updated = storage.settings.get();
-        setSettings(updated);
+        setSettings(storage.settings.get());
         Alert.alert(t("settings.alerts.restored"), t("settings.alerts.restoredBody"));
       } else {
         Alert.alert(t("settings.alerts.noPurchases"), t("settings.alerts.noPurchasesBody"));
@@ -74,320 +90,346 @@ export default function SettingsScreen() {
     }
   };
 
-  const handleTogglePreResetAlert = () => {
+  const handleTogglePreReset = () => {
     const updated = { ...settings, preResetAlertEnabled: !settings.preResetAlertEnabled };
     storage.settings.set(updated);
     setSettings(updated);
   };
 
-  const handleContact = () => {
-    Linking.openURL("mailto:support@sessionreset.app?subject=SessionReset Feedback");
-  };
+  // ── Building blocks ──────────────────────────────────────────────────────
 
-  return (
-    <View style={{ flex: 1, backgroundColor: c.bg }}>
-      {/* Header */}
+  const SectionLabel = ({ children }: { children: ReactNode }) => (
+    <Text
+      style={{
+        marginTop: spacing[26],
+        fontFamily: fontFamily.mono[700],
+        fontSize: fontSizes.tiny,
+        letterSpacing: letterSpacing.wideMd,
+        color: c.textMuted,
+        textAlign,
+        writingDirection,
+      }}
+    >
+      {children}
+    </Text>
+  );
+
+  const Row = ({
+    title,
+    subtitle,
+    value,
+    onPress,
+    right,
+    last,
+  }: {
+    title: string;
+    subtitle?: string;
+    value?: string;
+    onPress?: () => void;
+    right?: ReactNode;
+    last?: boolean;
+  }) => {
+    const body = (
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
+          flexDirection: row,
           alignItems: "center",
-          paddingHorizontal: spacing[20],
-          paddingTop: spacing[56],
-          paddingBottom: spacing[18],
+          justifyContent: "space-between",
+          gap: spacing[12],
+          paddingVertical: components.settingsRow.padding.vertical,
+          paddingHorizontal: components.settingsRow.padding.horizontal,
+          borderBottomWidth: last ? 0 : 1,
+          borderBottomColor: divider,
         }}
       >
-        <PressableScale onPress={() => router.back()} style={{ padding: spacing[4] }}>
-          <Ionicons name="close" size={24} color={c.textPrimary} />
-        </PressableScale>
-        <Text
-          style={{
-            fontFamily: fontFamily.manrope[800],
-            fontSize: fontSizes.h5,
-            color: c.textPrimary,
-          }}
-        >
-          {t("settings.title")}
-        </Text>
-        <View style={{ width: 32 }} />
-      </View>
-
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing[40] }}>
-        {/* Pro upgrade / status */}
-        <Animated.View entering={FadeInDown.duration(400).delay(100)}>
-        {settings.isPro ? (
-          <View
+        <View style={{ flex: 1, gap: spacing[2] }}>
+          <Text
             style={{
-              marginHorizontal: spacing[20],
-              backgroundColor: isDark ? components.upgradeCard.dark.bg : components.upgradeCard.light.bg,
-              borderLeftWidth: components.upgradeCard.leftBorderWidth,
-              borderLeftColor: c.success,
-              borderRadius: components.upgradeCard.radius,
-              padding: components.upgradeCard.padding,
-              marginBottom: spacing[24],
+              fontFamily: fontFamily.manrope[600],
+              fontSize: components.settingsRow.titleFont.size,
+              color: c.textPrimary,
+              textAlign,
+              writingDirection,
             }}
           >
-            <Text
-              style={{
-                fontFamily: fontFamily.manrope[700],
-                fontSize: fontSizes.body,
-                color: c.success,
-              }}
-            >
-              {t("settings.pro.active")}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fontFamily.manrope[500],
-                fontSize: fontSizes.micro,
-                color: c.textTertiary,
-                marginTop: spacing[4],
-              }}
-            >
-              {t("settings.pro.activeSubtext")}
-            </Text>
-          </View>
-        ) : (
-          <Pressable
-            onPress={() =>
-              Alert.alert(
-                t("onboarding.paywall.comingSoonTitle"),
-                t("onboarding.paywall.comingSoonBody")
-              )
-            }
-            style={{
-              marginHorizontal: spacing[20],
-              backgroundColor: isDark ? components.upgradeCard.dark.bg : components.upgradeCard.light.bg,
-              borderLeftWidth: components.upgradeCard.leftBorderWidth,
-              borderLeftColor: isDark ? components.upgradeCard.dark.border : components.upgradeCard.light.border,
-              borderRadius: components.upgradeCard.radius,
-              padding: components.upgradeCard.padding,
-              marginBottom: spacing[24],
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: fontFamily.manrope[700],
-                fontSize: fontSizes.body,
-                color: isDark ? components.upgradeCard.dark.border : components.upgradeCard.light.border,
-              }}
-            >
-              {t("settings.pro.upgrade")}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fontFamily.manrope[500],
-                fontSize: fontSizes.micro,
-                color: c.textTertiary,
-                marginTop: spacing[4],
-              }}
-            >
-              {t("settings.pro.upgradeSubtext")}
-            </Text>
+            {title}
+          </Text>
+          {subtitle ? (
             <Text
               style={{
                 fontFamily: fontFamily.manrope[500],
                 fontSize: fontSizes.xs,
                 color: c.textMuted,
-                marginTop: spacing[2],
+                textAlign,
+                writingDirection,
               }}
             >
-              {t("settings.pro.upgradePeriod")}
+              {subtitle}
             </Text>
-          </Pressable>
-        )}
-        </Animated.View>
+          ) : null}
+        </View>
 
-        {/* NOTIFICATIONS section */}
-        <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ marginBottom: spacing[24] }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.mono[700],
-              fontSize: fontSizes.xs,
-              letterSpacing: letterSpacing.wideMd,
-              color: c.textMuted,
-              paddingHorizontal: spacing[20],
-              marginBottom: spacing[10],
-            }}
-          >
-            {t("settings.sections.notifications")}
-          </Text>
-          <View
-            style={{
-              marginHorizontal: spacing[20],
-              backgroundColor: c.surface,
-              borderRadius: radii.badge,
-              overflow: "hidden",
-            }}
-          >
-            <View
+        <View style={{ flexDirection: row, alignItems: "center", gap: spacing[8], flexShrink: 0 }}>
+          {value ? (
+            <Text
               style={{
-                paddingVertical: components.settingsRow.padding.vertical,
-                paddingHorizontal: 18,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                borderBottomWidth: 1,
-                borderBottomColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
+                fontFamily: fontFamily.manrope[500],
+                fontSize: components.settingsRow.valueFont.size,
+                color: valueColor,
               }}
             >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
-                <Ionicons name="notifications-outline" size={18} color={c.textTertiary} />
-                <Text
-                  style={{
-                    fontFamily: fontFamily.manrope[600],
-                    fontSize: components.settingsRow.titleFont.size,
-                    color: c.textPrimary,
-                  }}
-                >
-                  {t("settings.notifications.sound")}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[6] }}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.manrope[500],
-                    fontSize: components.settingsRow.valueFont.size,
-                    color: isDark ? components.settingsRow.dark.value : components.settingsRow.light.value,
-                  }}
-                >
-                  {t("settings.soundDefault")}
-                </Text>
-                <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
-              </View>
-            </View>
-            <Pressable
-              onPress={handleTogglePreResetAlert}
-              style={{
-                paddingVertical: components.settingsRow.padding.vertical,
-                paddingHorizontal: 18,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
-                <Ionicons name="time-outline" size={18} color={c.textTertiary} />
-                <Text
-                  style={{
-                    fontFamily: fontFamily.manrope[600],
-                    fontSize: components.settingsRow.titleFont.size,
-                    color: c.textPrimary,
-                  }}
-                >
-                  {t("settings.notifications.preResetAlert")}
-                </Text>
-              </View>
-              <View
+              {value}
+            </Text>
+          ) : null}
+          {right ??
+            (onPress ? (
+              <Ionicons name={isRTL ? "chevron-back" : "chevron-forward"} size={16} color={chevronColor} />
+            ) : null)}
+        </View>
+      </View>
+    );
+
+    return onPress ? <Pressable onPress={onPress}>{body}</Pressable> : body;
+  };
+
+  const Toggle = ({ on }: { on: boolean }) => (
+    <View
+      style={{
+        width: components.toggle.width,
+        height: components.toggle.height,
+        borderRadius: components.toggle.radius,
+        backgroundColor: on ? (isDark ? components.toggle.dark.on : components.toggle.light.on) : c.border,
+        padding: components.toggle.padding,
+        justifyContent: "center",
+        alignItems: on ? "flex-end" : "flex-start",
+      }}
+    >
+      <Animated.View
+        key={on ? "on" : "off"}
+        entering={ZoomIn.springify()
+          .damping(springs.pop.damping)
+          .stiffness(springs.pop.stiffness)
+          .mass(springs.pop.mass)}
+        style={{
+          width: components.toggle.knobSize,
+          height: components.toggle.knobSize,
+          borderRadius: components.toggle.knobSize / 2,
+          backgroundColor: on ? (isDark ? components.toggle.dark.knob : components.toggle.light.knob) : c.bg,
+        }}
+      />
+    </View>
+  );
+
+  /** Rows sit on the page with hairline dividers, not inside a filled card. */
+  const List = ({ children }: { children: ReactNode }) => (
+    <View style={{ marginTop: spacing[10], borderTopWidth: 1, borderTopColor: divider }}>{children}</View>
+  );
+
+  return (
+    <View style={{ flex: 1, backgroundColor: c.bg, paddingTop: insets.top }}>
+      {/* Header — close tile on the leading edge, title optically centred */}
+      <View
+        style={{
+          flexDirection: row,
+          alignItems: "center",
+          height: 48,
+          paddingHorizontal: layout.settings.hPadding,
+        }}
+      >
+        <PressableScale
+          onPress={() => router.back()}
+          accessibilityLabel={t("common.cancel")}
+          style={{
+            width: layout.hamburger.size,
+            height: layout.hamburger.size,
+            borderRadius: layout.hamburger.radius,
+            backgroundColor: c.surface,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Ionicons name="close" size={18} color={c.textPrimary} />
+        </PressableScale>
+        <Text
+          style={{
+            flex: 1,
+            textAlign: "center",
+            // Offsets the close tile so the title centres against the screen.
+            marginEnd: layout.hamburger.size,
+            fontFamily: fontFamily.manrope[700],
+            fontSize: 17,
+            color: c.textPrimary,
+          }}
+        >
+          {t("settings.title")}
+        </Text>
+      </View>
+
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: layout.settings.hPadding,
+          paddingBottom: spacing[32] + insets.bottom,
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Pro status / upgrade */}
+        <Animated.View entering={FadeInDown.duration(400).delay(80)}>
+          <Pressable
+            onPress={
+              settings.isPro
+                ? undefined
+                : () =>
+                    Alert.alert(
+                      t("onboarding.paywall.comingSoonTitle"),
+                      t("onboarding.paywall.comingSoonBody")
+                    )
+            }
+            style={{
+              marginTop: spacing[18],
+              backgroundColor: isDark ? components.upgradeCard.dark.bg : components.upgradeCard.light.bg,
+              borderLeftWidth: components.upgradeCard.leftBorderWidth,
+              borderLeftColor: settings.isPro
+                ? c.success
+                : isDark
+                  ? components.upgradeCard.dark.border
+                  : components.upgradeCard.light.border,
+              borderRadius: components.upgradeCard.radius,
+              padding: components.upgradeCard.padding,
+            }}
+          >
+            <View style={{ flexDirection: row, alignItems: "center", justifyContent: "space-between", gap: spacing[12] }}>
+              <Text
                 style={{
-                  width: components.toggle.width,
-                  height: components.toggle.height,
-                  borderRadius: components.toggle.radius,
-                  backgroundColor: settings.preResetAlertEnabled ? (isDark ? components.toggle.dark.on : components.toggle.light.on) : c.border,
-                  padding: components.toggle.padding,
-                  justifyContent: "center",
-                  alignItems: settings.preResetAlertEnabled ? "flex-end" : "flex-start",
+                  fontFamily: fontFamily.manrope[700],
+                  fontSize: fontSizes.body,
+                  color: settings.isPro ? c.success : c.textPrimary,
+                  textAlign,
+                  writingDirection,
                 }}
               >
-                <View
-                  style={{
-                    width: components.toggle.knobSize,
-                    height: components.toggle.knobSize,
-                    borderRadius: 50,
-                    backgroundColor: settings.preResetAlertEnabled ? (isDark ? components.toggle.dark.knob : components.toggle.light.knob) : c.textOnAccent,
-                  }}
-                />
-              </View>
-            </Pressable>
-          </View>
-        </Animated.View>
-
-        {/* LANGUAGE section — the onboarding language step promises this exists */}
-        <Animated.View entering={FadeInDown.duration(400).delay(250)} style={{ marginBottom: spacing[24] }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.mono[700],
-              fontSize: fontSizes.xs,
-              letterSpacing: letterSpacing.wideMd,
-              color: c.textMuted,
-              paddingHorizontal: spacing[20],
-              marginBottom: spacing[10],
-            }}
-          >
-            {t("settings.sections.language")}
-          </Text>
-          <View
-            style={{
-              marginHorizontal: spacing[20],
-              backgroundColor: c.surface,
-              borderRadius: radii.badge,
-              overflow: "hidden",
-            }}
-          >
-            <Pressable
-              onPress={() => setLanguageOpen((open) => !open)}
+                {settings.isPro ? t("settings.pro.active") : t("settings.pro.upgrade")}
+              </Text>
+              {!settings.isPro && (
+                <Text style={{ fontFamily: fontFamily.mono[700], fontSize: 17, color: c.accent }}>
+                  {t("onboarding.paywall.price")}
+                </Text>
+              )}
+            </View>
+            <Text
               style={{
-                paddingVertical: components.settingsRow.padding.vertical,
-                paddingHorizontal: 18,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
+                marginTop: spacing[6],
+                fontFamily: fontFamily.manrope[500],
+                fontSize: fontSizes.captionSm,
+                lineHeight: 19.5,
+                color: c.textTertiary,
+                textAlign,
+                writingDirection,
               }}
             >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
-                <Ionicons name="language-outline" size={18} color={c.textTertiary} />
-                <Text
-                  style={{
-                    fontFamily: fontFamily.manrope[600],
-                    fontSize: components.settingsRow.titleFont.size,
-                    color: c.textPrimary,
-                  }}
-                >
-                  {t("settings.languageRow")}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[6] }}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.manrope[500],
-                    fontSize: components.settingsRow.valueFont.size,
-                    color: isDark ? components.settingsRow.dark.value : components.settingsRow.light.value,
-                  }}
-                >
-                  {SUPPORTED_LANGUAGES.find((l) => l.code === language)?.nativeName}
-                </Text>
-                <Ionicons
-                  name={languageOpen ? "chevron-up" : "chevron-down"}
-                  size={14}
-                  color={isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron}
-                />
-              </View>
-            </Pressable>
+              {settings.isPro ? t("settings.pro.activeSubtext") : t("settings.pro.upgradeBody")}
+            </Text>
+          </Pressable>
+        </Animated.View>
 
+        {/* Notifications */}
+        <Animated.View entering={FadeInDown.duration(400).delay(140)}>
+          <SectionLabel>{t("settings.sections.notifications")}</SectionLabel>
+          <List>
+            {/* Display-only: the app uses the system default sound and has no
+                picker, so this row deliberately has no chevron to tap. */}
+            <Row title={t("settings.notifications.sound")} value={t("settings.soundDefault")} />
+            <Row
+              title={t("settings.notifications.preResetAlert")}
+              subtitle={t("settings.notifications.preResetSub")}
+              onPress={handleTogglePreReset}
+              right={<Toggle on={settings.preResetAlertEnabled} />}
+              last
+            />
+          </List>
+        </Animated.View>
+
+        {/* Power features — entry point for the rewarded-ad unlock (screen 10) */}
+        <Animated.View entering={FadeInDown.duration(400).delay(200)}>
+          <SectionLabel>{t("settings.sections.power")}</SectionLabel>
+          <Pressable
+            onPress={() => router.push("/rewarded-ad")}
+            style={{
+              marginTop: spacing[10],
+              backgroundColor: isDark ? components.upgradeCard.dark.bg : components.upgradeCard.light.bg,
+              borderRadius: components.upgradeCard.radius,
+              paddingVertical: spacing[16],
+              paddingHorizontal: spacing[18],
+              flexDirection: row,
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: spacing[12],
+            }}
+          >
+            <View style={{ flex: 1, gap: spacing[3] }}>
+              <Text
+                style={{
+                  fontFamily: fontFamily.manrope[700],
+                  fontSize: fontSizes.bodySm,
+                  color: c.textPrimary,
+                  textAlign,
+                  writingDirection,
+                }}
+              >
+                {t("settings.power.watchAd")}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: fontFamily.manrope[500],
+                  fontSize: fontSizes.xs,
+                  color: c.textTertiary,
+                  textAlign,
+                  writingDirection,
+                }}
+              >
+                {t("settings.power.watchAdSubtext")}
+              </Text>
+            </View>
+            <Ionicons name={isRTL ? "chevron-back" : "chevron-forward"} size={16} color={chevronColor} />
+          </Pressable>
+        </Animated.View>
+
+        {/* Language */}
+        <Animated.View entering={FadeInDown.duration(400).delay(260)}>
+          <SectionLabel>{t("settings.sections.language")}</SectionLabel>
+          <List>
+            <Row
+              title={t("settings.languageRow")}
+              value={SUPPORTED_LANGUAGES.find((l) => l.code === language)?.nativeName}
+              onPress={() => setLanguageOpen((open) => !open)}
+              right={
+                <Ionicons name={languageOpen ? "chevron-up" : "chevron-down"} size={16} color={chevronColor} />
+              }
+              last={!languageOpen}
+            />
             {languageOpen &&
-              SUPPORTED_LANGUAGES.map((lang) => {
+              SUPPORTED_LANGUAGES.map((lang, i) => {
                 const active = lang.code === language;
                 return (
                   <Pressable
                     key={lang.code}
                     onPress={() => handleSelectLanguage(lang.code)}
                     style={{
-                      paddingVertical: spacing[12],
-                      paddingHorizontal: 18,
-                      flexDirection: "row",
-                      justifyContent: "space-between",
+                      flexDirection: row,
                       alignItems: "center",
-                      borderTopWidth: 1,
-                      borderTopColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
+                      justifyContent: "space-between",
+                      paddingVertical: spacing[12],
+                      paddingHorizontal: components.settingsRow.padding.horizontal,
+                      borderBottomWidth: i === SUPPORTED_LANGUAGES.length - 1 ? 0 : 1,
+                      borderBottomColor: divider,
                     }}
                   >
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
+                    <View style={{ flexDirection: row, alignItems: "center", gap: spacing[10] }}>
                       <Text
                         style={{
+                          width: 26,
                           fontFamily: fontFamily.mono[700],
                           fontSize: fontSizes.tiny,
                           letterSpacing: 1.2,
-                          width: 24,
                           color: active ? c.accent : c.textMuted,
                         }}
                       >
@@ -395,7 +437,7 @@ export default function SettingsScreen() {
                       </Text>
                       <Text
                         style={{
-                          fontFamily: fontFamily.manrope[active ? 700 : 500],
+                          fontFamily: active ? fontFamily.manrope[700] : fontFamily.manrope[500],
                           fontSize: components.settingsRow.valueFont.size,
                           color: active ? c.textPrimary : c.textSecondary,
                         }}
@@ -407,153 +449,37 @@ export default function SettingsScreen() {
                   </Pressable>
                 );
               })}
-          </View>
+          </List>
         </Animated.View>
 
-        {/* POWER FEATURES section — disabled for now */}
-        {/* Will re-enable when ads/IAP go live */}
-
-        {/* DATA section */}
-        <Animated.View entering={FadeInDown.duration(400).delay(300)} style={{ marginBottom: spacing[24] }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.mono[700],
-              fontSize: fontSizes.xs,
-              letterSpacing: letterSpacing.wideMd,
-              color: c.textMuted,
-              paddingHorizontal: spacing[20],
-              marginBottom: spacing[10],
-            }}
-          >
-            {t("settings.sections.data")}
-          </Text>
-          <View
-            style={{
-              marginHorizontal: spacing[20],
-              backgroundColor: c.surface,
-              borderRadius: radii.badge,
-              overflow: "hidden",
-            }}
-          >
-            <Pressable
-              onPress={handleExport}
-              style={{
-                paddingVertical: components.settingsRow.padding.vertical,
-                paddingHorizontal: 18,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                borderBottomWidth: 1,
-                borderBottomColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
-              }}
-            >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
-                <Ionicons name="download-outline" size={18} color={c.textTertiary} />
-                <Text
-                  style={{
-                    fontFamily: fontFamily.manrope[600],
-                    fontSize: components.settingsRow.titleFont.size,
-                    color: c.textPrimary,
-                  }}
-                >
-                  {t("settings.data.export")}
-                </Text>
-              </View>
-              <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
-            </Pressable>
-            <Pressable
+        {/* Data */}
+        <Animated.View entering={FadeInDown.duration(400).delay(320)}>
+          <SectionLabel>{t("settings.sections.data")}</SectionLabel>
+          <List>
+            <Row title={t("settings.data.export")} onPress={handleExport} />
+            <Row
+              title={restoring ? t("settings.restoring") : t("settings.data.restore")}
               onPress={handleRestore}
-              style={{
-                paddingVertical: components.settingsRow.padding.vertical,
-                paddingHorizontal: 18,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
-                <Ionicons name="refresh-outline" size={18} color={c.textTertiary} />
-                <Text
-                  style={{
-                    fontFamily: fontFamily.manrope[600],
-                    fontSize: components.settingsRow.titleFont.size,
-                    color: restoring ? c.textMuted : c.textPrimary,
-                  }}
-                >
-                  {restoring ? t("settings.restoring") : t("settings.data.restore")}
-                </Text>
-              </View>
-              <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
-            </Pressable>
-          </View>
+            />
+            <Row
+              title={t("settings.about.contact")}
+              onPress={() => Linking.openURL("mailto:support@sessionreset.app?subject=SessionReset Feedback")}
+              last
+            />
+          </List>
         </Animated.View>
 
-        {/* ABOUT section */}
-        <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: spacing[24] }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.mono[700],
-              fontSize: fontSizes.xs,
-              letterSpacing: letterSpacing.wideMd,
-              color: c.textMuted,
-              paddingHorizontal: spacing[20],
-              marginBottom: spacing[10],
-            }}
-          >
-            {t("settings.sections.about")}
-          </Text>
-          <View
-            style={{
-              marginHorizontal: spacing[20],
-              backgroundColor: c.surface,
-              borderRadius: radii.badge,
-              overflow: "hidden",
-            }}
-          >
-            <View
-              style={{
-                paddingVertical: components.settingsRow.padding.vertical,
-                paddingHorizontal: 18,
-                borderBottomWidth: 1,
-                borderBottomColor: isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: fontFamily.mono[500],
-                  fontSize: fontSizes.xs,
-                  color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron,
-                }}
-              >
-                {t("settings.about.version", { version: "1.0.0" })}
-              </Text>
-            </View>
-            <Pressable
-              onPress={handleContact}
-              style={{
-                paddingVertical: components.settingsRow.padding.vertical,
-                paddingHorizontal: 18,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
-                <Ionicons name="mail-outline" size={18} color={c.textTertiary} />
-                <Text
-                  style={{
-                    fontFamily: fontFamily.manrope[600],
-                    fontSize: components.settingsRow.titleFont.size,
-                    color: c.textPrimary,
-                  }}
-                >
-                  {t("settings.about.contact")}
-                </Text>
-              </View>
-              <Text style={{ color: isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron, fontSize: 14 }}>›</Text>
-            </Pressable>
-          </View>
-        </Animated.View>
+        <Text
+          style={{
+            marginTop: spacing[32],
+            textAlign: "center",
+            fontFamily: fontFamily.mono[500],
+            fontSize: fontSizes.xs,
+            color: chevronColor,
+          }}
+        >
+          {t("settings.about.version", { version: APP_VERSION })}
+        </Text>
       </ScrollView>
     </View>
   );

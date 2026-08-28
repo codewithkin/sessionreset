@@ -120,15 +120,17 @@
       "upgradeSubtext": "광고 제거 & 위젯 잠금 해제 — ₩2,900",
       "upgradePeriod": "평생 이용 • 런칭 가격",
       "active": "Pro입니다",
-      "activeSubtext": "모든 기능 잠금 해제, 광고 제거됨."
+      "activeSubtext": "모든 기능 잠금 해제, 광고 제거됨.",
+      "upgradeBody": "한 번 구매로 평생 사용. 광고 제거, 위젯과 사운드 잠금 해제."
     },
     "notifications": {
       "sound": "알림 사운드",
-      "preResetAlert": "기본 리셋 전 알림"
+      "preResetAlert": "기본 리셋 전 알림",
+      "preResetSub": "15분 전"
     },
     "power": {
-      "watchAd": "24시간 Pro 광고 시청",
-      "watchAdSubtext": "모든 기능을 잠금 해제하려면 15초 영상 시청"
+      "watchAd": "광고 보고 10시간 Pro",
+      "watchAdSubtext": "30초 영상으로 전체 잠금 해제"
     },
     "data": {
       "export": "타이머 기록 내보내기",
@@ -142,7 +144,8 @@
       "notifications": "알림",
       "data": "데이터",
       "about": "앱 정보",
-      "language": "언어"
+      "language": "언어",
+      "power": "고급 기능"
     },
     "soundDefault": "기본값",
     "restoring": "복원 중…",
@@ -159,11 +162,11 @@
     }
   },
   "rewardedAd": {
-    "headline": "24시간 Pro 잠금 해제",
-    "body": "다음 날 모든 Pro 기능을 사용하려면 15초 짧은 영상을 시청하세요.",
-    "cta": "짧은 영상 시청",
-    "dismiss": "아니요, 괜찮습니다",
-    "success": "Pro 24시간 잠금 해제!"
+    "headline": "10시간 동안 Pro 잠금 해제",
+    "body": "30초 영상을 보면 앞으로 10시간 동안 모든 Pro 기능을 사용할 수 있습니다.",
+    "cta": "짧은 영상 보기",
+    "dismiss": "괜찮아요",
+    "unavailable": "리워드 영상은 아직 제공되지 않습니다 — 출시 기간에는 Pro가 모두에게 무료입니다."
   },
   "notifications_alerts": {
     "resetTitle": "{{platform}} 윈도우 리셋! 🚀",
