@@ -1,5 +1,6 @@
 package expo.modules.livetimer
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -27,7 +28,6 @@ class LiveTimerOptions : Record {
   @Field val id: String = ""
   @Field val title: String = ""
   @Field val body: String = ""
-  @Field val startedAt: Double = 0.0
   @Field val endsAt: Double = 0.0
   @Field val color: String? = null
   @Field val channelName: String = "Active windows"
@@ -100,32 +100,35 @@ class LiveTimerModule : Module() {
       setShowBadge(false)
       enableVibration(false)
       setSound(null, null)
+      // On O+ the channel decides what the lock screen may show, and it
+      // overrides the per-notification visibility. Without this the countdown
+      // can be hidden behind "contents hidden" on the lock screen, which is
+      // the one place it most needs to be readable.
+      lockscreenVisibility = Notification.VISIBILITY_PUBLIC
     }
     manager.createNotificationChannel(channel)
   }
 
-  private fun buildNotification(options: LiveTimerOptions): android.app.Notification {
+  private fun buildNotification(options: LiveTimerOptions): Notification {
     val endsAt = options.endsAt.toLong()
-    val startedAt = options.startedAt.toLong()
-    val now = System.currentTimeMillis()
-
-    val total = (endsAt - startedAt).coerceAtLeast(1L)
-    val elapsed = (now - startedAt).coerceIn(0L, total)
-    val percent = ((elapsed.toDouble() / total) * 100).toInt().coerceIn(0, 100)
 
     val builder = NotificationCompat.Builder(context, CHANNEL_ID)
       .setSmallIcon(smallIconRes())
       .setContentTitle(options.title)
       .setContentText(options.body)
       .setOngoing(true)
-      // Re-posting to refresh the progress bar must not re-alert.
+      // Re-posting (relaunch, language change) must not re-alert.
       .setOnlyAlertOnce(true)
       .setShowWhen(true)
       // `when` is the target; with countDown set the system renders the
       // remaining time and decrements it once a second on its own.
       .setWhen(endsAt)
       .setUsesChronometer(true)
-      .setProgress(100, percent, false)
+      // No progress bar here on purpose. setProgress is evaluated once, at
+      // post time, and nothing re-posts while the app is closed — so over a
+      // five-hour window the bar would sit frozen near 0% beside a countdown
+      // correctly reading two hours left. A stale bar next to live figures
+      // undermines the figures; the countdown alone is honest.
       .setCategory(NotificationCompat.CATEGORY_STATUS)
       .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
       .setPriority(NotificationCompat.PRIORITY_LOW)

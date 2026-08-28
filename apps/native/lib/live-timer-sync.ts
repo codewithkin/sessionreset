@@ -27,7 +27,6 @@ export function showLiveTimer(timer: Timer): void {
     id: timer.id,
     title: i18n.t(`dashboard.timer.${timer.platform}`),
     body: i18n.t('liveTimer.body', { time: formatClockTime(timer.resetTime, locale) }),
-    startedAt: timer.startTime,
     endsAt: timer.resetTime,
     color: tintFor(timer),
     channelName: i18n.t('liveTimer.channelName'),

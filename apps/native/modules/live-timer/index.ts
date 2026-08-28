@@ -5,8 +5,6 @@ export interface LiveTimerOptions {
   id: string;
   title: string;
   body: string;
-  /** Epoch ms the window opened. */
-  startedAt: number;
   /** Epoch ms the window reopens; the countdown targets this. */
   endsAt: number;
   /** `#RRGGBB` used to tint the small icon and app name. */
