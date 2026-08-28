@@ -1,38 +1,55 @@
+import { useMemo } from "react";
 import { View, Text, ScrollView } from "react-native";
-import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
-import { storage } from "@/lib/storage";
+import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+
+import { storage } from "@/lib/storage";
+import { getAppLanguage } from "@/lib/i18n";
+import { formatClockTime } from "@/lib/timeline";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, shadows, fontFamily } from "@/lib/tokens";
+import { colors, components, fontFamily, fontSizes, layout, letterSpacing, spacing } from "@/lib/tokens";
+import { useDirection } from "@/lib/rtl";
+import { Timer } from "@/lib/types";
 
 export default function HistoryScreen() {
   const { t } = useTranslation();
   const { isDark } = useAppTheme();
+  const { row, textAlign, writingDirection } = useDirection();
+  const insets = useSafeAreaInsets();
   const c = isDark ? colors.dark : colors.light;
-  const allTimers = storage.timers.get();
-  const inactive = allTimers
-    .filter((timer) => !timer.active)
-    .sort((a, b) => b.resetTime - a.resetTime);
+  const locale = getAppLanguage();
 
-  const grouped = inactive.reduce(
-    (acc, t) => {
-      const date = new Date(timer.resetTime).toLocaleDateString("en-US", {
+  const groups = useMemo(() => {
+    const past = storage.timers
+      .get()
+      .filter((timer) => !timer.active)
+      .sort((a, b) => b.resetTime - a.resetTime);
+
+    // Insertion order is preserved, and `past` is already newest-first, so the
+    // resulting day groups come out in the right order too.
+    const byDay = new Map<string, Timer[]>();
+    for (const timer of past) {
+      const day = new Date(timer.resetTime).toLocaleDateString(locale, {
         weekday: "short",
         month: "short",
         day: "numeric",
       });
-      if (!acc[date]) acc[date] = [];
-      acc[date].push(t);
-      return acc;
-    },
-    {} as Record<string, typeof inactive>
-  );
+      const bucket = byDay.get(day);
+      if (bucket) bucket.push(timer);
+      else byDay.set(day, [timer]);
+    }
+    return [...byDay.entries()];
+  }, [locale]);
+
+  const divider = isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider;
 
   return (
-    <View style={{ flex: 1, backgroundColor: c.bg }}>
+    <View style={{ flex: 1, backgroundColor: c.bg, paddingTop: insets.top }}>
       <Animated.View
-        entering={FadeIn.duration(400)}
-        style={{ paddingHorizontal: spacing[20], paddingTop: spacing[56], paddingBottom: spacing[18] }}
+        entering={FadeIn.duration(300)}
+        style={{ height: 52, justifyContent: "center", paddingHorizontal: layout.dashboard.hPadding }}
       >
         <Text
           style={{
@@ -40,6 +57,8 @@ export default function HistoryScreen() {
             fontSize: fontSizes.h3,
             letterSpacing: -0.5,
             color: c.textPrimary,
+            textAlign,
+            writingDirection,
           }}
         >
           {t("history.title")}
@@ -47,87 +66,101 @@ export default function HistoryScreen() {
       </Animated.View>
 
       <ScrollView
-        contentContainerStyle={{ paddingHorizontal: spacing[20], paddingBottom: spacing[40] }}
+        contentContainerStyle={{
+          paddingHorizontal: layout.dashboard.hPadding,
+          paddingTop: spacing[8],
+          paddingBottom: spacing[24],
+        }}
+        showsVerticalScrollIndicator={false}
       >
-        {inactive.length === 0 ? (
+        {groups.length === 0 ? (
           <Animated.View
-            entering={FadeInDown.duration(500).delay(200)}
-            style={{ alignItems: "center", paddingTop: spacing[56] }}
+            entering={FadeInDown.duration(400).delay(150)}
+            style={{ alignItems: "center", paddingTop: spacing[56], gap: spacing[12] }}
           >
+            <Ionicons name="time-outline" size={40} color={c.textMuted} />
             <Text
               style={{
                 fontFamily: fontFamily.manrope[500],
                 fontSize: fontSizes.body,
                 color: c.textMuted,
+                textAlign: "center",
               }}
             >
               {t("history.empty")}
             </Text>
           </Animated.View>
         ) : (
-          Object.entries(grouped).map(([date, timers], groupIndex) => (
+          groups.map(([day, timers], groupIndex) => (
             <Animated.View
-              key={date}
-              entering={FadeInDown.duration(400).delay(groupIndex * 100)}
-              style={{ marginBottom: spacing[24] }}
+              key={day}
+              entering={FadeInDown.duration(360).delay(100 + groupIndex * 70)}
+              style={{ marginTop: groupIndex === 0 ? spacing[12] : spacing[26] }}
             >
               <Text
                 style={{
-                  fontFamily: fontFamily.manrope[700],
-                  fontSize: fontSizes.bodySm,
-                  color: c.textPrimary,
-                  marginBottom: spacing[10],
+                  fontFamily: fontFamily.mono[700],
+                  fontSize: fontSizes.tiny,
+                  letterSpacing: letterSpacing.wideMd,
+                  color: c.textMuted,
+                  textAlign,
+                  writingDirection,
                 }}
               >
-                {date}
+                {day.toUpperCase()}
               </Text>
-              {timers.map((timer) => (
-                <View
-                  key={timer.id}
-                  style={{
-                    backgroundColor: c.surface,
-                    borderRadius: radii.badge,
-                    padding: spacing[16],
-                    marginBottom: spacing[8],
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: spacing[10] }}>
-                    <View
-                      style={{
-                        width: components.timeline.lineWidth * 4,
-                        height: components.timeline.lineWidth * 4,
-                        borderRadius: 50,
-                        backgroundColor:
-                          timer.platform === "claude" ? c.claude : c.codex,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontFamily: fontFamily.manrope[600],
-                        fontSize: fontSizes.caption,
-                        color: c.textPrimary,
-                      }}
-                    >
-                      {t(`dashboard.timer.${timer.platform}`)}
-                    </Text>
-                  </View>
-                  <Text
+
+              <View style={{ marginTop: spacing[10], borderTopWidth: 1, borderTopColor: divider }}>
+                {timers.map((timer, i) => (
+                  <View
+                    key={timer.id}
                     style={{
-                      fontFamily: fontFamily.mono[500],
-                      fontSize: fontSizes.xs,
-                      color: c.textTertiary,
+                      flexDirection: row,
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: spacing[12],
+                      paddingVertical: spacing[14],
+                      borderBottomWidth: i === timers.length - 1 ? 0 : 1,
+                      borderBottomColor: divider,
                     }}
                   >
-                    {new Date(timer.resetTime).toLocaleTimeString([], {
-                      hour: "numeric",
-                      minute: "2-digit",
-                    })}
-                  </Text>
-                </View>
-              ))}
+                    <View style={{ flexDirection: row, alignItems: "center", gap: spacing[10], flex: 1 }}>
+                      <View
+                        style={{
+                          width: layout.serviceDot.size,
+                          height: layout.serviceDot.size,
+                          borderRadius: layout.serviceDot.size / 2,
+                          backgroundColor: timer.platform === "claude" ? c.claude : c.codex,
+                        }}
+                      />
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          flex: 1,
+                          fontFamily: fontFamily.manrope[600],
+                          fontSize: fontSizes.bodySm,
+                          color: c.textPrimary,
+                          textAlign,
+                          writingDirection,
+                        }}
+                      >
+                        {t(`dashboard.timer.${timer.platform}`)}
+                      </Text>
+                    </View>
+
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.mono[500],
+                        fontSize: fontSizes.xs,
+                        color: c.textMuted,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {formatClockTime(timer.startTime, locale)} → {formatClockTime(timer.resetTime, locale)}
+                    </Text>
+                  </View>
+                ))}
+              </View>
             </Animated.View>
           ))
         )}
