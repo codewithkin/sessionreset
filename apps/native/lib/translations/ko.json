@@ -98,7 +98,7 @@
     "subtitleEmpty": "{{date}} · 실행 중 없음"
   },
   "quickLog": {
-    "title": "제한 기록",
+    "title": "한도 기록",
     "serviceLabel": "어떤 서비스?",
     "claude": "Claude",
     "codex": "Codex",
@@ -109,7 +109,9 @@
     "cta": "5시간 타이머 시작",
     "replaceWarning": "기존 {{platform}} 타이머를 교체하시겠습니까? 현재 카운트다운이 취소됩니다.",
     "confirm": "교체",
-    "cancel": "취소"
+    "cancel": "취소",
+    "alertSub": "{{time}}에 로컬 알림",
+    "minutesShort": "{{minutes}}분"
   },
   "settings": {
     "title": "설정",

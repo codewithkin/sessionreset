@@ -105,11 +105,13 @@
     "timeLabel": "Когда вы достигли лимита?",
     "justNow": "Сейчас",
     "minutesAgo": "{{minutes}}м назад",
-    "alertLabel": "Напомнить за 15 минут до сброса",
+    "alertLabel": "Напомнить за 15 мин до сброса",
     "cta": "Запустить 5-часовой таймер",
     "replaceWarning": "Заменить текущий таймер {{platform}}? Это отменит обратный отсчёт.",
     "confirm": "Заменить",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "alertSub": "Локальный сигнал в {{time}}",
+    "minutesShort": "{{minutes}} мин"
   },
   "settings": {
     "title": "Настройки",

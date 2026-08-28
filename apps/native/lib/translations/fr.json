@@ -105,11 +105,13 @@
     "timeLabel": "Quand avez-vous atteint la limite ?",
     "justNow": "À l'instant",
     "minutesAgo": "il y a {{minutes}} min",
-    "alertLabel": "Me rappeler 15 minutes avant la réinitialisation",
+    "alertLabel": "Me prévenir 15 min avant la réinitialisation",
     "cta": "Démarrer un minuteur de 5 heures",
     "replaceWarning": "Remplacer le minuteur {{platform}} existant ? Cela annulera le compte à rebours.",
     "confirm": "Remplacer",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "alertSub": "Alarme locale à {{time}}",
+    "minutesShort": "{{minutes}} min"
   },
   "settings": {
     "title": "Paramètres",

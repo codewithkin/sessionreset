@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { View, Text, Pressable, Alert } from "react-native";
-import Animated, { FadeIn, SlideInDown } from "react-native-reanimated";
+import Animated, { FadeIn, ZoomIn } from "react-native-reanimated";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetView,
+  type BottomSheetBackdropProps,
+} from "@gorhom/bottom-sheet";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
+
 import { useTimers } from "@/contexts/TimerContext";
 import { Platform } from "@/lib/types";
-import { showInterstitial, canShowInterstitial } from "@/lib/ads";
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontSizes, spacing, radii, shadows, layout, springs, fontFamily } from "@/lib/tokens";
+import { colors, components, fontFamily, fontSizes, layout, radii, spacing, springs } from "@/lib/tokens";
+import { useDirection } from "@/lib/rtl";
+import { getAppLanguage } from "@/lib/i18n";
+import { formatClockTime } from "@/lib/timeline";
+import { FIVE_HOURS_MS, FIFTEEN_MINUTES_MS } from "@/lib/timer-engine";
 import { PressableScale } from "@/components/PressableScale";
 
 const SERVICES: { key: Platform; color: string }[] = [
@@ -21,29 +30,33 @@ export default function QuickLogScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const { isDark } = useAppTheme();
+  const { row, textAlign, writingDirection } = useDirection();
   const c = isDark ? colors.dark : colors.light;
   const { addTimer, timers } = useTimers();
+  const sheetRef = useRef<BottomSheet>(null);
+
   const [selectedService, setSelectedService] = useState<Platform | null>(null);
   const [selectedOffset, setSelectedOffset] = useState(0);
   const [preResetAlert, setPreResetAlert] = useState(true);
 
+  const startTime = Date.now() - selectedOffset * 60_000;
+  const alarmAt = useMemo(
+    () => formatClockTime(startTime + FIVE_HOURS_MS - FIFTEEN_MINUTES_MS, getAppLanguage()),
+    [startTime]
+  );
+
+  // Let the sheet animate out before the route unmounts.
+  const dismiss = useCallback(() => sheetRef.current?.close(), []);
+
   const handleStart = async () => {
     if (!selectedService) return;
 
-    // Named `timer`, not `t` — `t` is the translation function in this scope.
-    const existing = timers.find(
-      (timer) => timer.platform === selectedService && timer.active
-    );
+    const existing = timers.find((timer) => timer.platform === selectedService && timer.active);
 
     const doStart = async () => {
       // The window opened when they hit the limit, not when they logged it.
-      const startTime = Date.now() - selectedOffset * 60_000;
-      await addTimer(selectedService, preResetAlert, startTime);
-      router.back();
-      // Show interstitial after logging (free tier, once per session)
-      if (canShowInterstitial()) {
-        setTimeout(() => showInterstitial(), 500);
-      }
+      await addTimer(selectedService, preResetAlert, Date.now() - selectedOffset * 60_000);
+      dismiss();
     };
 
     if (existing) {
@@ -61,72 +74,62 @@ export default function QuickLogScreen() {
     await doStart();
   };
 
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} opacity={isDark ? 0.68 : 0.5} />
+    ),
+    [isDark]
+  );
+
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: c.overlay,
-        justifyContent: "flex-end",
+    <BottomSheet
+      ref={sheetRef}
+      enablePanDownToClose
+      enableDynamicSizing
+      onClose={() => router.back()}
+      backdropComponent={renderBackdrop}
+      backgroundStyle={{
+        backgroundColor: isDark ? components.timerCard.dark.bg : c.bg,
+        borderTopLeftRadius: components.bottomSheet.radius,
+        borderTopRightRadius: components.bottomSheet.radius,
+      }}
+      handleIndicatorStyle={{
+        width: components.bottomSheet.handleWidth,
+        height: components.bottomSheet.handleHeight,
+        borderRadius: components.bottomSheet.handleRadius,
+        backgroundColor: isDark ? components.bottomSheet.dark.handle : components.bottomSheet.light.handle,
       }}
     >
-      <Pressable style={{ flex: 1 }} onPress={() => router.back()} />
-
-      <Animated.View
-        entering={SlideInDown.springify()
-          .damping(springs.sheet.damping)
-          .stiffness(springs.sheet.stiffness)
-          .mass(springs.sheet.mass)}
+      <BottomSheetView
         style={{
-          backgroundColor: c.bg,
-          borderTopLeftRadius: components.bottomSheet.radius,
-          borderTopRightRadius: components.bottomSheet.radius,
-          paddingTop: components.bottomSheet.padding.top,
           paddingHorizontal: components.bottomSheet.padding.horizontal,
           paddingBottom: spacing[32],
         }}
       >
-        {/* Handle */}
-        <View style={{ alignItems: "center", marginBottom: spacing[18] }}>
-          <View
-            style={{
-              width: components.bottomSheet.handleWidth,
-              height: components.bottomSheet.handleHeight,
-              borderRadius: components.bottomSheet.handleRadius,
-              backgroundColor: isDark ? components.bottomSheet.dark.handle : components.bottomSheet.light.handle,
-            }}
-          />
-        </View>
-
         <Text
           style={{
+            marginTop: spacing[18],
             fontFamily: fontFamily.manrope[800],
             fontSize: fontSizes.h5,
             letterSpacing: -0.3,
             color: c.textPrimary,
-            marginBottom: spacing[20],
+            textAlign,
+            writingDirection,
           }}
         >
           {t("quickLog.title")}
         </Text>
 
-        {/* Service selector */}
-        <Text
-          style={{
-            fontFamily: fontFamily.manrope[700],
-            fontSize: fontSizes.micro,
-            color: c.textTertiary,
-            marginBottom: spacing[10],
-          }}
-        >
-          {t("quickLog.serviceLabel")}
-        </Text>
-        <View style={{ flexDirection: "row", gap: spacing[10], marginBottom: spacing[22] }}>
+        {/* Service — dot above the name, filled in the brand colour when picked */}
+        <View style={{ marginTop: spacing[20], flexDirection: row, gap: spacing[12] }}>
           {SERVICES.map((s) => {
             const active = selectedService === s.key;
             return (
               <PressableScale
                 key={s.key}
                 onPress={() => setSelectedService(s.key)}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: active }}
                 style={{
                   flex: 1,
                   borderWidth: 2,
@@ -134,25 +137,24 @@ export default function QuickLogScreen() {
                   backgroundColor: active ? s.color : "transparent",
                   borderRadius: components.primaryButton.radius,
                   padding: spacing[16],
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: spacing[12],
-                  opacity: selectedService && !active ? 0.5 : 1,
+                  gap: spacing[10],
                 }}
               >
                 <View
                   style={{
                     width: layout.serviceDot.size,
                     height: layout.serviceDot.size,
-                    borderRadius: 50,
-                    backgroundColor: active ? c.textOnAccent : s.color,
+                    borderRadius: layout.serviceDot.size / 2,
+                    backgroundColor: active ? (isDark ? colors.dark.textOnBrand : "#FFFFFF") : s.color,
                   }}
                 />
                 <Text
                   style={{
                     fontFamily: fontFamily.manrope[700],
-                    fontSize: fontSizes.body,
-                    color: active ? c.textOnAccent : c.textPrimary,
+                    fontSize: fontSizes.bodySm,
+                    color: active ? (isDark ? colors.dark.textOnBrand : "#FFFFFF") : c.textSecondary,
+                    textAlign,
+                    writingDirection,
                   }}
                 >
                   {t(`quickLog.${s.key}`)}
@@ -162,125 +164,170 @@ export default function QuickLogScreen() {
           })}
         </View>
 
-        {/* Time offset */}
         <Text
           style={{
+            marginTop: spacing[24],
             fontFamily: fontFamily.manrope[700],
             fontSize: fontSizes.micro,
             color: c.textTertiary,
-            marginBottom: spacing[10],
+            textAlign,
+            writingDirection,
           }}
         >
           {t("quickLog.timeLabel")}
         </Text>
-        <View style={{ flexDirection: "row", gap: spacing[8], marginBottom: spacing[22] }}>
+
+        {/* Offset pills — "Just Now" in Manrope, the rest mono, per the design */}
+        <View style={{ marginTop: spacing[12], flexDirection: row, gap: spacing[8] }}>
           {OFFSET_MINUTES.map((minutes) => {
             const active = selectedOffset === minutes;
+            const isNow = minutes === 0;
             return (
               <PressableScale
                 key={minutes}
                 onPress={() => setSelectedOffset(minutes)}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: active }}
                 style={{
                   flex: 1,
-                  borderWidth: 1.5,
-                  borderColor: active ? (isDark ? components.offsetPill.dark.activeBg : components.offsetPill.light.activeBg) : (isDark ? components.offsetPill.dark.inactiveBorder : components.offsetPill.light.inactiveBorder),
-                  backgroundColor: active ? (isDark ? components.offsetPill.dark.activeBg : components.offsetPill.light.activeBg) : "transparent",
                   borderRadius: radii.full,
-                  paddingVertical: active ? spacing[12] : spacing[10],
+                  borderWidth: active ? 0 : 1.5,
+                  borderColor: isDark ? components.offsetPill.dark.inactiveBorder : components.offsetPill.light.inactiveBorder,
+                  backgroundColor: active
+                    ? isDark
+                      ? components.offsetPill.dark.activeBg
+                      : components.offsetPill.light.activeBg
+                    : "transparent",
+                  paddingVertical: active ? 11 : 10,
                   alignItems: "center",
                 }}
               >
                 <Text
                   style={{
-                    fontFamily: fontFamily.mono[700],
+                    fontFamily: isNow ? fontFamily.manrope[700] : fontFamily.mono[700],
                     fontSize: fontSizes.micro,
-                    color: active ? (isDark ? components.offsetPill.dark.activeText : components.offsetPill.light.activeText) : c.textSecondary,
+                    color: active
+                      ? isDark
+                        ? components.offsetPill.dark.activeText
+                        : components.offsetPill.light.activeText
+                      : c.textSecondary,
                   }}
                 >
-                  {minutes === 0 ? t("quickLog.justNow") : t("quickLog.minutesAgo", { minutes })}
+                  {isNow ? t("quickLog.justNow") : t("quickLog.minutesShort", { minutes })}
                 </Text>
               </PressableScale>
             );
           })}
         </View>
 
-        {/* Alert toggle */}
+        {/* Alert card — subtitle names the exact local alarm time */}
         <Pressable
-          onPress={() => setPreResetAlert(!preResetAlert)}
+          onPress={() => setPreResetAlert((v) => !v)}
+          accessibilityRole="switch"
+          accessibilityState={{ checked: preResetAlert }}
           style={{
-            backgroundColor: c.surface,
+            marginTop: spacing[22],
+            backgroundColor: isDark ? colors.dark.surfaceAlt : c.surface,
             borderRadius: components.primaryButton.radius,
-            padding: spacing[16],
-            flexDirection: "row",
-            justifyContent: "space-between",
+            paddingVertical: spacing[16],
+            paddingHorizontal: spacing[18],
+            flexDirection: row,
             alignItems: "center",
-            marginBottom: spacing[22],
+            justifyContent: "space-between",
+            gap: spacing[12],
           }}
         >
-          <Text
-            style={{
-              fontFamily: fontFamily.manrope[600],
-              fontSize: fontSizes.caption,
-              color: c.textPrimary,
-            }}
-          >
-            {t("quickLog.alertLabel")}
-          </Text>
+          <View style={{ flex: 1, gap: spacing[3] }}>
+            <Text
+              style={{
+                fontFamily: fontFamily.manrope[700],
+                fontSize: fontSizes.caption,
+                color: c.textPrimary,
+                textAlign,
+                writingDirection,
+              }}
+            >
+              {t("quickLog.alertLabel")}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fontFamily.manrope[500],
+                fontSize: fontSizes.xs,
+                color: c.textTertiary,
+                textAlign,
+                writingDirection,
+              }}
+            >
+              {t("quickLog.alertSub", { time: alarmAt })}
+            </Text>
+          </View>
+
           <View
             style={{
               width: components.toggle.width,
               height: components.toggle.height,
               borderRadius: components.toggle.radius,
-              backgroundColor: preResetAlert ? (isDark ? components.toggle.dark.on : components.toggle.light.on) : c.border,
+              backgroundColor: preResetAlert
+                ? isDark
+                  ? components.toggle.dark.on
+                  : components.toggle.light.on
+                : c.border,
               padding: components.toggle.padding,
               justifyContent: "center",
               alignItems: preResetAlert ? "flex-end" : "flex-start",
+              flexShrink: 0,
             }}
           >
-            <View
+            <Animated.View
+              key={preResetAlert ? "on" : "off"}
+              entering={ZoomIn.springify()
+                .damping(springs.pop.damping)
+                .stiffness(springs.pop.stiffness)
+                .mass(springs.pop.mass)}
               style={{
                 width: components.toggle.knobSize,
                 height: components.toggle.knobSize,
-                borderRadius: 50,
-                backgroundColor: preResetAlert ? (isDark ? components.toggle.dark.knob : components.toggle.light.knob) : c.textOnAccent,
+                borderRadius: components.toggle.knobSize / 2,
+                backgroundColor: preResetAlert
+                  ? isDark
+                    ? components.toggle.dark.knob
+                    : components.toggle.light.knob
+                  : c.bg,
               }}
             />
           </View>
         </Pressable>
 
-        {/* CTA */}
-        <PressableScale
-          onPress={handleStart}
-          disabled={!selectedService}
-          style={{
-            height: components.primaryButton.height,
-            borderRadius: components.primaryButton.radius,
-            backgroundColor: selectedService
-              ? (isDark ? components.primaryButton.dark.bg : components.primaryButton.light.bg)
-              : c.border,
-            justifyContent: "center",
-            alignItems: "center",
-            shadowColor: selectedService ? c.accent : "transparent",
-            shadowOffset: { width: 0, height: 6 },
-            shadowOpacity: selectedService ? 0.32 : 0,
-            shadowRadius: 18,
-            elevation: selectedService ? 8 : 0,
-            opacity: selectedService ? 1 : 0.5,
-          }}
-        >
-          <Text
+        <Animated.View entering={FadeIn.duration(250)} style={{ marginTop: spacing[22] }}>
+          <PressableScale
+            onPress={handleStart}
+            disabled={!selectedService}
+            accessibilityRole="button"
             style={{
-              fontFamily: fontFamily.manrope[700],
-              fontSize: fontSizes.body,
-              color: selectedService
-                ? (isDark ? components.primaryButton.dark.text : components.primaryButton.light.text)
-                : c.textDisabled,
+              height: components.primaryButton.height,
+              borderRadius: components.primaryButton.radius,
+              backgroundColor: selectedService ? c.accent : c.border,
+              alignItems: "center",
+              justifyContent: "center",
+              shadowColor: c.accent,
+              shadowOffset: { width: 0, height: 6 },
+              shadowOpacity: selectedService ? 0.32 : 0,
+              shadowRadius: 18,
+              elevation: selectedService ? 8 : 0,
             }}
           >
-            {t("quickLog.cta")}
-          </Text>
-        </PressableScale>
-      </Animated.View>
-    </View>
+            <Text
+              style={{
+                fontFamily: fontFamily.manrope[700],
+                fontSize: fontSizes.body,
+                color: selectedService ? c.textOnAccent : c.textDisabled,
+              }}
+            >
+              {t("quickLog.cta")}
+            </Text>
+          </PressableScale>
+        </Animated.View>
+      </BottomSheetView>
+    </BottomSheet>
   );
 }

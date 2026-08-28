@@ -98,18 +98,20 @@
     "subtitleEmpty": "{{date}} · لا شيء قيد التشغيل"
   },
   "quickLog": {
-    "title": "سجّل الحد",
+    "title": "تسجيل الحد",
     "serviceLabel": "أي خدمة؟",
     "claude": "Claude",
     "codex": "Codex",
     "timeLabel": "متى وصلت للحد؟",
     "justNow": "الآن",
     "minutesAgo": "قبل {{minutes}} د",
-    "alertLabel": "ذكّرني قبل 15 دقيقة من إعادة التعيين",
+    "alertLabel": "ذكّرني قبل 15 د من إعادة التعيين",
     "cta": "بدء مؤقت 5 ساعات",
     "replaceWarning": "استبدال المؤقت الحالي لـ {{platform}}؟ سيإلغاء العد التنازلي.",
     "confirm": "استبدال",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "alertSub": "تنبيه محلي في {{time}}",
+    "minutesShort": "{{minutes}} د"
   },
   "settings": {
     "title": "الإعدادات",

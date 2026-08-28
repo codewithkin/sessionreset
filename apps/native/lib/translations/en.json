@@ -129,18 +129,20 @@
     "subtitleEmpty": "{{date}} · nothing running"
   },
   "quickLog": {
-    "title": "Log Limit Hit",
+    "title": "Log limit hit",
     "serviceLabel": "Which service?",
     "claude": "Claude",
     "codex": "Codex",
     "timeLabel": "When did you hit the limit?",
     "justNow": "Just Now",
     "minutesAgo": "{{minutes}}m ago",
-    "alertLabel": "Remind me 15 minutes before reset",
+    "alertLabel": "Remind me 15m before reset",
     "cta": "Start 5-Hour Timer",
     "replaceWarning": "Replace existing {{platform}} timer? This will cancel the current countdown.",
     "confirm": "Replace",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "alertSub": "Local alarm at {{time}}",
+    "minutesShort": "{{minutes}}m"
   },
   "settings": {
     "title": "Settings",

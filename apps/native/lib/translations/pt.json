@@ -98,18 +98,20 @@
     "subtitleEmpty": "{{date}} · nada a decorrer"
   },
   "quickLog": {
-    "title": "Registrar limite",
+    "title": "Registar limite",
     "serviceLabel": "Qual serviço?",
     "claude": "Claude",
     "codex": "Codex",
     "timeLabel": "Quando você atingiu o limite?",
     "justNow": "Agora",
     "minutesAgo": "{{minutes}}m atrás",
-    "alertLabel": "Lembrar 15 minutos antes da redefinição",
+    "alertLabel": "Avisar 15 min antes do reinício",
     "cta": "Iniciar temporizador de 5 horas",
     "replaceWarning": "Substituir temporizador existente de {{platform}}? Isso cancelará a contagem regressiva.",
     "confirm": "Substituir",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "alertSub": "Alarme local às {{time}}",
+    "minutesShort": "{{minutes}} min"
   },
   "settings": {
     "title": "Configurações",

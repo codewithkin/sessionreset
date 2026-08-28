@@ -56,7 +56,9 @@ function StackLayout() {
         options={{
           headerShown: false,
           presentation: "transparentModal",
-          animation: "slide_from_bottom",
+          // The sheet animates itself (and its own backdrop); a route-level
+          // slide would play the same motion twice.
+          animation: "none",
         }}
       />
       <Stack.Screen

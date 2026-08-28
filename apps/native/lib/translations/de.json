@@ -98,18 +98,20 @@
     "subtitleEmpty": "{{date}} · nichts aktiv"
   },
   "quickLog": {
-    "title": "Limit protokollieren",
+    "title": "Limit erfassen",
     "serviceLabel": "Welcher Dienst?",
     "claude": "Claude",
     "codex": "Codex",
     "timeLabel": "Wann haben Sie das Limit erreicht?",
     "justNow": "Gerade eben",
     "minutesAgo": "vor {{minutes}} Min",
-    "alertLabel": "15 Minuten vor Reset erinnern",
+    "alertLabel": "15 Min. vor dem Reset erinnern",
     "cta": "5-Stunden-Timer starten",
     "replaceWarning": "Vorhandenen {{platform}}-Timer ersetzen? Dies wird den aktuellen Countdown abbrechen.",
     "confirm": "Ersetzen",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "alertSub": "Lokaler Alarm um {{time}}",
+    "minutesShort": "{{minutes}} Min."
   },
   "settings": {
     "title": "Einstellungen",

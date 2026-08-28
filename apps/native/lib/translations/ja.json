@@ -98,18 +98,20 @@
     "subtitleEmpty": "{{date}} · 実行中なし"
   },
   "quickLog": {
-    "title": "制限を記録",
+    "title": "上限を記録",
     "serviceLabel": "どのサービス？",
     "claude": "Claude",
     "codex": "Codex",
     "timeLabel": "いつ制限に達しましたか？",
     "justNow": "今すぐ",
     "minutesAgo": "{{minutes}}分前",
-    "alertLabel": "リセット15分前にリマインド",
+    "alertLabel": "リセット15分前に通知",
     "cta": "5時間タイマーを開始",
     "replaceWarning": "既存の{{platform}}タイマーを置き換えますか？現在のカウントダウンがキャンセルされます。",
     "confirm": "置き換え",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "alertSub": "{{time}} にローカル通知",
+    "minutesShort": "{{minutes}}分"
   },
   "settings": {
     "title": "設定",

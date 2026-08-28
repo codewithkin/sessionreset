@@ -98,18 +98,20 @@
     "subtitleEmpty": "{{date}} · कुछ नहीं चल रहा"
   },
   "quickLog": {
-    "title": "लिमिट लॉग करें",
+    "title": "लिमिट दर्ज करें",
     "serviceLabel": "कौन सी सेवा?",
     "claude": "Claude",
     "codex": "Codex",
     "timeLabel": "आपने कब लिमिट हिट की?",
     "justNow": "अभी",
     "minutesAgo": "{{minutes}}m पहले",
-    "alertLabel": "रीसेट से 15 मिनट पहले याद दिलाएं",
+    "alertLabel": "रीसेट से 15 मि पहले याद दिलाएँ",
     "cta": "5-घंटे का टाइमर शुरू करें",
     "replaceWarning": "{{platform}} का मौजूदा टाइमर बदलें? यह वर्तमान काउंटडाउन रद्द कर देगा।",
     "confirm": "बदलें",
-    "cancel": "रद्द करें"
+    "cancel": "रद्द करें",
+    "alertSub": "{{time}} पर स्थानीय अलार्म",
+    "minutesShort": "{{minutes}} मि"
   },
   "settings": {
     "title": "सेटिंग्स",

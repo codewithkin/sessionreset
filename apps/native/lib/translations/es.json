@@ -105,11 +105,13 @@
     "timeLabel": "¿Cuándo alcanzaste el límite?",
     "justNow": "Ahora mismo",
     "minutesAgo": "Hace {{minutes}}m",
-    "alertLabel": "Recordarme 15 minutos antes del reinicio",
+    "alertLabel": "Avísame 15 min antes del reinicio",
     "cta": "Iniciar temporizador de 5 horas",
     "replaceWarning": "¿Reemplazar temporizador de {{platform}}? Esto cancelará el conteo actual.",
     "confirm": "Reemplazar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "alertSub": "Alarma local a las {{time}}",
+    "minutesShort": "{{minutes}} min"
   },
   "settings": {
     "title": "Configuración",
