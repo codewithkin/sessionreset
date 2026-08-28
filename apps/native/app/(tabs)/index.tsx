@@ -1,197 +1,233 @@
+import { useCallback, useMemo, useState } from "react";
 import { View, Text, ScrollView, Pressable, Alert, RefreshControl } from "react-native";
-import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
+import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, radii, fontFamily } from "@/lib/tokens";
+import { colors, components, fontFamily, fontSizes, layout, radii, spacing } from "@/lib/tokens";
+import { useDirection } from "@/lib/rtl";
 import { getAppLanguage } from "@/lib/i18n";
 import { useTimers } from "@/contexts/TimerContext";
+import { buildTimeline, formatClockTime, TimelineEntry } from "@/lib/timeline";
 import { TimerCard } from "@/components/TimerCard";
-import { PressableScale } from "@/components/PressableScale";
-import { useState, useCallback } from "react";
+import {
+  TimelineRow,
+  TimelineNowRow,
+  TimelineNote,
+  TimelineHollowDot,
+  TimelineBrandDot,
+} from "@/components/Timeline";
 
-export default function DashboardScreen() {
+export default function TodayScreen() {
   const { timers, toggleAlert, removeTimer, refreshTimers } = useTimers();
   const router = useRouter();
   const { t } = useTranslation();
   const { isDark } = useAppTheme();
+  const { row, textAlign, writingDirection } = useDirection();
+  const insets = useSafeAreaInsets();
   const c = isDark ? colors.dark : colors.light;
+
   const [refreshing, setRefreshing] = useState(false);
+  // Recomputed on every countdown tick via the timers list; a dedicated
+  // "now" in state would drift from what the cards are showing.
+  const entries = useMemo(() => buildTimeline(timers), [timers]);
 
-  const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    refreshTimers();
-    setTimeout(() => setRefreshing(false), 500);
-  }, [refreshTimers]);
-
-  const today = new Date();
-  // Follow the chosen app language, not a hardcoded en-US.
-  const dateStr = today.toLocaleDateString(getAppLanguage(), {
+  const locale = getAppLanguage();
+  const dateStr = new Date().toLocaleDateString(locale, {
     weekday: "short",
     month: "short",
     day: "numeric",
   });
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    refreshTimers();
+    setTimeout(() => setRefreshing(false), 500);
+  }, [refreshTimers]);
+
   const handleRemove = (id: string) => {
     Alert.alert(t("dashboard.remove.title"), t("dashboard.remove.body"), [
       { text: t("common.cancel"), style: "cancel" },
-      {
-        text: t("dashboard.remove.confirm"),
-        style: "destructive",
-        onPress: () => removeTimer(id),
-      },
+      { text: t("dashboard.remove.confirm"), style: "destructive", onPress: () => removeTimer(id) },
     ]);
   };
 
+  const renderEntry = (entry: TimelineEntry, index: number) => {
+    const time = formatClockTime(entry.at, locale);
+    const stagger = FadeInDown.duration(360).delay(120 + index * 60);
+
+    switch (entry.kind) {
+      case "logged":
+        return (
+          <Animated.View key={entry.id} entering={stagger}>
+            <TimelineRow
+              time={time}
+              timeTone="muted"
+              timeOffset={14}
+              dotOffset={16}
+              dot={<TimelineHollowDot c={c} isDark={isDark} />}
+            >
+              <View style={{ paddingTop: spacing[12], paddingBottom: spacing[22] }}>
+                <TimelineNote
+                  title={t("dashboard.timeline.logged", { service: t(`dashboard.timer.${entry.timer.platform}`) })}
+                  subtitle={t("dashboard.timeline.loggedSub")}
+                />
+              </View>
+            </TimelineRow>
+          </Animated.View>
+        );
+
+      case "now":
+        return (
+          <Animated.View key={entry.id} entering={FadeIn.duration(400).delay(100)}>
+            <TimelineNowRow time={time} />
+          </Animated.View>
+        );
+
+      case "reset":
+        return (
+          <Animated.View key={entry.id} entering={stagger}>
+            <TimelineRow
+              time={time}
+              timeTone="strong"
+              timeOffset={20}
+              dotOffset={22}
+              dot={<TimelineBrandDot color={entry.timer.platform === "claude" ? c.claude : c.codex} />}
+            >
+              <View style={{ paddingBottom: spacing[20] }}>
+                <TimerCard timer={entry.timer} onToggleAlert={toggleAlert} onRemove={handleRemove} />
+              </View>
+            </TimelineRow>
+          </Animated.View>
+        );
+
+      case "clear":
+        return (
+          <Animated.View key={entry.id} entering={stagger}>
+            <TimelineRow
+              time={time}
+              timeTone="muted"
+              timeOffset={12}
+              dotOffset={14}
+              showLine={false}
+              dot={<TimelineHollowDot c={c} isDark={isDark} />}
+            >
+              <View style={{ paddingTop: spacing[10] }}>
+                <TimelineNote
+                  title={t("dashboard.timeline.allClear")}
+                  subtitle={t("dashboard.timeline.allClearSub")}
+                />
+              </View>
+            </TimelineRow>
+          </Animated.View>
+        );
+    }
+  };
+
+  const openWindows = timers.length;
+
   return (
-    <View style={{ flex: 1, backgroundColor: c.bg }}>
+    <View style={{ flex: 1, backgroundColor: c.bg, paddingTop: insets.top }}>
       {/* Header */}
       <Animated.View
         entering={FadeIn.duration(300)}
         style={{
-          flexDirection: "row",
+          flexDirection: row,
           alignItems: "center",
           justifyContent: "space-between",
-          paddingHorizontal: 16,
-          paddingTop: 56,
-          paddingBottom: 4,
+          height: 52,
+          paddingHorizontal: layout.dashboard.hPadding,
         }}
       >
-        <View>
+        <View style={{ gap: spacing[2] }}>
           <Text
             style={{
               fontFamily: fontFamily.manrope[800],
-              fontSize: 22,
+              fontSize: fontSizes.h3,
               letterSpacing: -0.5,
               color: c.textPrimary,
+              textAlign,
+              writingDirection,
             }}
           >
             {t("dashboard.today")}
           </Text>
           <Text
             style={{
-              fontFamily: fontFamily.mono[500],
-              fontSize: 12,
-              color: c.textMuted,
-              marginTop: 2,
+              fontFamily: fontFamily.manrope[500],
+              fontSize: fontSizes.xs,
+              color: c.textTertiary,
+              textAlign,
+              writingDirection,
             }}
           >
-            {dateStr}
+            {openWindows === 0
+              ? t("dashboard.subtitleEmpty", { date: dateStr })
+              : t("dashboard.subtitle", { date: dateStr, count: openWindows })}
           </Text>
         </View>
-        <Pressable onPress={() => router.push("/settings")}>
-          <Ionicons name="settings-outline" size={24} color={c.textPrimary} />
+
+        <Pressable
+          onPress={() => router.push("/settings")}
+          accessibilityLabel={t("settings.title")}
+          hitSlop={8}
+          style={{
+            width: layout.hamburger.size,
+            height: layout.hamburger.size,
+            borderRadius: layout.hamburger.radius,
+            backgroundColor: c.surface,
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 3,
+          }}
+        >
+          {[0, 1, 2].map((i) => (
+            <View
+              key={i}
+              style={{
+                width: layout.hamburger.lineWidth,
+                height: layout.hamburger.lineHeight,
+                borderRadius: 1,
+                backgroundColor: c.textPrimary,
+              }}
+            />
+          ))}
         </Pressable>
       </Animated.View>
 
-      {/* Timer list */}
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{
-          paddingHorizontal: 16,
-          paddingTop: 18,
-          paddingBottom: timers.length > 0 ? 120 : 40,
-          gap: 12,
+          paddingHorizontal: layout.dashboard.hPadding,
+          paddingTop: spacing[20],
+          paddingBottom: spacing[24],
         }}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor={c.textMuted}
-            colors={[c.accent]}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={c.textMuted} colors={[c.accent]} />
         }
       >
-        {timers.length === 0 ? (
-          <Animated.View
-            entering={FadeInDown.duration(500).delay(200)}
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              paddingTop: 120,
-              gap: 12,
-            }}
-          >
-            <Ionicons name="timer-outline" size={48} color={c.textMuted} />
-            <Text
-              style={{
-                fontFamily: fontFamily.manrope[800],
-                fontSize: 22,
-                letterSpacing: -0.5,
-                color: c.textPrimary,
-              }}
+        {entries.map((entry, i) => renderEntry(entry, i))}
+
+        {timers.length === 0 && (
+          <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ paddingTop: spacing[8] }}>
+            <TimelineRow
+              time=""
+              timeOffset={12}
+              dotOffset={14}
+              showLine={false}
+              dot={<TimelineHollowDot c={c} isDark={isDark} />}
             >
-              {t("dashboard.empty.title")}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fontFamily.manrope[500],
-                fontSize: 16,
-                textAlign: "center",
-                color: c.textMuted,
-              }}
-            >
-              {t("dashboard.empty.subtext")}
-            </Text>
+              <View style={{ paddingTop: spacing[10] }}>
+                <TimelineNote title={t("dashboard.empty.title")} subtitle={t("dashboard.empty.subtext")} />
+              </View>
+            </TimelineRow>
           </Animated.View>
-        ) : (
-          timers.map((timer, index) => (
-            <Animated.View
-              key={timer.id}
-              entering={FadeInDown.duration(400).delay(index * 80)}
-            >
-              <TimerCard
-                timer={timer}
-                onToggleAlert={toggleAlert}
-                onRemove={handleRemove}
-              />
-            </Animated.View>
-          ))
         )}
       </ScrollView>
-
-      {/* FAB */}
-      <Animated.View
-        entering={FadeIn.duration(400).delay(300)}
-        style={{
-          position: "absolute",
-          bottom: timers.length > 0 ? 80 : 32,
-          left: 0,
-          right: 0,
-        }}
-      >
-        <PressableScale
-          onPress={() => router.push("/quick-log")}
-          style={{
-            marginHorizontal: 16,
-            height: 56,
-            borderRadius: radii.button,
-            backgroundColor: c.accent,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            shadowColor: c.accent,
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.3,
-            shadowRadius: 12,
-            elevation: 6,
-          }}
-        >
-          <Ionicons name="add" size={20} color={c.textOnAccent} />
-          <Text
-            style={{
-              fontFamily: fontFamily.manrope[700],
-              fontSize: 16,
-              color: c.textOnAccent,
-            }}
-          >
-            {t("dashboard.fab")}
-          </Text>
-        </PressableScale>
-      </Animated.View>
     </View>
   );
 }

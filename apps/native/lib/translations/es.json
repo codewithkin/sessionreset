@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "Sin límites activos.",
-      "subtext": "Toca abajo cuando te topes con un muro."
+      "title": "Nada en curso",
+      "subtext": "Registra un límite cuando llegues a uno"
     },
     "timer": {
       "resetsAt": "Se reinicia a las {{time}}",
       "alertOn": "🔔 15m",
       "alertOff": "🔔 15m Desact.",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "restante"
     },
     "fab": "Registrar límite",
     "today": "Hoy",
@@ -85,7 +86,16 @@
       "title": "Eliminar temporizador",
       "body": "¿Eliminar este temporizador de tu panel?",
       "confirm": "Eliminar"
-    }
+    },
+    "subtitle_one": "{{date}} · {{count}} ventana abierta",
+    "subtitle_other": "{{date}} · {{count}} ventanas abiertas",
+    "timeline": {
+      "logged": "Límite de {{service}} registrado",
+      "loggedSub": "La ventana dura 5 h desde aquí",
+      "allClear": "Todo libre desde aquí",
+      "allClearSub": "Buen momento para una refactorización"
+    },
+    "subtitleEmpty": "{{date}} · nada en curso"
   },
   "quickLog": {
     "title": "Registrar límite",

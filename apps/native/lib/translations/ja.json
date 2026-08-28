@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "アクティブな制限なし。",
-      "subtext": "壁に当たったときに下をタップ。"
+      "title": "実行中なし",
+      "subtext": "上限に達したら記録しましょう"
     },
     "timer": {
       "resetsAt": "{{time}}にリセット",
       "alertOn": "🔔 15分",
       "alertOff": "🔔 15分 オフ",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "残り"
     },
     "fab": "上限を記録",
     "today": "今日",
@@ -85,7 +86,16 @@
       "title": "タイマーを削除",
       "body": "このタイマーをダッシュボードから削除しますか？",
       "confirm": "削除"
-    }
+    },
+    "subtitle_one": "{{date}} · {{count}} 件のウィンドウ",
+    "subtitle_other": "{{date}} · {{count}} 件のウィンドウ",
+    "timeline": {
+      "logged": "{{service}} の上限を記録",
+      "loggedSub": "ここから5時間のウィンドウ",
+      "allClear": "ここからは空き",
+      "allClearSub": "大きなリファクタリングに好機"
+    },
+    "subtitleEmpty": "{{date}} · 実行中なし"
   },
   "quickLog": {
     "title": "制限を記録",

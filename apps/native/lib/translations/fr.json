@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "Aucune limite active.",
-      "subtext": "Appuyez ci-dessous quand vous heurtez un mur."
+      "title": "Rien en cours",
+      "subtext": "Enregistrez une limite quand vous en atteignez une"
     },
     "timer": {
       "resetsAt": "Réinitialisation à {{time}}",
       "alertOn": "🔔 15 min",
       "alertOff": "🔔 15 min Arr",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "restant"
     },
     "fab": "Enregistrer la limite",
     "today": "Aujourd'hui",
@@ -85,7 +86,16 @@
       "title": "Supprimer le minuteur",
       "body": "Supprimer ce minuteur de votre tableau de bord ?",
       "confirm": "Supprimer"
-    }
+    },
+    "subtitle_one": "{{date}} · {{count}} fenêtre ouverte",
+    "subtitle_other": "{{date}} · {{count}} fenêtres ouvertes",
+    "timeline": {
+      "logged": "Limite {{service}} enregistrée",
+      "loggedSub": "La fenêtre dure 5 h à partir d'ici",
+      "allClear": "Libre à partir d'ici",
+      "allClearSub": "Bon créneau pour un gros refactoring"
+    },
+    "subtitleEmpty": "{{date}} · rien en cours"
   },
   "quickLog": {
     "title": "Enregistrer la limite",

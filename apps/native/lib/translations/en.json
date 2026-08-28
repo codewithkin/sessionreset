@@ -100,15 +100,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "No active limits.",
-      "subtext": "Tap below when you hit a wall."
+      "title": "Nothing running",
+      "subtext": "Log a limit when you hit one"
     },
     "timer": {
       "resetsAt": "Resets at {{time}}",
       "alertOn": "🔔 15m",
       "alertOff": "🔔 15m Off",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "left"
     },
     "fab": "Log Limit Hit",
     "today": "Today",
@@ -116,7 +117,16 @@
       "title": "Remove Timer",
       "body": "Remove this timer from your dashboard?",
       "confirm": "Remove"
-    }
+    },
+    "subtitle_one": "{{date}} · {{count}} window open",
+    "subtitle_other": "{{date}} · {{count}} windows open",
+    "timeline": {
+      "logged": "{{service}} limit logged",
+      "loggedSub": "Window runs 5h from here",
+      "allClear": "All clear from here",
+      "allClearSub": "Good slot for a long refactor"
+    },
+    "subtitleEmpty": "{{date}} · nothing running"
   },
   "quickLog": {
     "title": "Log Limit Hit",

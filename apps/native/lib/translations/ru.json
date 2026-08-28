@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "Нет активных лимитов.",
-      "subtext": "Нажмите ниже, когда упрётесь в стену."
+      "title": "Ничего не запущено",
+      "subtext": "Запишите лимит, когда достигнете его"
     },
     "timer": {
       "resetsAt": "Сброс в {{time}}",
       "alertOn": "🔔 15 мин",
       "alertOff": "🔔 15 мин Выкл",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "осталось"
     },
     "fab": "Записать лимит",
     "today": "Сегодня",
@@ -85,7 +86,16 @@
       "title": "Удалить таймер",
       "body": "Удалить этот таймер с панели?",
       "confirm": "Удалить"
-    }
+    },
+    "subtitle_one": "{{date}} · {{count}} окно открыто",
+    "subtitle_other": "{{date}} · открыто окон: {{count}}",
+    "timeline": {
+      "logged": "Лимит {{service}} записан",
+      "loggedSub": "Окно длится 5 ч отсюда",
+      "allClear": "Дальше всё свободно",
+      "allClearSub": "Хорошее время для рефакторинга"
+    },
+    "subtitleEmpty": "{{date}} · ничего не запущено"
   },
   "quickLog": {
     "title": "Записать лимит",

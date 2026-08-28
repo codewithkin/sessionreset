@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "Sem limites ativos.",
-      "subtext": "Toque abaixo quando encontrar um obstáculo."
+      "title": "Nada a decorrer",
+      "subtext": "Registe um limite quando atingir um"
     },
     "timer": {
       "resetsAt": "Redefine às {{time}}",
       "alertOn": "🔔 15m",
       "alertOff": "🔔 15m Deslig.",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "restante"
     },
     "fab": "Registar limite",
     "today": "Hoje",
@@ -85,7 +86,16 @@
       "title": "Remover temporizador",
       "body": "Remover este temporizador do seu painel?",
       "confirm": "Remover"
-    }
+    },
+    "subtitle_one": "{{date}} · {{count}} janela aberta",
+    "subtitle_other": "{{date}} · {{count}} janelas abertas",
+    "timeline": {
+      "logged": "Limite de {{service}} registado",
+      "loggedSub": "A janela dura 5 h a partir daqui",
+      "allClear": "Tudo livre a partir daqui",
+      "allClearSub": "Boa altura para uma refatoração longa"
+    },
+    "subtitleEmpty": "{{date}} · nada a decorrer"
   },
   "quickLog": {
     "title": "Registrar limite",

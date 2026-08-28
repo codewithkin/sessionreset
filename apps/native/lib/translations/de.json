@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "Keine aktiven Limits.",
-      "subtext": "Tippen Sie unten, wenn Sie auf eine Wand stoßen."
+      "title": "Nichts aktiv",
+      "subtext": "Erfasse ein Limit, wenn du eines erreichst"
     },
     "timer": {
       "resetsAt": "Reset um {{time}}",
       "alertOn": "🔔 15 Min",
       "alertOff": "🔔 15 Min Aus",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "übrig"
     },
     "fab": "Limit erfassen",
     "today": "Heute",
@@ -85,7 +86,16 @@
       "title": "Timer entfernen",
       "body": "Diesen Timer vom Dashboard entfernen?",
       "confirm": "Entfernen"
-    }
+    },
+    "subtitle_one": "{{date}} · {{count}} Fenster offen",
+    "subtitle_other": "{{date}} · {{count}} Fenster offen",
+    "timeline": {
+      "logged": "{{service}}-Limit erfasst",
+      "loggedSub": "Fenster läuft 5 Std. ab hier",
+      "allClear": "Ab hier alles frei",
+      "allClearSub": "Guter Slot für ein großes Refactoring"
+    },
+    "subtitleEmpty": "{{date}} · nichts aktiv"
   },
   "quickLog": {
     "title": "Limit protokollieren",

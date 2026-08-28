@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "활성 제한 없음.",
-      "subtext": "벽에 부딪힐 때 아래를 탭하세요."
+      "title": "실행 중 없음",
+      "subtext": "한도에 도달하면 기록하세요"
     },
     "timer": {
       "resetsAt": "{{time}}에 리셋",
       "alertOn": "🔔 15분",
       "alertOff": "🔔 15분 끔",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "남음"
     },
     "fab": "한도 기록",
     "today": "오늘",
@@ -85,7 +86,16 @@
       "title": "타이머 삭제",
       "body": "이 타이머를 대시보드에서 삭제할까요?",
       "confirm": "삭제"
-    }
+    },
+    "subtitle_one": "{{date}} · 창 {{count}}개 열림",
+    "subtitle_other": "{{date}} · 창 {{count}}개 열림",
+    "timeline": {
+      "logged": "{{service}} 한도 기록됨",
+      "loggedSub": "여기서부터 5시간 창",
+      "allClear": "여기부터는 모두 여유",
+      "allClearSub": "긴 리팩터링에 좋은 시간"
+    },
+    "subtitleEmpty": "{{date}} · 실행 중 없음"
   },
   "quickLog": {
     "title": "제한 기록",

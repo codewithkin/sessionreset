@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "कोई एक्टिव लिमिट नहीं।",
-      "subtext": "जब आप रुकें तो नीचे टैप करें।"
+      "title": "कुछ नहीं चल रहा",
+      "subtext": "लिमिट पर पहुँचने पर उसे दर्ज करें"
     },
     "timer": {
       "resetsAt": "{{time}} पर रीसेट",
       "alertOn": "🔔 15m",
       "alertOff": "🔔 15m बंद",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "बचा"
     },
     "fab": "लिमिट दर्ज करें",
     "today": "आज",
@@ -85,7 +86,16 @@
       "title": "टाइमर हटाएँ",
       "body": "इस टाइमर को अपने डैशबोर्ड से हटाएँ?",
       "confirm": "हटाएँ"
-    }
+    },
+    "subtitle_one": "{{date}} · {{count}} विंडो खुली",
+    "subtitle_other": "{{date}} · {{count}} विंडो खुली",
+    "timeline": {
+      "logged": "{{service}} लिमिट दर्ज",
+      "loggedSub": "यहाँ से विंडो 5 घंटे चलती है",
+      "allClear": "यहाँ से सब खाली",
+      "allClearSub": "लंबे रीफैक्टर के लिए अच्छा समय"
+    },
+    "subtitleEmpty": "{{date}} · कुछ नहीं चल रहा"
   },
   "quickLog": {
     "title": "लिमिट लॉग करें",

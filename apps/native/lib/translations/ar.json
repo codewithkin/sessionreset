@@ -69,15 +69,16 @@
   "dashboard": {
     "title": "SessionReset",
     "empty": {
-      "title": "لا حدود نشطة.",
-      "subtext": "اضغط أدناه عند الاصطدام بجدار."
+      "title": "لا شيء قيد التشغيل",
+      "subtext": "سجّل الحد عندما تصل إليه"
     },
     "timer": {
       "resetsAt": "يُعاد التعيين الساعة {{time}}",
       "alertOn": "🔔 15 د",
       "alertOff": "🔔 15 د مغلق",
       "claude": "Claude 3.5 Sonnet",
-      "codex": "Codex"
+      "codex": "Codex",
+      "left": "متبقٍ"
     },
     "fab": "تسجيل الحد",
     "today": "اليوم",
@@ -85,7 +86,16 @@
       "title": "إزالة المؤقت",
       "body": "إزالة هذا المؤقت من لوحتك؟",
       "confirm": "إزالة"
-    }
+    },
+    "subtitle_one": "{{date}} · نافذة واحدة مفتوحة",
+    "subtitle_other": "{{date}} · {{count}} نوافذ مفتوحة",
+    "timeline": {
+      "logged": "تم تسجيل حد {{service}}",
+      "loggedSub": "تمتد النافذة 5 ساعات من هنا",
+      "allClear": "كل شيء متاح من هنا",
+      "allClearSub": "وقت مناسب لإعادة هيكلة طويلة"
+    },
+    "subtitleEmpty": "{{date}} · لا شيء قيد التشغيل"
   },
   "quickLog": {
     "title": "سجّل الحد",
