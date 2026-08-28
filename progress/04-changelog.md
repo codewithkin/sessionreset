@@ -4,6 +4,66 @@ Newest first.
 
 ---
 
+## Session 5
+
+**Every non-onboarding screen built from the design file, plus RTL.**
+
+Session 4 claimed the other screens were "implemented"; they were not. They
+were the session 2/3 screens with a localisation and font pass applied. None
+had been compared to `designs/extracted/all-screens-template.html` — the
+dashboard in particular was a flat card list where the design specifies a
+vertical timeline. This session builds them.
+
+### RTL (commits `c79e718`, `644a5a8`)
+- `lib/rtl.ts` — `useDirection()` returns row direction, text alignment and an
+  axis sign from the active language. Deliberately avoids `I18nManager.forceRTL`,
+  which only applies after a native restart and would break the "language
+  applies instantly" behaviour the picker relies on.
+- Applied across onboarding and every rebuilt screen.
+
+### Navigation (commit `4175378`)
+- Drawer replaced with the design's bottom tab bar (open item 6). The log
+  button is raised through the bar and is not a route — it opens the sheet.
+- Routes moved `(drawer)` → `(tabs)`.
+
+### Today (commit `8c281c4`)
+- Rebuilt as design 07's vertical timeline: `lib/timeline.ts` orders logged
+  limits, the NOW marker, reopening windows and a closing "all clear" row;
+  `components/Timeline.tsx` draws the 54/16 rail with its connecting line.
+- NOW halo is a real view (RN has no spread shadow) breathing on a 2.2s loop.
+- TimerCard rebuilt to its in-timeline form and its progress fill now eases
+  between ticks.
+
+### Quick-Log (commit `dc324aa`)
+- Moved onto `@gorhom/bottom-sheet` (open item 7) — a dependency since session
+  2 that was never used. Pans down to close.
+- Service cards, offset pills and the alert row rebuilt to design 08; the alert
+  row's second line now computes the real local alarm time.
+
+### Settings (commit `7ec1043`)
+- Rebuilt to design 09: hairline rows rather than filled cards, close tile,
+  price on the upgrade card, POWER FEATURES restored, version as a footer.
+- Android export used `Clipboard` from react-native core, which no longer
+  exists there; now uses `Share` on both platforms.
+
+### Rewarded ad (commit `d841364`)
+- Screen 10 built for the first time. Video is a placeholder and says so.
+
+### History / Alerts (commit `03a354c`)
+- Rebuilt. **Fixed a crash**: session 4's bulk rename rewrote `t.resetTime` to
+  `timer.resetTime` inside a reduce whose parameter was `t`, so History threw
+  on any past timer.
+
+### i18n (commit `aed496a`)
+- The 23 onboarding strings that were English-only are translated. All ten
+  locales now match key-for-key at 159 keys.
+
+### Verification note
+`expo prebuild` never reads app source, so it cannot catch a syntax error.
+Added a Babel parse check over all 32 source files alongside it.
+
+---
+
 ## Session 4
 
 **Onboarding rebuilt as a single-route state machine, rewritten pixel-for-pixel against `designs/extracted/all-screens-template.html`.**

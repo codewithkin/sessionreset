@@ -5,7 +5,7 @@ You are picking up **SessionReset**, a local-only Expo app that reminds develope
 > Read `AGENT-WORKFLOW.md` first — that is *how* work is done here.
 > This file is *what* to build next.
 
-Last updated: end of session 4 (onboarding rebuilt as a single-route state machine, matched pixel-for-pixel to `designs/extracted/all-screens-template.html`).
+Last updated: end of session 5 (every screen in the design file now built; RTL added).
 
 ## The rule that comes before everything else
 
@@ -72,11 +72,15 @@ Every screen you build, you build from its design file. Design specs are in `des
 
 1. AdMob re-add when Expo SDK supports Kotlin 2.3+
 2. RevenueCat IAP activation when ready to monetize
-3. Rewarded Ad Modal (Screen 10) — not yet implemented
-4. Banner Ad on dashboard (free tier) — not yet implemented
-5. Settings: Power Features section placeholder preserved
-6. Tab Bar navigation (spec says tabs, currently drawer)
-7. Quick-Log should use `@gorhom/bottom-sheet` for proper gesture handling
+3. Banner Ad on dashboard (free tier) — design shows one; `components/BannerAd.tsx`
+   is a placeholder that nothing renders, pending AdMob
+4. Rewarded Ad Modal is built (screen 10) but its video is a placeholder —
+   wire to a real rewarded unit when AdMob returns
+5. Nothing has been run on a device this session; all verification is
+   `expo prebuild` plus a Babel parse check
+
+Resolved in session 5: tab bar navigation, `@gorhom/bottom-sheet` for
+Quick-Log, Settings Power Features section, Rewarded Ad Modal screen.
 
 ## The test
 
