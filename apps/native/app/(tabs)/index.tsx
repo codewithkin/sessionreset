@@ -1,13 +1,11 @@
 import { useCallback, useMemo, useState } from "react";
 import { View, Text, ScrollView, Pressable, Alert, RefreshControl } from "react-native";
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
-import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useAppTheme } from "@/contexts/app-theme-context";
-import { colors, components, fontFamily, fontSizes, layout, radii, spacing } from "@/lib/tokens";
+import { colors, fontFamily, fontSizes, layout, spacing } from "@/lib/tokens";
 import { useDirection } from "@/lib/rtl";
 import { getAppLanguage } from "@/lib/i18n";
 import { useTimers } from "@/contexts/TimerContext";
@@ -23,7 +21,6 @@ import {
 
 export default function TodayScreen() {
   const { timers, toggleAlert, removeTimer, refreshTimers } = useTimers();
-  const router = useRouter();
   const { t } = useTranslation();
   const { isDark } = useAppTheme();
   const { row, textAlign, writingDirection } = useDirection();
@@ -135,10 +132,8 @@ export default function TodayScreen() {
       <Animated.View
         entering={FadeIn.duration(300)}
         style={{
-          flexDirection: row,
-          alignItems: "center",
-          justifyContent: "space-between",
           height: 52,
+          justifyContent: "center",
           paddingHorizontal: layout.dashboard.hPadding,
         }}
       >
@@ -169,33 +164,6 @@ export default function TodayScreen() {
               : t("dashboard.subtitle", { date: dateStr, count: openWindows })}
           </Text>
         </View>
-
-        <Pressable
-          onPress={() => router.push("/settings")}
-          accessibilityLabel={t("settings.title")}
-          hitSlop={8}
-          style={{
-            width: layout.hamburger.size,
-            height: layout.hamburger.size,
-            borderRadius: layout.hamburger.radius,
-            backgroundColor: c.surface,
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 3,
-          }}
-        >
-          {[0, 1, 2].map((i) => (
-            <View
-              key={i}
-              style={{
-                width: layout.hamburger.lineWidth,
-                height: layout.hamburger.lineHeight,
-                borderRadius: 1,
-                backgroundColor: c.textPrimary,
-              }}
-            />
-          ))}
-        </Pressable>
       </Animated.View>
 
       <ScrollView

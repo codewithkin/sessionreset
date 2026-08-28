@@ -4,7 +4,7 @@ import { TabBar } from "@/components/TabBar";
 
 /**
  * Design screen 07 puts navigation in a bottom bar (Today / History / log FAB
- * / Alerts), not the drawer this app previously used. The bar itself is fully
+ * / Alerts / Settings), not the drawer this app previously used. The bar itself is fully
  * custom because the raised FAB sits between the tab items and is not a route.
  */
 export default function TabsLayout() {
@@ -13,6 +13,7 @@ export default function TabsLayout() {
       <Tabs.Screen name="index" />
       <Tabs.Screen name="history" />
       <Tabs.Screen name="alerts" />
+      <Tabs.Screen name="settings" />
     </Tabs>
   );
 }

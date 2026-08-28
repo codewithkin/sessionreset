@@ -227,38 +227,23 @@ export default function SettingsScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: c.bg, paddingTop: insets.top }}>
-      {/* Header — close tile on the leading edge, title optically centred */}
+      {/* Settings is a tab, not a modal, so there is no close control here —
+          the title sits where every other tab's title sits. */}
       <View
         style={{
-          flexDirection: row,
-          alignItems: "center",
-          height: 48,
+          height: 52,
+          justifyContent: "center",
           paddingHorizontal: layout.settings.hPadding,
         }}
       >
-        <PressableScale
-          onPress={() => router.back()}
-          accessibilityLabel={t("common.cancel")}
-          style={{
-            width: layout.hamburger.size,
-            height: layout.hamburger.size,
-            borderRadius: layout.hamburger.radius,
-            backgroundColor: c.surface,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Ionicons name="close" size={18} color={c.textPrimary} />
-        </PressableScale>
         <Text
           style={{
-            flex: 1,
-            textAlign: "center",
-            // Offsets the close tile so the title centres against the screen.
-            marginEnd: layout.hamburger.size,
-            fontFamily: fontFamily.manrope[700],
-            fontSize: 17,
+            fontFamily: fontFamily.manrope[800],
+            fontSize: fontSizes.h3,
+            letterSpacing: -0.5,
             color: c.textPrimary,
+            textAlign,
+            writingDirection,
           }}
         >
           {t("settings.title")}

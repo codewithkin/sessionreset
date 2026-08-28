@@ -62,14 +62,6 @@ function StackLayout() {
         }}
       />
       <Stack.Screen
-        name="settings"
-        options={{
-          headerShown: false,
-          presentation: "modal",
-          animation: "slide_from_bottom",
-        }}
-      />
-      <Stack.Screen
         name="rewarded-ad"
         options={{
           headerShown: false,

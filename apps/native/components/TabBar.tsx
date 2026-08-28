@@ -16,6 +16,7 @@ const ICONS: Record<string, { on: keyof typeof Ionicons.glyphMap; off: keyof typ
   index: { on: "today", off: "today-outline" },
   history: { on: "time", off: "time-outline" },
   alerts: { on: "notifications", off: "notifications-outline" },
+  settings: { on: "settings", off: "settings-outline" },
 };
 
 /**
@@ -71,7 +72,9 @@ export function TabBar({ state, navigation }: BottomTabBarProps) {
             color: focused ? tab.activeText : tab.inactiveText,
           }}
         >
-          {t(`drawer.${route.name === "index" ? "dashboard" : route.name}`)}
+          {route.name === "settings"
+            ? t("settings.title")
+            : t(`drawer.${route.name === "index" ? "dashboard" : route.name}`)}
         </Text>
       </Pressable>
     );
