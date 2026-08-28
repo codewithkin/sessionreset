@@ -1,20 +1,68 @@
 @import "tailwindcss";
 
+/*
+ * Web half of the SessionReset design system.
+ *
+ * Values are the same ones in apps/native/lib/tokens.ts, which were extracted
+ * from designs/extracted/all-screens-template.html — so a colour or radius
+ * named here means exactly what it means in the app.
+ *
+ * The `ink`/`fg`/`subtle`/`dim` names predate that and are kept because the
+ * privacy and terms pages use them; they now alias the shared palette rather
+ * than being a second, drifting set.
+ */
 @theme inline {
-  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  /* Fonts — these variables are defined by next/font in app/layout.tsx.
+     They previously pointed at --font-outfit / --font-plex-mono, which
+     nothing defined, so both families silently fell back to system faces. */
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
-  --color-ink: #08080a;
-  --color-elevated: #16161b;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-fg: #fafafc;
-  --color-subtle: #9c9ca8;
-  --color-dim: #62626c;
-
-  --color-claude: #CC785C;
-  --color-codex: #10A37F;
-  --color-brand: #3B82F6;
+  /* Brand */
+  --color-claude: #cc785c;
+  --color-codex: #10a37f;
+  --color-brand: #3b82f6;
   --color-brand-bright: #60a5fa;
+
+  /* Surfaces (dark, matching the app's dark theme) */
+  --color-ink: #000000;
+  --color-elevated: #1a1a1a;
+  --color-elevated-alt: #111111;
+  --color-line: #2a2a2a;
+
+  /* Text */
+  --color-fg: #ffffff;
+  --color-subtle: #8a8a8a;
+  --color-dim: #6c7076;
+  --color-faint: #4a4e54;
+  --color-on-accent: #06152b;
+
+  /* Status */
+  --color-danger: #f87171;
+  --color-danger-bg: #2a1616;
+  --color-warn: #fbbf24;
+  --color-ok: #10a37f;
+
+  /* Radii — mirrors radii in the native tokens */
+  --radius-card: 12px;
+  --radius-pill: 14px;
+  --radius-button: 16px;
+  --radius-timer: 18px;
+  --radius-dialog: 20px;
+  --radius-sheet: 24px;
+  --radius-frame: 42px;
+
+  /* The accent glow the native buttons and FAB use */
+  --shadow-glow: 0 6px 18px rgba(96, 165, 250, 0.32);
+  --shadow-fab: 0 8px 20px rgba(96, 165, 250, 0.36);
+  --shadow-frame: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* Aliases kept so existing pages keep resolving. */
+@theme inline {
+  --color-border: var(--color-line);
+  --color-primary: var(--color-fg);
+  --color-on-surface-muted: var(--color-dim);
 }
 
 html {
@@ -28,5 +76,31 @@ body {
 
 ::selection {
   background-color: var(--color-brand);
-  color: #fafafc;
+  color: #ffffff;
+}
+
+/* The NOW marker's halo on the Today mockup, mirroring the app's pulse. */
+@keyframes sr-pulse {
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.26;
+    transform: scale(1.15);
+  }
+}
+
+.sr-pulse {
+  animation: sr-pulse 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-pulse {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
