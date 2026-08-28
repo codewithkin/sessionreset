@@ -47,6 +47,9 @@ lib version, not this one).
 - Translations: added `rewardedAd.loading` + `rewardedAd.success`, corrected
   `rewardedAd.unavailable` (removed "free for everyone during launch") across
   all 10 locales.
+- Settings: `useFocusEffect` re-reads settings from storage on focus so the
+  Pro card / power-features reflect a rewarded-ad grant immediately instead of
+  showing stale "upgrade" state until remount.
 - `tsc --noEmit` clean; `expo prebuild --platform android --clean` succeeds.
 
 **Requires a native rebuild** (new native module) — EAS Android development

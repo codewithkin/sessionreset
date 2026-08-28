@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
   Share,
 } from "react-native";
 import Animated, { FadeInDown, ZoomIn } from "react-native-reanimated";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -47,6 +47,15 @@ export default function SettingsScreen() {
   const [restoring, setRestoring] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
   const [language, setLanguage] = useState<LanguageCode>(() => getAppLanguage());
+
+  // Re-sync from storage whenever this screen regains focus — a rewarded ad
+  // (or future IAP) grants Pro in the pushed modal; without this the card
+  // would keep showing the stale "upgrade" state until the screen remounts.
+  useFocusEffect(
+    useCallback(() => {
+      setSettings(storage.settings.get());
+    }, [])
+  );
 
   const divider = isDark ? components.settingsRow.dark.divider : components.settingsRow.light.divider;
   const chevronColor = isDark ? components.settingsRow.dark.chevron : components.settingsRow.light.chevron;
