@@ -69,6 +69,15 @@ function StackLayout() {
           animation: "slide_from_bottom",
         }}
       />
+      <Stack.Screen
+        name="rewarded-ad"
+        options={{
+          headerShown: false,
+          presentation: "transparentModal",
+          // The dialog fades and scales itself.
+          animation: "none",
+        }}
+      />
     </Stack>
   );
 }
