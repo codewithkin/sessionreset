@@ -21,6 +21,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontSizes, spacing, radii, layout, springs, fontFamily } from "@/lib/tokens";
 import { PressableScale } from "@/components/PressableScale";
+import { useDirection, type Direction } from "@/lib/rtl";
 import { storage } from "@/lib/storage";
 import { SUPPORTED_LANGUAGES, setAppLanguage, getAppLanguage, LanguageCode } from "@/lib/i18n";
 import { createTimer } from "@/lib/timer-engine";
@@ -90,6 +91,7 @@ export default function OnboardingScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const { isDark } = useAppTheme();
+  const d = useDirection();
   const c = isDark ? colors.dark : colors.light;
 
   const [step, setStep] = useState<number>(STEP.LANGUAGE);
@@ -173,7 +175,7 @@ export default function OnboardingScreen() {
         style={{ flex: 1 }}
       >
         {step === STEP.LANGUAGE && (
-          <LanguageStep
+          <LanguageStep d={d}
             c={c}
             isDark={isDark}
             t={t}
@@ -182,9 +184,9 @@ export default function OnboardingScreen() {
             onNext={() => setStep(STEP.HOOK)}
           />
         )}
-        {step === STEP.HOOK && <HookStep c={c} isDark={isDark} t={t} onNext={() => setStep(STEP.QUIZ)} />}
+        {step === STEP.HOOK && <HookStep d={d} c={c} isDark={isDark} t={t} onNext={() => setStep(STEP.QUIZ)} />}
         {step === STEP.QUIZ && (
-          <QuizStep
+          <QuizStep d={d}
             c={c}
             isDark={isDark}
             t={t}
@@ -196,10 +198,10 @@ export default function OnboardingScreen() {
           />
         )}
         {step === STEP.FOUNDER && (
-          <FounderStep c={c} isDark={isDark} t={t} onNext={() => setStep(STEP.PAYWALL)} />
+          <FounderStep d={d} c={c} isDark={isDark} t={t} onNext={() => setStep(STEP.PAYWALL)} />
         )}
         {step === STEP.PAYWALL && (
-          <PaywallStep
+          <PaywallStep d={d}
             c={c}
             isDark={isDark}
             t={t}
@@ -209,10 +211,10 @@ export default function OnboardingScreen() {
           />
         )}
         {step === STEP.NOTIFICATIONS && (
-          <NotificationsStep c={c} isDark={isDark} t={t} status={notifStatus} onEnable={handleEnableNotifications} />
+          <NotificationsStep d={d} c={c} isDark={isDark} t={t} status={notifStatus} onEnable={handleEnableNotifications} />
         )}
         {step === STEP.STARTER && (
-          <StarterStep
+          <StarterStep d={d}
             c={c}
             isDark={isDark}
             t={t}
@@ -304,6 +306,7 @@ function LanguageStep({
   c,
   isDark,
   t,
+  d,
   selected,
   onSelect,
   onNext,
@@ -311,6 +314,7 @@ function LanguageStep({
   c: ThemeColors;
   isDark: boolean;
   t: TFn;
+  d: Direction;
   selected: LanguageCode;
   onSelect: (code: LanguageCode) => void;
   onNext: () => void;
@@ -327,6 +331,8 @@ function LanguageStep({
             lineHeight: 27.3,
             letterSpacing: -0.4,
             color: c.textPrimary,
+                      textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
           }}
         >
           {t("onboarding.language.headline")}
@@ -346,7 +352,7 @@ function LanguageStep({
       <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ flex: 1, marginTop: spacing[18] }}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ gap: spacing[10], paddingBottom: spacing[16] }}>
           {LANGUAGE_ROWS.map((row, rowIndex) => (
-            <View key={rowIndex} style={{ flexDirection: "row", gap: spacing[10] }}>
+            <View key={rowIndex} style={{ flexDirection: d.row, gap: spacing[10] }}>
               {row.map((lang) => {
                 const active = selected === lang.code;
                 return (
@@ -373,7 +379,7 @@ function LanguageStep({
                       gap: spacing[8],
                     }}
                   >
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                    <View style={{ flexDirection: d.row, justifyContent: "space-between", alignItems: "center" }}>
                       <Text
                         style={{
                           fontFamily: fontFamily.mono[700],
@@ -440,12 +446,12 @@ function LanguageStep({
 
 // ─── Screen 01 — Outcome Hook ────────────────────────────────────────────────
 
-function HookStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t: TFn; onNext: () => void }) {
+function HookStep({ c, isDark, t, d, onNext }: { c: ThemeColors; isDark: boolean; t: TFn; d: Direction; onNext: () => void }) {
   return (
     <View style={{ flex: 1, paddingHorizontal: spacing[28], paddingTop: spacing[56], justifyContent: "space-between" }}>
       <View>
         <Animated.View entering={FadeInDown.duration(300)}>
-          <RateLimitTimeline c={c} isDark={isDark} t={t} />
+          <RateLimitTimeline c={c} isDark={isDark} t={t} dir={d} />
         </Animated.View>
 
         <Animated.Text
@@ -469,6 +475,8 @@ function HookStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t
             fontSize: fontSizes.body,
             lineHeight: 24.8,
             color: c.textTertiary,
+                      textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
           }}
         >
           {t("onboarding.outcomeHook.subtitle")}
@@ -494,7 +502,7 @@ function HookStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t
 }
 
 /** Looping "Rate Limit Hit → 05:00:00 → 00:00:00 → Back to Code" status rail. */
-function RateLimitTimeline({ c, isDark, t }: { c: ThemeColors; isDark: boolean; t: TFn }) {
+function RateLimitTimeline({ c, isDark, t, dir }: { c: ThemeColors; isDark: boolean; t: TFn; dir: Direction }) {
   const progress = useSharedValue(0);
 
   useEffect(() => {
@@ -521,7 +529,7 @@ function RateLimitTimeline({ c, isDark, t }: { c: ThemeColors; isDark: boolean; 
   return (
     <View style={{ gap: 0 }}>
       {/* Rate Limit Hit */}
-      <Animated.View style={[{ flexDirection: "row", gap: spacing[14], alignItems: "center" }, rowStyle0]}>
+      <Animated.View style={[{ flexDirection: dir.row, gap: spacing[14], alignItems: "center" }, rowStyle0]}>
         <View style={{ width: 12, alignItems: "center" }}>
           <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.error }} />
         </View>
@@ -533,7 +541,7 @@ function RateLimitTimeline({ c, isDark, t }: { c: ThemeColors; isDark: boolean; 
       </Animated.View>
 
       {/* 05:00:00 */}
-      <View style={{ flexDirection: "row", gap: spacing[14] }}>
+      <View style={{ flexDirection: dir.row, gap: spacing[14] }}>
         <View style={{ width: 12, alignItems: "center" }}>
           <View style={{ width: 2, flex: 1, backgroundColor: c.border }} />
         </View>
@@ -548,7 +556,7 @@ function RateLimitTimeline({ c, isDark, t }: { c: ThemeColors; isDark: boolean; 
       </View>
 
       {/* 00:00:00 */}
-      <View style={{ flexDirection: "row", gap: spacing[14] }}>
+      <View style={{ flexDirection: dir.row, gap: spacing[14] }}>
         <View style={{ width: 12, alignItems: "center" }}>
           <View style={{ width: 2, flex: 1, backgroundColor: c.border }} />
         </View>
@@ -563,7 +571,7 @@ function RateLimitTimeline({ c, isDark, t }: { c: ThemeColors; isDark: boolean; 
       </View>
 
       {/* Back to Code */}
-      <Animated.View style={[{ flexDirection: "row", gap: spacing[14], alignItems: "center" }, rowStyle3]}>
+      <Animated.View style={[{ flexDirection: dir.row, gap: spacing[14], alignItems: "center" }, rowStyle3]}>
         <View style={{ width: 12, alignItems: "center" }}>
           <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.success }} />
         </View>
@@ -583,6 +591,7 @@ function QuizStep({
   c,
   isDark,
   t,
+  d,
   services,
   setServices,
   frequency,
@@ -592,6 +601,7 @@ function QuizStep({
   c: ThemeColors;
   isDark: boolean;
   t: TFn;
+  d: Direction;
   services: string[];
   setServices: (fn: (prev: string[]) => string[]) => void;
   frequency: string | null;
@@ -617,7 +627,9 @@ function QuizStep({
               lineHeight: 27.3,
               letterSpacing: -0.4,
               color: c.textPrimary,
-            }}
+                        textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
+          }}
           >
             {t("onboarding.quiz.question1")}
           </Text>
@@ -640,7 +652,7 @@ function QuizStep({
           style={{ marginTop: spacing[18], gap: spacing[10] }}
         >
           {SERVICE_ROWS.map((row, rowIndex) => (
-            <View key={rowIndex} style={{ flexDirection: "row", gap: spacing[10] }}>
+            <View key={rowIndex} style={{ flexDirection: d.row, gap: spacing[10] }}>
               {row.map((s) => {
                 const active = services.includes(s);
                 return (
@@ -668,7 +680,7 @@ function QuizStep({
                       gap: spacing[10],
                     }}
                   >
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                    <View style={{ flexDirection: d.row, justifyContent: "space-between", alignItems: "center" }}>
                       <View
                         style={{
                           width: components.quizCard.serviceDotSize,
@@ -732,7 +744,9 @@ function QuizStep({
               lineHeight: 27.3,
               letterSpacing: -0.4,
               color: c.textPrimary,
-            }}
+                        textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
+          }}
           >
             {t("onboarding.quiz.question2")}
           </Text>
@@ -740,7 +754,7 @@ function QuizStep({
 
         <Animated.View
           entering={FadeInDown.duration(400).delay(400)}
-          style={{ marginTop: spacing[18], flexDirection: "row", gap: spacing[10] }}
+          style={{ marginTop: spacing[18], flexDirection: d.row, gap: spacing[10] }}
         >
           {FREQUENCIES.map((f) => {
             const active = frequency === f;
@@ -800,7 +814,7 @@ function QuizStep({
 
 // ─── Screen 03 — Founder Note ────────────────────────────────────────────────
 
-function FounderStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean; t: TFn; onNext: () => void }) {
+function FounderStep({ c, isDark, t, d, onNext }: { c: ThemeColors; isDark: boolean; t: TFn; d: Direction; onNext: () => void }) {
   return (
     <View style={{ flex: 1, paddingHorizontal: spacing[24], paddingTop: spacing[16], justifyContent: "space-between" }}>
       <ProgressDots activeIndex={DOT_INDEX[STEP.FOUNDER]} c={c} />
@@ -834,7 +848,9 @@ function FounderStep({ c, isDark, t, onNext }: { c: ThemeColors; isDark: boolean
               fontSize: components.founderCard.font.size,
               lineHeight: 26.4,
               color: c.textPrimary,
-            }}
+                        textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
+          }}
           >
             {t("onboarding.founderNote.body")}
           </Text>
@@ -866,6 +882,7 @@ function PaywallStep({
   c,
   isDark,
   t,
+  d,
   isPro,
   onPrimary,
   onSkip,
@@ -873,6 +890,7 @@ function PaywallStep({
   c: ThemeColors;
   isDark: boolean;
   t: TFn;
+  d: Direction;
   isPro: boolean;
   onPrimary: () => void;
   onSkip: () => void;
@@ -906,6 +924,8 @@ function PaywallStep({
             lineHeight: 32.5,
             letterSpacing: -0.8,
             color: c.textPrimary,
+                      textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
           }}
         >
           {isPro ? t("onboarding.paywall.proHeadline") : t("onboarding.paywall.headline")}
@@ -913,7 +933,7 @@ function PaywallStep({
 
         <Animated.View entering={FadeInDown.duration(400).delay(200)} style={{ marginTop: spacing[26], gap: spacing[18] }}>
           {FEATURES.map((f) => (
-            <View key={f} style={{ flexDirection: "row", alignItems: "flex-start", gap: components.checklistItem.gap }}>
+            <View key={f} style={{ flexDirection: d.row, alignItems: "flex-start", gap: components.checklistItem.gap }}>
               <View
                 style={{
                   width: components.checklistItem.circleSize,
@@ -957,7 +977,7 @@ function PaywallStep({
             borderLeftColor: isDark ? components.priceCard.dark.border : components.priceCard.light.border,
             borderRadius: components.priceCard.radius,
             padding: components.priceCard.padding,
-            flexDirection: "row",
+            flexDirection: d.row,
             alignItems: "flex-end",
             justifyContent: "space-between",
             gap: spacing[12],
@@ -966,7 +986,7 @@ function PaywallStep({
           {/* flex/minWidth let the price column absorb long localised strings
               instead of pushing the LIFETIME badge past the card edge. */}
           <View style={{ flex: 1, minWidth: 0, gap: spacing[6] }}>
-            <View style={{ flexDirection: "row", alignItems: "baseline", gap: spacing[10], flexWrap: "wrap" }}>
+            <View style={{ flexDirection: d.row, alignItems: "baseline", gap: spacing[10], flexWrap: "wrap" }}>
               <Text
                 style={{
                   fontFamily: fontFamily.mono[700],
@@ -1041,12 +1061,14 @@ function NotificationsStep({
   c,
   isDark,
   t,
+  d,
   status,
   onEnable,
 }: {
   c: ThemeColors;
   isDark: boolean;
   t: TFn;
+  d: Direction;
   status: NotificationPermissionStatus;
   onEnable: () => void;
 }) {
@@ -1068,7 +1090,7 @@ function NotificationsStep({
             elevation: 4,
           }}
         >
-          <View style={{ flexDirection: "row", gap: spacing[12] }}>
+          <View style={{ flexDirection: d.row, gap: spacing[12] }}>
             <View
               style={{
                 width: layout.notification.iconSize,
@@ -1083,7 +1105,7 @@ function NotificationsStep({
               <Text style={{ fontFamily: fontFamily.mono[700], fontSize: 13, color: c.textOnAccent }}>SR</Text>
             </View>
             <View style={{ flex: 1, gap: spacing[3] }}>
-              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
+              <View style={{ flexDirection: d.row, justifyContent: "space-between", alignItems: "baseline" }}>
                 <Text
                   style={{ fontFamily: fontFamily.manrope[700], fontSize: fontSizes.xs, letterSpacing: 0.4, color: c.textTertiary }}
                 >
@@ -1119,6 +1141,8 @@ function NotificationsStep({
             lineHeight: 32.5,
             letterSpacing: -0.8,
             color: c.textPrimary,
+                      textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
           }}
         >
           {t("onboarding.notifications.headline")}
@@ -1132,6 +1156,8 @@ function NotificationsStep({
             fontSize: fontSizes.body,
             lineHeight: 24.8,
             color: c.textTertiary,
+                      textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
           }}
         >
           {t("onboarding.notifications.body")}
@@ -1166,6 +1192,7 @@ function StarterStep({
   c,
   isDark,
   t,
+  d,
   busy,
   onBlocked,
   onDemo,
@@ -1173,6 +1200,7 @@ function StarterStep({
   c: ThemeColors;
   isDark: boolean;
   t: TFn;
+  d: Direction;
   busy: boolean;
   onBlocked: () => void;
   onDemo: () => void;
@@ -1218,6 +1246,8 @@ function StarterStep({
             fontSize: fontSizes.body,
             lineHeight: 24.8,
             color: c.textTertiary,
+                      textAlign: d.textAlign,
+            writingDirection: d.writingDirection,
           }}
         >
           {t("onboarding.starter.subtext")}
@@ -1225,7 +1255,7 @@ function StarterStep({
 
         <Animated.View
           entering={FadeInDown.duration(300).delay(280)}
-          style={{ marginTop: spacing[36], flexDirection: "row", gap: spacing[12], alignItems: "center" }}
+          style={{ marginTop: spacing[36], flexDirection: d.row, gap: spacing[12], alignItems: "center" }}
         >
           <View style={{ width: 12, alignItems: "center" }}>
             <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.accent }} />
