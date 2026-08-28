@@ -6,6 +6,7 @@ import {
   scheduleTimerNotifications,
   cancelTimerNotifications,
 } from "@/lib/notifications";
+import { showLiveTimer, hideLiveTimer, syncLiveTimers } from "@/lib/live-timer-sync";
 
 interface TimerContextValue {
   timers: Timer[];
@@ -31,6 +32,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
       const timer = createTimer(platform, startTime, preResetAlert);
       storage.timers.add(timer);
       await scheduleTimerNotifications(timer);
+      showLiveTimer(timer);
       refreshTimers();
     },
     [refreshTimers]
@@ -39,6 +41,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
   const removeTimer = useCallback(
     async (id: string) => {
       await cancelTimerNotifications(id);
+      hideLiveTimer(id);
       storage.timers.remove(id);
       refreshTimers();
     },
@@ -74,6 +77,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
       if (expired.length > 0) {
         expired.forEach((t) => {
           cancelTimerNotifications(t.id);
+          hideLiveTimer(t.id);
         });
         const stillActive = active.filter((t) => !isExpired(t));
         // Keep expired ones in history but mark inactive
@@ -85,6 +89,10 @@ export function TimerProvider({ children }: { children: ReactNode }) {
         setTimers(stillActive);
       }
     };
+
+    // The system clears notifications on reboot, so re-post whatever is
+    // still running whenever the provider mounts.
+    syncLiveTimers(storage.timers.getActive());
 
     check();
     const interval = setInterval(check, 5000);

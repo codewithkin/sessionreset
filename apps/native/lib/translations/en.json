@@ -242,5 +242,10 @@
     "stopConfirm": "Stop",
     "done": "Window reopened",
     "doneSub": "You are clear to go."
+  },
+  "liveTimer": {
+    "body": "Window reopens at {{time}}",
+    "channelName": "Active windows",
+    "channelDescription": "A live countdown while a window is open"
   }
 }

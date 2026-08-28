@@ -242,5 +242,10 @@
     "stopConfirm": "Detener",
     "done": "Ventana reabierta",
     "doneSub": "Ya puedes continuar."
+  },
+  "liveTimer": {
+    "body": "La ventana se reabre a las {{time}}",
+    "channelName": "Ventanas activas",
+    "channelDescription": "Cuenta atrás en vivo mientras hay una ventana abierta"
   }
 }

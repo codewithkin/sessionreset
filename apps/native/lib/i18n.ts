@@ -84,6 +84,12 @@ i18n.use(initReactI18next).init({
 export async function setAppLanguage(code: LanguageCode): Promise<void> {
   storage.language.set(code);
   await i18n.changeLanguage(code);
+
+  // Notifications already in the shade keep whatever text they were posted
+  // with, so re-post the live countdowns in the new language. Imported lazily
+  // to avoid a cycle: live-timer-sync reads translations from this module.
+  const { syncLiveTimers } = await import('./live-timer-sync');
+  syncLiveTimers(storage.timers.getActive());
 }
 
 export function getAppLanguage(): LanguageCode {

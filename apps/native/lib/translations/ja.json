@@ -242,5 +242,10 @@
     "stopConfirm": "停止",
     "done": "ウィンドウが再開",
     "doneSub": "作業を再開できます。"
+  },
+  "liveTimer": {
+    "body": "ウィンドウは {{time}} に再開",
+    "channelName": "進行中のウィンドウ",
+    "channelDescription": "ウィンドウが開いている間のライブカウントダウン"
   }
 }

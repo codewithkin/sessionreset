@@ -242,5 +242,10 @@
     "stopConfirm": "Parar",
     "done": "Janela reaberta",
     "doneSub": "Já podes continuar."
+  },
+  "liveTimer": {
+    "body": "A janela reabre às {{time}}",
+    "channelName": "Janelas ativas",
+    "channelDescription": "Contagem decrescente ao vivo enquanto há uma janela aberta"
   }
 }

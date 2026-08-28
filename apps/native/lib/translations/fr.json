@@ -242,5 +242,10 @@
     "stopConfirm": "Arrêter",
     "done": "Fenêtre rouverte",
     "doneSub": "Vous pouvez repartir."
+  },
+  "liveTimer": {
+    "body": "La fenêtre rouvre à {{time}}",
+    "channelName": "Fenêtres actives",
+    "channelDescription": "Compte à rebours en direct tant qu’une fenêtre est ouverte"
   }
 }

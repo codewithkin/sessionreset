@@ -242,5 +242,10 @@
     "stopConfirm": "Beenden",
     "done": "Fenster wieder offen",
     "doneSub": "Du kannst weitermachen."
+  },
+  "liveTimer": {
+    "body": "Fenster öffnet wieder um {{time}}",
+    "channelName": "Aktive Fenster",
+    "channelDescription": "Live-Countdown, solange ein Fenster offen ist"
   }
 }
