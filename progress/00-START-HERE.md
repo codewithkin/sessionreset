@@ -5,7 +5,7 @@ You are picking up **SessionReset**, a local-only Expo app that reminds develope
 > Read `AGENT-WORKFLOW.md` first — that is *how* work is done here.
 > This file is *what* to build next.
 
-Last updated: end of session 5 (every screen in the design file now built; RTL added).
+Last updated: end of session 9 (banner ads pinned to all 3 tabs; Pro copy refresh; delivered by OTA).
 
 ## The rule that comes before everything else
 
@@ -70,15 +70,15 @@ Every screen you build, you build from its design file. Design specs are in `des
 
 ## Open items, in priority order
 
-1. **Run the single EAS Android development build** — includes both the AdMob (`react-native-google-mobile-ads@16.3.4`) and RevenueCat (`react-native-purchases@10.8.0`) native modules. Fix any build errors until green.
-2. **Verify on device** — banner on free-tier Dashboard, interstitial after Quick-Log (1/session), rewarded ad → 10h Pro, IAP $9.99 lifetime Pro (entitlement `session_reset_pro`), restore.
-3. **iOS RevenueCat API key** — still a placeholder (`appl_YOUR_REVENUECAT_API_KEY`); add a real one if/when shipping iOS.
-4. **Subsequent product decisions** — interstitial cadence (1/session), whether Pro users keep the rewarded-ad row (extends a lifetime grant unnecessarily).
-5. **AdMob / RevenueCat unit performance** — monitor fill rates + purchase events post-launch.
+1. **Verify on device** — banner pinned at the bottom of Dashboard/History/Alerts on the free tier, interstitial after Quick-Log (1/session), rewarded ad → 10h Pro, IAP $9.99 lifetime Pro (entitlement `session_reset_pro`), restore. The OTA on the production channel already has the banner + copy changes.
+2. **iOS RevenueCat API key** — still a placeholder (`appl_YOUR_REVENUECAT_API_KEY`); add a real one if/when shipping iOS.
+3. **Subsequent product decisions** — interstitial cadence (1/session), whether Pro users keep the rewarded-ad row (extends a lifetime grant unnecessarily).
+4. **AdMob / RevenueCat unit performance** — monitor fill rates + purchase events post-launch.
 
 Resolved in session 6: app-ads.txt deployed & verified, model names updated.
 Resolved in session 7: AdMob re-integrated with real units, live freemium model.
 Resolved in session 8: RevenueCat live IAP wired ($9.99 lifetime Pro, entitlement `session_reset_pro`), launch offer removed.
+Resolved in session 9: banner ads pinned to the bottom of Dashboard, History & Alerts (incl. empty states); Pro copy refreshed ("Watch a 30-second ad…10 hours", "Pay $9.99 to go ad-free forever"); delivered by EAS Update OTA to the production channel (runtime 1.0.0); `builds/` gitignored (the earlier push hang was an accidentally-committed 94MB AAB). Production AAB: `apps/native/builds/sessionreset-prod-1.0.0-3.aab`.
 
 ## The test
 

@@ -4,6 +4,47 @@ Newest first.
 
 ---
 
+## Session 9
+
+**Banner ads pinned to the bottom of the three main tabs + Pro copy refresh.**
+
+### Banner placement
+- `BannerAd` moved OUT of each screen's `ScrollView` and pinned at the very
+  bottom of the parent `View` (a flex sibling below the scroll area) on
+  **Dashboard (`index.tsx`), History, and Alerts**. It now always sits at the
+  very bottom even when content doesn't fill the screen, and it's the last
+  element above the tab bar.
+- Empty / placeholder states on History and Alerts keep their flex-centering
+  (they center within the scroll area above the pinned banner).
+- Pro users still see nothing (the pinned slot collapses; `shouldShowBanner()`
+  returns false when Pro).
+- Pure JS/JSON → delivered via **EAS Update (OTA)** — no native rebuild.
+  Published to `production` branch/channel, runtime 1.0.0, Android,
+  update group `313757e5-…`, commit `46cd4ba`. (Note: `eas update --platform
+  all` fails on Expo's web static-render step because native modules can't
+  SSR in Node — use `--platform android` for mobile OTA.)
+
+### Pro copy refresh (all 10 locales)
+- Rewarded ad: "Watch a 30-second ad to have no other ads for the next
+  10 hours."
+- Settings power row: "Watch a 30-second ad to remove all other ads for
+  10 hours."
+- Paywall CTA now reads "Pay {{price}} to go ad-free forever" (real RC price
+  or $9.99 fallback).
+- Settings Pro card: removed stale launch-price / "$1.99" strikethrough copy;
+  body is now "Pay once, go ad-free forever. Your purchase never expires."
+- All 9 non-en locales updated key-for-key; `{{price}}` preserved everywhere.
+
+### Housekeeping
+- `apps/native/builds/` added to `.gitignore` — the 94.5MB production AAB had
+  accidentally been committed (a `git add apps/native` sweep), which made the
+  `git push` hang uploading it. Untracked it (file kept on disk), kept the
+  binary out of the repo, recommitted cleanly, and pushed. Root cause of the
+  earlier push hang.
+- Commits: `46cd4ba` (feature), `43b7677` (docs). Pushed to `main`.
+
+---
+
 ## Session 8
 
 **RevenueCat live IAP wired — real $9.99 lifetime Pro purchase; launch offer removed.**
