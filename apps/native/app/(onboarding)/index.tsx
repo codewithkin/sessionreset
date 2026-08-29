@@ -1048,7 +1048,7 @@ function PaywallStep({
 
       <Animated.View entering={FadeInDown.duration(400).delay(400)} style={{ marginBottom: spacing[14] }}>
         <PrimaryButton
-          label={isPro ? t("onboarding.paywall.proCta") : purchasing ? t("onboarding.paywall.purchasing") : t("onboarding.paywall.cta")}
+          label={isPro ? t("onboarding.paywall.proCta") : purchasing ? t("onboarding.paywall.purchasing") : t("onboarding.paywall.cta", { price: offeringsPrice ?? t("onboarding.paywall.price") })}
           onPress={onPrimary}
           c={c}
           isDark={isDark}

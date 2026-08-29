@@ -65,7 +65,7 @@
       },
       "price": "US$ 9,99",
       "period": "Pro vitalício • Preço de lançamento",
-      "cta": "Desbloquear Pro vitalício",
+      "cta": "Pague {{price}} para ficar sem anúncios para sempre",
       "skip": "Continuar com versão gratuita",
       "headline": "Tudo ligado. Uma compra, para sempre.",
       "lifetimeBadge": "VITALÍCIO",
@@ -148,11 +148,11 @@
     "title": "Configurações",
     "pro": {
       "upgrade": "Desbloquear Pro",
-      "upgradeSubtext": "Remover anúncios e desbloquear widgets — $1.99",
-      "upgradePeriod": "Acesso vitalício • Preço de lançamento",
+      "upgradeSubtext": "Remover anúncios e desbloquear widgets",
+      "upgradePeriod": "Acesso vitalício",
       "active": "Você é Pro",
       "activeSubtext": "Todos os recursos desbloqueados, anúncios removidos.",
-      "upgradeBody": "Uma compra, para sempre. Remove anúncios e desbloqueia widgets e sons."
+      "upgradeBody": "Pague uma vez e fique sem anúncios para sempre. Sua compra nunca expira."
     },
     "notifications": {
       "sound": "Som de notificação",
@@ -160,8 +160,8 @@
       "preResetSub": "15 minutos antes"
     },
     "power": {
-      "watchAd": "Ver anúncio por 10 h de Pro",
-      "watchAdSubtext": "Um vídeo de 30 s desbloqueia tudo"
+      "watchAd": "Ver anúncio por 10 h sem anúncios",
+      "watchAdSubtext": "Veja um anúncio de 30 segundos para remover todos os outros anúncios por 10 horas"
     },
     "data": {
       "export": "Exportar histórico de temporizadores",
@@ -197,7 +197,7 @@
   },
   "rewardedAd": {
     "headline": "Desbloqueie o Pro por 10 horas",
-    "body": "Veja um vídeo de 30 segundos para usar todas as funções Pro durante 10 horas.",
+    "body": "Veja um anúncio de 30 segundos para não ver outros anúncios nas próximas 10 horas.",
     "cta": "Ver vídeo curto",
     "dismiss": "Não, obrigado",
     "loading": "Carregando...",

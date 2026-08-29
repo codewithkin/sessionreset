@@ -40,5 +40,8 @@ yarn-error.*
 /ios
 /android
 
+# local EAS build artifacts
+/builds
+
 # UniWind generated types
 uniwind-types.d.ts

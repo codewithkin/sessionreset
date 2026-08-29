@@ -65,7 +65,7 @@
       },
       "price": "9,99 $US",
       "period": "Pro à vie • Prix de lancement",
-      "cta": "Débloquer Pro à vie",
+      "cta": "Payez {{price}} pour être sans publicité pour toujours",
       "skip": "Continuer avec la version gratuite",
       "headline": "Tout activé. Un achat, à vie.",
       "lifetimeBadge": "À VIE",
@@ -148,11 +148,11 @@
     "title": "Paramètres",
     "pro": {
       "upgrade": "Débloquer Pro",
-      "upgradeSubtext": "Supprimer les pubs & débloquer les widgets — 1,99 €",
-      "upgradePeriod": "Accès à vie • Prix de lancement",
+      "upgradeSubtext": "Supprimer les pubs & débloquer les widgets",
+      "upgradePeriod": "Accès à vie",
       "active": "Vous êtes Pro",
       "activeSubtext": "Toutes les fonctionnalités débloquées, publicités supprimées.",
-      "upgradeBody": "Un seul achat, à vie. Supprime les pubs, débloque widgets et sons."
+      "upgradeBody": "Payez une fois, sans publicité pour toujours. Votre achat n'expire jamais."
     },
     "notifications": {
       "sound": "Son de notification",
@@ -160,8 +160,8 @@
       "preResetSub": "15 minutes avant"
     },
     "power": {
-      "watchAd": "Regarder une pub pour 10 h de Pro",
-      "watchAdSubtext": "Une vidéo de 30 s débloque tout"
+      "watchAd": "Regarder une pub pour 10 h sans pub",
+      "watchAdSubtext": "Regardez une publicité de 30 secondes pour supprimer toutes les autres publicités pendant 10 heures"
     },
     "data": {
       "export": "Exporter l'historique des minuteurs",
@@ -197,7 +197,7 @@
   },
   "rewardedAd": {
     "headline": "Débloquez Pro pendant 10 heures",
-    "body": "Regardez une vidéo de 30 secondes pour utiliser toutes les fonctions Pro pendant 10 heures.",
+    "body": "Regardez une publicité de 30 secondes pour ne plus voir aucune autre publicité pendant les 10 prochaines heures.",
     "cta": "Voir la vidéo",
     "dismiss": "Non merci",
     "loading": "Chargement...",

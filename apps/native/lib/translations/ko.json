@@ -65,7 +65,7 @@
       },
       "price": "₩13,000",
       "period": "평생 Pro • 런칭 할인",
-      "cta": "Pro 잠금 해제",
+      "cta": "{{price}}를 지불하고 영원히 무광고로",
       "skip": "무료 버전으로 계속",
       "headline": "전부 켜짐. 한 번 구매로 평생.",
       "lifetimeBadge": "평생",
@@ -148,11 +148,11 @@
     "title": "설정",
     "pro": {
       "upgrade": "Pro 잠금 해제",
-      "upgradeSubtext": "광고 제거 & 위젯 잠금 해제 — ₩2,900",
-      "upgradePeriod": "평생 이용 • 런칭 가격",
+      "upgradeSubtext": "광고 제거 & 위젯 잠금 해제",
+      "upgradePeriod": "평생 이용",
       "active": "Pro입니다",
       "activeSubtext": "모든 기능 잠금 해제, 광고 제거됨.",
-      "upgradeBody": "한 번 구매로 평생 사용. 광고 제거, 위젯과 사운드 잠금 해제."
+      "upgradeBody": "한 번 결제하면 영원히 광고 없이 사용하세요. 구매는 만료되지 않습니다."
     },
     "notifications": {
       "sound": "알림 사운드",
@@ -160,8 +160,8 @@
       "preResetSub": "15분 전"
     },
     "power": {
-      "watchAd": "광고 보고 10시간 Pro",
-      "watchAdSubtext": "30초 영상으로 전체 잠금 해제"
+      "watchAd": "광고 보고 10시간 무광고",
+      "watchAdSubtext": "30초 광고를 보고 10시간 동안 모든 광고 제거"
     },
     "data": {
       "export": "타이머 기록 내보내기",
@@ -197,7 +197,7 @@
   },
   "rewardedAd": {
     "headline": "10시간 동안 Pro 잠금 해제",
-    "body": "30초 영상을 보면 앞으로 10시간 동안 모든 Pro 기능을 사용할 수 있습니다.",
+    "body": "30초 광고를 보면 앞으로 10시간 동안 다른 광고가 표시되지 않습니다.",
     "cta": "짧은 영상 보기",
     "dismiss": "괜찮아요",
     "loading": "불러오는 중...",

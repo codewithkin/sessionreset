@@ -12,6 +12,7 @@ import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontFamily, fontSizes, layout, letterSpacing, spacing } from "@/lib/tokens";
 import { useDirection } from "@/lib/rtl";
 import { Timer } from "@/lib/types";
+import { BannerAd } from "@/components/BannerAd";
 
 export default function HistoryScreen() {
   const { t } = useTranslation();
@@ -166,6 +167,8 @@ export default function HistoryScreen() {
           ))
         )}
       </ScrollView>
+
+      <BannerAd />
     </View>
   );
 }

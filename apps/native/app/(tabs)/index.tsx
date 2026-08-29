@@ -197,8 +197,9 @@ export default function TodayScreen() {
           </Animated.View>
         )}
 
-        <BannerAd />
       </ScrollView>
+
+      <BannerAd />
     </View>
   );
 }

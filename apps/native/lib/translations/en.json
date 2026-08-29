@@ -67,7 +67,7 @@
       "price": "$9.99",
       "period": "Lifetime Pro  One purchase, no subscription",
       "lifetimeBadge": "LIFETIME",
-      "cta": "Unlock Lifetime Pro",
+      "cta": "Pay {{price}} to go ad-free forever",
       "skip": "Continue with Free Version",
       "proHeadline": "Everything's on. Nothing to pay.",
       "proPrice": "Included",
@@ -148,11 +148,11 @@
     "title": "Settings",
     "pro": {
       "upgrade": "Unlock Pro",
-      "upgradeSubtext": "Remove Ads & Unlock Widgets — $1.99",
-      "upgradePeriod": "Lifetime Access • Launch Price",
+      "upgradeSubtext": "Remove Ads & Unlock Widgets",
+      "upgradePeriod": "Lifetime Access",
       "active": "You're Pro",
       "activeSubtext": "All features unlocked, ads removed.",
-      "upgradeBody": "One purchase, yours for life. Removes ads, unlocks widgets and custom sounds."
+      "upgradeBody": "Pay once, go ad-free forever. Your purchase never expires."
     },
     "notifications": {
       "sound": "Notification Sound",
@@ -160,8 +160,8 @@
       "preResetSub": "15 minutes before"
     },
     "power": {
-      "watchAd": "Watch ad for 10h Pro",
-      "watchAdSubtext": "30-second video unlocks everything"
+      "watchAd": "Watch ad for 10h ad-free",
+      "watchAdSubtext": "Watch a 30-second ad to remove all other ads for 10 hours"
     },
     "data": {
       "export": "Export Timer History",
@@ -197,7 +197,7 @@
   },
   "rewardedAd": {
     "headline": "Unlock Pro for 10 Hours",
-    "body": "Watch a 30-second video to use all Pro features for the next 10 hours.",
+    "body": "Watch a 30-second ad to have no other ads for the next 10 hours.",
     "cta": "Watch Short Video",
     "dismiss": "No Thanks",
     "loading": "Loading...",

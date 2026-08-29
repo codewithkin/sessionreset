@@ -65,7 +65,7 @@
       },
       "price": "9,99 €",
       "period": "Lebenslanger Pro • Startpreis",
-      "cta": "Pro freischalten",
+      "cta": "Zahle {{price}} und bleibe für immer werbefrei",
       "skip": "Mit kostenloser Version fortfahren",
       "headline": "Alles an. Einmal kaufen, für immer.",
       "lifetimeBadge": "LEBENSLANG",
@@ -148,11 +148,11 @@
     "title": "Einstellungen",
     "pro": {
       "upgrade": "Pro freischalten",
-      "upgradeSubtext": "Werbung entfernen & Widgets freischalten — $1.99",
-      "upgradePeriod": "Lebenslanger Zugang • Startpreis",
+      "upgradeSubtext": "Werbung entfernen & Widgets freischalten",
+      "upgradePeriod": "Lebenslanger Zugang",
       "active": "Sie sind Pro",
       "activeSubtext": "Alle Funktionen freigeschaltet, Werbung entfernt.",
-      "upgradeBody": "Einmal kaufen, für immer behalten. Entfernt Werbung, schaltet Widgets und Sounds frei."
+      "upgradeBody": "Zahle einmal, bleibe für immer werbefrei. Dein Kauf läuft nie ab."
     },
     "notifications": {
       "sound": "Benachrichtigungston",
@@ -160,8 +160,8 @@
       "preResetSub": "15 Minuten vorher"
     },
     "power": {
-      "watchAd": "Video ansehen für 10 Std. Pro",
-      "watchAdSubtext": "30-Sekunden-Video schaltet alles frei"
+      "watchAd": "Anzeige ansehen für 10 Std. werbefrei",
+      "watchAdSubtext": "Sieh eine 30-sekündige Anzeige, um für 10 Stunden alle anderen Anzeigen zu entfernen"
     },
     "data": {
       "export": "Timer-Verlauf exportieren",
@@ -197,7 +197,7 @@
   },
   "rewardedAd": {
     "headline": "Pro für 10 Stunden freischalten",
-    "body": "Sieh ein 30-Sekunden-Video und nutze alle Pro-Funktionen für 10 Stunden.",
+    "body": "Sieh dir eine 30-sekündige Anzeige an und du siehst 10 Stunden lang keine anderen Anzeigen mehr.",
     "cta": "Kurzes Video ansehen",
     "dismiss": "Nein danke",
     "loading": "Wird geladen...",

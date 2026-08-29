@@ -11,6 +11,7 @@ import { useTimers } from "@/contexts/TimerContext";
 import { useAppTheme } from "@/contexts/app-theme-context";
 import { colors, components, fontFamily, fontSizes, layout, letterSpacing, spacing } from "@/lib/tokens";
 import { useDirection } from "@/lib/rtl";
+import { BannerAd } from "@/components/BannerAd";
 
 export default function AlertsScreen() {
   const { t } = useTranslation();
@@ -157,6 +158,8 @@ export default function AlertsScreen() {
           </Animated.View>
         )}
       </ScrollView>
+
+      <BannerAd />
     </View>
   );
 }
