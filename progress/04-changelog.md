@@ -40,8 +40,11 @@ product `sessionreset_pro`; default offering package `$rc_lifetime`.
 - `tsc --noEmit` clean; `expo prebuild --platform android --clean` succeeds
   (AdMob APPLICATION_ID present; RevenueCat auto-linked).
 
-**Single EAS Android development build queued** (AdMob + RevenueCat native
-modules together, per user to avoid wasting builds).
+**EAS Android production build (`--profile production`) succeeded** (commit
+`c25ed22`, versionCode 3 → `builds/sessionreset-prod-1.0.0-3.aab`, 94.5 MB),
+bundling both AdMob + RevenueCat native modules in a signed, store-ready AAB —
+no errors on the first run. (An earlier dev `ad52eddc`/`47a49c7` production
+AAB predates RevenueCat; this one is current.)
 
 ---
 
